@@ -1,0 +1,175 @@
+#include "hardware.h"
+#include "rs232.h"
+#include "event2/buffer.h"
+#include "event2/bufferevent.h"
+#include "client.h"
+#include "obsolete.h"
+#include "radionetwork.h"
+
+#define USESERIAL 1
+#define SERIAL_BAND 115200 
+
+#ifdef OS_UBUNTU
+#define SERIAL_PORT 16 ///dev/ttyUSB0
+#else
+#define SERIAL_PORT 15 ///dev/ttyATH0
+#endif
+
+static void onPacketRead(BOARD *board, serial_packet *data)
+{
+	   int size;
+	   uint8_t temp[BUFFER_SIZE];
+	   packet pkt;
+	   clients *cl = client_first();	
+       //package
+	   pkt.id = 0;
+	   pkt.command = CMD_SERIAL;
+	   pkt.ack = ACK_NOP;
+	   pkt.length = data->read_size;
+	   pkt.data = data->data;
+	
+	   size = packet_readBuffer(&pkt, temp);
+
+	   while(cl != NULL){
+		  if(cl->logged){
+		    bufferevent_write(cl->buf_ev, temp, size);
+		  }else if(cl->serv->service_type){
+			obsolete_send_packet(cl, data);
+		  }
+		  cl = cl->next;
+	   }
+
+	printf("board->radio->state = %d   data->data[1] = %d \n" ,board->radio->state,data->data[1]);
+	if((board->radio->state>0) && (data->data[1] == CC1101)){
+	   radionetwork_ondata(board, data->data, data->read_size);
+	}
+}
+
+#ifdef USESERIAL
+static void onSerialCallback(evutil_socket_t sock, short flag, void *arg)
+{
+	BOARD *_serial = (BOARD *)arg;
+	uint8_t buffer[BUFFER_SIZE];
+	int size = RS232_PollComport(SERIAL_PORT, buffer, BUFFER_SIZE); //jyc20150911 uint16_t -> int 
+	if (size >0){
+		serial_packet *s_data = _serial->prve_packet;
+	    uint8_t *enc = buffer;
+		
+		if(size < 5 && (s_data->data_size==0) && ((_serial->cache_length+size) < 5)){
+			memcpy(_serial->cache + _serial->cache_length, buffer, size);
+			_serial->cache_length += size;
+
+			return;
+		}
+
+		if(_serial->cache_length > 0){
+			uint8_t temp[BUFFER_SIZE];
+			memcpy(temp, _serial->cache, _serial->cache_length);
+			memcpy(temp + _serial->cache_length, buffer, size);
+			size+= _serial->cache_length;
+			memcpy(buffer, temp, size);
+			_serial->cache_length = 0;
+		}
+			
+		while(size > 0){
+			if(s_data->data_size == 0x0){
+				if(enc[0] == 0xBC && enc[1]==0xAC){ 
+					s_data->head = *enc++;
+			        s_data->ack = *enc++;
+				    s_data->data_size = *enc++;
+					size-=3;
+				}else{
+					enc++;
+					size--;
+				}
+			}else if(s_data->read_size < s_data->data_size){
+				uint8_t read_size = s_data->data_size - s_data->read_size;
+				if(read_size > size)
+				{
+					read_size = size;
+				}
+				if(s_data->read_size+read_size<260){ //jyc20150911debug
+					memcpy(s_data->data+s_data->read_size, enc, read_size);
+					s_data->read_size +=read_size;
+					enc+=read_size;
+				}
+				size -= read_size;
+			}else{
+				s_data->end_ack = *enc++;
+				size--;
+
+				if(s_data->ack == s_data->end_ack){
+					//printf("rec %d\n",s_data->read_size);
+					onPacketRead(_serial, s_data);
+				}
+
+				memset(s_data, 0, sizeof(serial_packet));				
+			}
+		}
+	}
+}
+#endif
+
+int hardware_init(BOARD *board)
+{
+#ifndef OS_UBUNTU	
+	system("echo 18 >/sys/class/gpio/export"); //reset
+	system("echo 19 >/sys/class/gpio/export"); //isp0
+	system("echo 20 >/sys/class/gpio/export"); //isp1
+	system("echo out >/sys/class/gpio/gpio18/direction");
+	system("echo out >/sys/class/gpio/gpio19/direction");
+	system("echo out >/sys/class/gpio/gpio20/direction");
+	system("echo 0 >/sys/class/gpio/gpio19/value");
+	system("echo 0 >/sys/class/gpio/gpio20/value");
+	system("echo 1 >/sys/class/gpio/gpio18/value");
+	system("sleep 1");
+	system("echo 0 >/sys/class/gpio/gpio18/value");
+	system("sleep 1");
+#endif
+	
+#ifdef USESERIAL
+	board->cache_length = 0;
+	
+	if(RS232_OpenComport(SERIAL_PORT, SERIAL_BAND)==0){
+        board->serial_evt = event_new(board->task->evbase, RS232_getfd(SERIAL_PORT), EV_READ | EV_PERSIST, onSerialCallback, board);
+	    event_add(board->serial_evt, NULL);
+
+		return 0;
+	}	
+#endif
+	return -1;
+}
+
+void hardware_close(BOARD *board)
+{
+#ifdef USESERIAL	
+	event_del(board->serial_evt);
+	event_free(board->serial_evt);
+	
+    RS232_CloseComport(SERIAL_PORT);
+#endif
+}
+
+int hardware_send(uint8_t *data, int size)
+{
+#ifdef USESERIAL	
+    return RS232_SendBuf(SERIAL_PORT, data, size);
+#endif
+}
+
+#ifndef OS_UBUNTU
+void hardware_soft_version(uint8_t *soft_version)
+{
+	FILE *stream;
+	char buf[64];
+
+	memset(buf,'\0',sizeof(buf));
+	stream = popen("opkg list gsbox","r");
+	fread(buf,sizeof(char),sizeof(buf),stream);
+	memcpy(soft_version,&buf[8],10); //gsbox 
+
+	pclose(stream);	
+}
+
+#endif
+

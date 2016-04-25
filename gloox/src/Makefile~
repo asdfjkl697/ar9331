@@ -1,0 +1,16 @@
+RM = rm
+#CC = linux-gcc
+OBJS = adhoc_test.o
+bin = gloox
+CFLAGS += -I.
+LIBS += -lpthread
+LIBS += -lstdc++
+LIBS += -lgloox
+
+#LIBDIR = -L/lib/
+all : $(bin)
+$(bin) : $(OBJS)
+	$(CXX) $(CFLAGS) -Wall  $(OBJS) $(LIBDIR) -o $(bin) $(LIBS)
+clean :
+	$(RM) -f $(OBJS)
+	$(RM) -f $(bin)

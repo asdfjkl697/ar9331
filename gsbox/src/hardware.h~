@@ -1,0 +1,11 @@
+#ifndef _HARDWARE_H
+#define _HARDWARE_H
+
+#include "typedef.h"
+
+
+int hardware_init(BOARD *board);
+void hardware_close(BOARD *board);
+int hardware_send(uint8_t *board);
+
+#endif

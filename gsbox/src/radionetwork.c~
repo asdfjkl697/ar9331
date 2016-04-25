@@ -1,0 +1,777 @@
+#include "radionetwork.h"
+#include "hardware.h"
+#include "packet.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#include "libxml/xmlmemory.h"
+#include "libxml/parser.h"
+
+#define RADIO_CONFIG_FILE "radio.xml"
+#define HEADBEART_TIME  10000
+
+#define REG_PKTCTRL1 0x7
+
+static void radionetwork_loadconfig(RADIO_NETWORK *radio)
+{
+    xmlDocPtr doc;
+	xmlNodePtr cur;
+	
+	doc = xmlParseFile(RADIO_CONFIG_FILE);
+	if (doc == NULL) return;
+
+	cur = xmlDocGetRootElement(doc);
+	if (cur == NULL){
+		xmlFreeDoc(doc);
+		return;
+	}
+
+	if (!xmlStrEqual(cur->name, BAD_CAST"radio")){
+		xmlFreeDoc(doc);
+		return;
+	}
+
+	if (xmlHasProp(cur, BAD_CAST"id")){
+		radio->id = atoi((char *)xmlGetProp(cur, BAD_CAST"id"));
+	}
+	if (xmlHasProp(cur, BAD_CAST"state")){
+		radio->state = atoi((char *)xmlGetProp(cur, BAD_CAST"state"));
+	}
+	if (xmlHasProp(cur, BAD_CAST"dis_addr")){
+		radio->dis_addr = atoi((char *)xmlGetProp(cur, BAD_CAST"dis_addr"));
+	}
+	if (xmlHasProp(cur, BAD_CAST"addr")){
+		radio->addr = atoi((char *)xmlGetProp(cur, BAD_CAST"addr"));
+	}
+	if (xmlHasProp(cur, BAD_CAST"channel")){
+		radio->channel = atoi((char *)xmlGetProp(cur, BAD_CAST"channel"));
+	}
+	if (xmlHasProp(cur, BAD_CAST"role")){
+		radio->role = atoi((char *)xmlGetProp(cur, BAD_CAST"role"));
+	}
+
+
+	RADIO_CHILD *cl = radio->child;
+	cur = cur->xmlChildrenNode;
+	while (cur != NULL) {
+		if (xmlStrEqual(cur->name, BAD_CAST"child")){
+			if (cl == NULL){
+				cl = radio->child = malloc(sizeof(RADIO_CHILD));
+			}
+			else{
+				cl = cl->next = malloc(sizeof(RADIO_CHILD));
+			}
+
+			cl->next = NULL;
+			
+			if (xmlHasProp(cur, BAD_CAST"id")){
+				radio->id = cl->id = atoi((char *)xmlGetProp(cur, BAD_CAST"id"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"addr")){
+				cl->addr = atoi((char *)xmlGetProp(cur, BAD_CAST"addr"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"channel")){
+				cl->channel = atoi((char *)xmlGetProp(cur, BAD_CAST"channel"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"role")){
+				cl->role = atoi((char *)xmlGetProp(cur, BAD_CAST"role"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"recv_rssi")){
+				cl->recv_rssi = atoi((char *)xmlGetProp(cur, BAD_CAST"recv_rssi"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"send_rssi")){
+				cl->send_rssi = atoi((char *)xmlGetProp(cur, BAD_CAST"send_rssi"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"ipver")){
+				cl->ipver = atoi((char *)xmlGetProp(cur, BAD_CAST"ipver"));
+			}
+			if (xmlHasProp(cur, BAD_CAST"mac")){
+				char *mac = (char *)xmlGetProp(cur, BAD_CAST"mac");
+				memcpy(cl->mac, mac, strlen(mac));
+			}
+		}
+		cur = cur->next;
+	}
+
+	xmlFreeDoc(doc);
+}
+
+static void radionetwork_saveXml(RADIO_NETWORK *radio)
+{
+	xmlDocPtr doc;
+	xmlNodePtr curNode = NULL, child = NULL;
+	char temp[64];
+	doc = xmlNewDoc(BAD_CAST "1.0");
+	curNode = xmlNewNode(NULL, BAD_CAST "radio");
+	sprintf(temp,"%d",radio->id);
+	xmlSetProp(curNode, BAD_CAST"id", BAD_CAST temp);
+	sprintf(temp,"%d",radio->state);
+	xmlSetProp(curNode, BAD_CAST"state", BAD_CAST temp);
+	sprintf(temp,"%d",radio->dis_addr);
+	xmlSetProp(curNode, BAD_CAST"dis_addr", BAD_CAST temp);
+	sprintf(temp,"%d",radio->addr);
+	xmlSetProp(curNode, BAD_CAST"addr", BAD_CAST temp);
+	sprintf(temp,"%d",radio->channel);
+	xmlSetProp(curNode, BAD_CAST"channel", BAD_CAST temp);
+	sprintf(temp,"%d",radio->role);
+	xmlSetProp(curNode, BAD_CAST"role", BAD_CAST temp);
+	xmlDocSetRootElement(doc, curNode);
+
+	RADIO_CHILD *cl = radio->child;
+
+	while(cl != NULL){
+		child = xmlNewNode(NULL, BAD_CAST "child");
+		sprintf(temp,"%d", ++radio->id);
+		xmlSetProp(child, BAD_CAST"id", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->state);
+		xmlSetProp(child, BAD_CAST"state", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->addr);
+		xmlSetProp(child, BAD_CAST"addr", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->channel);
+		xmlSetProp(child, BAD_CAST"channel", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->role);
+		xmlSetProp(child, BAD_CAST"role", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->recv_rssi);
+		xmlSetProp(child, BAD_CAST"recv_rssi", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->send_rssi);
+		xmlSetProp(child, BAD_CAST"send_rssi", BAD_CAST temp);
+	    sprintf(temp,"%d",cl->ipver);
+		xmlSetProp(child, BAD_CAST"ipver", BAD_CAST temp);
+		xmlSetProp(child, BAD_CAST"mac", BAD_CAST cl->mac);
+		xmlAddChild(curNode, child);
+
+		cl = cl->next;
+	}
+
+	xmlSaveFile(RADIO_CONFIG_FILE, doc);
+	xmlFreeDoc(doc);
+}
+
+static void radionetwork_addorupdateChild(RADIO_NETWORK *radio, RADIO_CHILD *child)
+{
+	RADIO_CHILD *cl = radio->child;
+	if(cl == NULL){
+		radio->child = child;
+		radionetwork_saveXml(radio);
+		return;
+	}
+	while(cl != NULL){
+		if(memcmp(cl->mac, child->mac, strlen((const char *)cl->mac))==0){
+			cl->id        = child->id;
+			cl->addr      = child->addr;
+			cl->channel   = child->channel;
+			cl->state     = child->state;
+			cl->recv_rssi = child->recv_rssi;
+			cl->send_rssi = child->send_rssi;
+			break;
+		}
+		if(cl->next == NULL){
+			cl->next = child;
+			break;
+		}
+		cl = cl->next;
+	}
+
+	radionetwork_saveXml(radio);
+}
+
+static uint8_t radionetwork_updateChild(RADIO_NETWORK *radio, int id)
+{
+   RADIO_CHILD *cl = radio->child;
+   while(cl != NULL){
+	   if(cl->id == id){
+		   cl->state = 0x1;
+		   return 0x1;
+	   }
+
+	   cl = cl->next;
+   }
+
+   return 0;
+}
+
+static void radionetwork_removeChild(RADIO_NETWORK *radio)
+{
+   RADIO_CHILD *cl = radio->child;
+   while(cl != NULL){
+	   RADIO_CHILD *swp = cl;	   
+	   cl = swp->next;
+	   free(swp);
+   }
+   radio->child = NULL;
+}
+
+static void radionetwork_setaddr_freq(uint8_t role,uint8_t addr, uint8_t channel)
+{
+	uint8_t temp[260] = {0};
+	uint8_t data[12] = {0};
+	uint8_t *enc = data;
+	
+	*enc++= 0x65;
+	*enc++= SYSTEM_SET;
+	*enc++= CC1101;
+	*enc++= SYSTEM_WIRTE;
+	*enc++= REG_PKTCTRL1; //start addr
+	*enc++= 0x4; //count
+	*enc++= role == ROLE_CHILD ? 0x5 : 0x6;  //Address check and 0 (0x00) broadcast/Address check, no broadcast
+	*enc++= 0x5;
+	*enc++= addr;
+	*enc++= channel;
+	
+	enc = packet_to_hardware(temp, data, enc - data);
+	hardware_send(temp, enc - temp);
+}
+
+static void radionetwork_send(RADIO_PACKET *pkt)
+{
+    uint8_t temp[260] = {0};
+	uint8_t data[36] = {0};
+	uint8_t *enc = data;
+	
+	*enc++= 0x65;
+	*enc++= CC1101;
+	*enc++= pkt->addr;
+	*enc++= pkt->cmd;
+
+	if(pkt->len > 0){
+	   memcpy(enc, pkt->data, pkt->len);
+	   enc += pkt->len;
+	}
+	
+	enc = packet_to_hardware(temp, data, enc - data);
+	hardware_send(temp, enc - temp);
+}
+
+
+static uint8_t radionetwork_getchild_addr(RADIO_NETWORK *radio, uint8_t addr)
+{
+	if(radio->addr == addr){
+		addr++;
+	}
+	
+   RADIO_CHILD *cl = radio->child;
+   while(cl != NULL){
+	   if(cl->addr == addr){
+		   addr++;
+	   }
+	   cl = cl->next;
+   }
+   return addr;
+}
+
+static void radionetwork_discovery_send(RADIO_NETWORK *radio)
+{
+	uint8_t *enc;
+	
+	RADIO_PACKET pkt= {0};
+	pkt.addr = 0x0;
+	pkt.cmd  = RD_DISCOVERY;
+
+	enc = pkt.data;
+	*enc++= ++radio->dis_count;
+	*enc++= radio->channel;
+	enc = packet_writeInt16(enc, 100);
+    pkt.len = enc - pkt.data;
+	
+	radionetwork_send(&pkt);
+}
+
+static void radionetwork_stop_headbeart(RADIO_NETWORK *radio)
+{
+	radio->role = 0;
+	if(radio->radiotask != NULL){
+	   taskmanager_remove_timer(radio->radiotask);
+	   free(radio->radiotask);
+	   radio->radiotask = NULL;
+   }
+}
+
+static void radionetwork_timecallback(void *arg)
+{	
+	
+	RADIO_NETWORK *radio = (RADIO_NETWORK *)arg;
+	if(radio->dis_state == DIS_PROGRESS){
+		if(radio->dis_read){
+			radio->dis_read = 0;
+			radionetwork_discovery_send(radio);
+			return;
+		}
+	}
+	
+	if(radio->hb_count < 2) {
+		radio->hb_count++;
+		return;
+	}
+	
+	radio->hb_count = 0;
+
+	if((radio->dis_state == DIS_PROGRESS) && (radio->dis_read == 0)){
+	    radio->dis_state = DIS_DONE;
+		//send discovery end packet
+		if(radio->dis_callback){
+			radio->dis_callback(radio->arg, DIS_DONE, NULL, 0);
+		}
+		//set config back
+		radionetwork_setaddr_freq(radio->role, radio->addr, radio->channel);
+	}
+	
+	if(radio->role == ROLE_MAIN){
+		RADIO_CHILD *cl = radio->child;
+		while(cl != NULL){
+			if(cl->state == 0){
+			   if(cl->channel != radio->channel){
+	              radionetwork_setaddr_freq(radio->role, radio->addr, cl->channel);
+			   }
+			
+			   RADIO_PACKET pkt= {0};
+	           pkt.addr = cl->addr;
+	           pkt.cmd  = RD_HEARTBEAT;
+               uint8_t *enc = pkt.data;
+	           enc = packet_encodeInt16(enc, cl->id);
+	           pkt.len = enc - pkt.data;
+	           radionetwork_send(&pkt);
+			    sleep(1);
+			}
+			cl->timeout_count++;
+			if(cl->timeout_count > 3){
+				cl->state = 0;
+			}
+			cl = cl->next;
+		}
+	}else if(radio->role == ROLE_CHILD){		
+		if(radio->state == 0x1){
+			radionetwork_setaddr_freq(ROLE_MAIN, 0x0, 0x0);
+			radionetwork_stop_headbeart(radio);
+			return;
+		}
+		
+		RADIO_PACKET pkt= {0};
+	    pkt.addr = radio->dis_addr;
+	    pkt.cmd  = RD_HEARTBEAT;
+        uint8_t *enc = pkt.data;
+	    enc = packet_encodeInt16(enc, radio->id);
+		pkt.len = enc - pkt.data;
+		radionetwork_send(&pkt);
+		radio->dis_count++;	
+		if(radio->dis_count > 3){
+			radio->state = 0x1;
+		}
+	}
+}
+
+
+static void radionetwork_headbeart(TASK *task, RADIO_NETWORK *radio)
+{
+	if(radio->state && radio->role > 0x0){
+	   //set headbeart
+	   if(radio->radiotask == NULL){
+	       radio->hb_count  = 0;
+		   radio->radiotask = taskmanager_timer_create();
+	       radio->radiotask->arg = radio;
+	       radio->radiotask->callback = radionetwork_timecallback;
+	       taskmanager_add_timer(task, radio->radiotask, HEADBEART_TIME);
+	   }
+	}
+}
+
+void radionetwork_init(TASK *task, RADIO_NETWORK *radio)
+{
+	memset(radio, 0, sizeof(RADIO_NETWORK));
+	radio->state = 0x1;	
+	radio->dis_state = DIS_DONE;
+	
+
+	radionetwork_loadconfig(radio);
+	radionetwork_setaddr_freq(radio->role, radio->addr, radio->channel);
+    radionetwork_headbeart(task, radio);
+}
+
+uint8_t radionetwork_config(TASK *task, RADIO_NETWORK *radio)
+{
+	radionetwork_saveXml(radio);
+	radionetwork_headbeart(task, radio);
+	return 0x1;
+}
+
+static uint8_t* radionetwork_writeChild(uint8_t *data, RADIO_CHILD *cl)
+{
+	uint8_t *enc = data;
+	*enc++ = DATA_OBJECT;
+	enc = packet_encodeByte(enc, cl->addr);
+	enc = packet_encodeByte(enc, cl->channel);
+	enc = packet_encodeByte(enc, cl->recv_rssi);
+	enc = packet_encodeByte(enc, cl->send_rssi);
+	enc = packet_encodeByte(enc, cl->ipver);
+	enc = packet_encodeString(enc, (const char *)cl->mac);	
+	return enc;
+}
+
+uint8_t* radionetwork_read_config(uint8_t *data, RADIO_NETWORK *radio, uint16_t parent_id)
+{
+	uint8_t *enc = data;
+	RADIO_CHILD *cl = radio->child;
+	while(cl != NULL){
+		if(parent_id == 0){
+			enc = radionetwork_writeChild(enc, cl);
+		}else if(parent_id == cl->id){
+			//remote call
+		}
+		cl = cl->next;
+	}
+
+	*enc++ = DATA_NONE;
+
+	return enc;
+}
+
+void radionetwork_add_radio(RADIO_NETWORK *radio, uint8_t *data, int size)
+{
+	if(size > 5){
+	    RADIO_CHILD *cl = malloc(sizeof(RADIO_CHILD));
+		uint8_t *enc = data;
+
+		memset(cl, 0, sizeof(RADIO_CHILD));
+		
+	    enc = packet_decodeByte(enc, &cl->addr);
+	    enc = packet_decodeByte(enc, &cl->channel);
+  	    enc = packet_decodeByte(enc, &cl->recv_rssi);
+	    enc = packet_decodeByte(enc, &cl->send_rssi);
+	    enc = packet_decodeByte(enc, &cl->ipver);
+
+	    str_st val = {0};
+		
+	    enc = packet_decodeString(enc, &val);
+		memcpy(cl->mac, val.str, val.len);
+
+		radionetwork_addorupdateChild(radio, cl);
+	}	
+}
+
+uint8_t radionetwork_edit_radio(RADIO_NETWORK *radio, uint16_t id, uint8_t *data, int size)
+{
+	uint8_t *enc = data;	
+	RADIO_CHILD *cl = radio->child;	
+	while(cl != NULL){
+		if(cl->id == id){
+	        enc = packet_decodeByte(enc, &cl->addr);
+	        enc = packet_decodeByte(enc, &cl->channel);
+  	        enc = packet_decodeByte(enc, &cl->recv_rssi);
+	        enc = packet_decodeByte(enc, &cl->send_rssi);
+	        enc = packet_decodeByte(enc, &cl->ipver);
+	        str_st val = {0};		
+	        enc = packet_decodeString(enc, &val);
+		    memcpy(cl->mac, val.str, val.len);
+			radionetwork_saveXml(radio);
+			return 1;
+		}
+		cl = cl->next;
+	}
+
+	return 0;
+}
+
+uint8_t radionetwork_delete_radio(RADIO_NETWORK *radio, uint16_t id)
+{
+	RADIO_CHILD *swp;
+    RADIO_CHILD *cl = radio->child;
+	if((cl != NULL) && (cl->id == id)){
+		swp = cl->next;
+		free(cl);
+		radio->child = swp;
+		radionetwork_saveXml(radio);
+		return 1;
+	}
+	
+   while(cl->next != NULL){
+	   if(cl->next->id == id){
+		   swp = cl->next->next;
+	       free(cl->next);
+		   cl->next = swp;
+		   radionetwork_saveXml(radio);
+		   return 1;
+	   }
+	   cl = cl->next;
+   }
+
+   return 0;
+}
+
+uint8_t radionetwork_discovery(RADIO_NETWORK *radio, discovery_callback *callback, void *arg)
+{
+	if(radio->dis_state == DIS_DONE){
+	   radio->dis_state = DIS_PROGRESS;
+	   radio->hb_count  = 0;
+	   radio->dis_read  = 0;	   
+	   radio->dis_callback  = callback;
+	   radio->arg       = arg;
+
+	   radionetwork_setaddr_freq(ROLE_MAIN, 0, 0);
+       radionetwork_discovery_send(radio);
+	}
+
+	return radio->dis_state;
+}
+
+static void radionetwork_temptask_init(RADIO_NETWORK *radio)
+{
+	if(radio->temptask == NULL){
+        radio->temptask = taskmanager_timer_create();
+	}
+}
+/*
+static void radionetwork_asyncDiscoeryFindCall(void *arg)
+{
+	BOARD *board = (BOARD *)arg;
+	RADIO_NETWORK *radio = board->radio;
+	taskmanager_remove_timer(radio->temptask);
+
+	RADIO_CHILD *child = radio->dis_child;
+	if(child != NULL){
+		uint8_t temp[20];
+		uint8_t *enc = temp;
+		enc = packet_encodeInt16(enc, child->id);
+		enc = packet_encodeByte(enc, child->addr);
+		enc = packet_encodeByte(enc, child->channel);
+		enc = packet_encodeByte(enc, child->recv_rssi);
+		enc = packet_encodeByte(enc, child->send_rssi);
+		
+		radio->dis_callback(radio->arg, DIS_FIND, temp, enc - temp);
+	}
+}
+*/
+static void radionetwork_asyncDiscoeryCall(void *arg)
+{
+	BOARD *board = (BOARD *)arg;
+	RADIO_NETWORK *radio = board->radio;
+	if(radio->dis_read){
+		radio->dis_read = 0;
+		return;
+	}
+	
+	taskmanager_remove_timer(radio->temptask);
+
+	uint8_t *enc;
+	
+	RADIO_PACKET pkt= {0};
+	pkt.addr = 0x0;
+	pkt.cmd  = RD_DIS_REPLY;
+	
+	enc = pkt.data;
+	*enc++= radio->dis_addr;
+	*enc++= radio->recv_rssi;
+	*enc++= 0x1; //ipv4=1, ipv6=2
+	enc = packet_encodeString(enc, (const char *)board->task->sock.adapter->mac);
+    pkt.len = enc - pkt.data;
+	radionetwork_send(&pkt);
+}
+
+static void radionetwork_radioDiscoeryDone(void *arg, uint8_t code, uint8_t *data, int size)
+{
+	if(code == DIS_DONE){
+		//
+	}
+}
+
+static void radionetwork_radioDiscoery(void *arg)
+{
+	BOARD *board = (BOARD *)arg;
+	RADIO_NETWORK *radio = board->radio;
+	taskmanager_remove_timer(radio->temptask);
+	radionetwork_discovery(radio, radionetwork_radioDiscoeryDone, arg); //callback when discovery is done,radio send to main
+}
+
+static void radionetwork_onpacket(BOARD *board, RADIO_PACKET *pkt)
+{
+	RADIO_NETWORK *radio = board->radio;
+	
+	switch(pkt->cmd)
+	{
+		case RD_DISCOVERY:
+		{ 
+			if(radio->state == 0x2 || radio->role == ROLE_MAIN) return; //without main
+			
+			uint8_t *enc = pkt->data;
+			uint8_t addr    = *enc++;
+			uint8_t channel = *enc++;
+			uint16_t delay  = packet_readInt16(enc);
+			int rssi_db;
+			
+			radio->dis_addr = addr;
+			radio->dis_channel = channel;
+			radio->recv_rssi  = pkt->rssi;
+
+			if(pkt->rssi < 128){
+                rssi_db = (pkt->rssi / 2) - 74;
+            } else {
+                rssi_db = ((pkt->rssi - 256) / 2) - 74;
+            }
+
+			delay += abs(rssi_db) * 5;
+
+			radionetwork_temptask_init(radio);
+			radio->temptask->callback = radionetwork_asyncDiscoeryCall;
+			radio->temptask->arg = board;
+
+			taskmanager_add_timer(board->task, radio->temptask, delay);
+			break;
+		}
+		case RD_DIS_REPLY:
+		{
+			if(radio->dis_state != DIS_PROGRESS) {
+				radio->dis_read = 0x1;
+				return;
+			}
+			
+			uint8_t *enc = pkt->data;
+			RADIO_CHILD *child = malloc(sizeof(RADIO_CHILD));
+			child->next = NULL;
+			child->addr = radionetwork_getchild_addr(radio, *enc++);
+			child->channel = radio->dis_channel;
+			child->role = ROLE_CHILD;
+			child->recv_rssi = *enc++;
+			child->send_rssi = pkt->rssi;
+			child->ipver = *enc++;
+			child->id   = ++radio->id;
+			child->state = 0x1;
+			child->timeout_count = 0;
+			
+			str_st val = {0};
+			enc = packet_decodeString(enc, &val);
+			packet_stringCopy(child->mac, &val);
+			
+			//send ack
+			RADIO_PACKET packet= {0};
+	        packet.addr = 0x0;
+	        packet.cmd  = RD_DIS_REPLY_ACK;
+			enc = packet.data;
+			*enc++ = radio->addr;
+			*enc++ = child->addr;
+			*enc++ = child->channel;
+			enc = packet_encodeInt16(enc, child->id);
+			*enc++ = child->ipver;
+			enc = packet_encodeString(enc, (const char *)child->mac);	
+			packet.len = enc - packet.data;
+			radionetwork_send(&packet);
+/*
+			if(radio->dis_callback != NULL){
+				radio->dis_child = child;
+			    radionetwork_temptask_init(radio);
+			    radio->temptask->callback = radionetwork_asyncDiscoeryFindCall;
+			    radio->temptask->arg = board;
+			    taskmanager_add_timer(board->task, radio->temptask, 100);
+			}*/
+			//save and Notification
+			radionetwork_addorupdateChild(radio, child);
+			radio->dis_read = 0x1;	
+			break;
+		}
+		case RD_DIS_REPLY_ACK:
+		{
+			char temp[18];
+			uint8_t *enc    = pkt->data;
+			radio->dis_addr = *enc++;
+			radio->addr     = *enc++;
+			radio->channel  = *enc++;
+			radio->role     = ROLE_CHILD;
+			radio->dis_state= 0x1;
+			enc = packet_decodeInt16(enc, &radio->id);			
+			enc++;
+
+			str_st val = {0};
+			enc = packet_decodeString(enc, &val);
+			packet_stringCopy((uint8_t *)temp, &val);
+
+			char* mac = (char *)board->task->sock.adapter->mac;
+			if(memcmp(temp, mac, strlen(mac))==0){
+				radio->state = 0x2;
+				radionetwork_removeChild(radio);
+				radionetwork_saveXml(radio);
+				radionetwork_setaddr_freq(ROLE_CHILD, radio->addr, radio->channel);
+				radionetwork_headbeart(board->task, radio);
+			}
+			break;
+		}
+		case RD_COM:
+			break;
+		case RD_BIND:
+			break;
+		case RD_UNBIND:
+			break;
+		case RD_HEARTBEAT_ACK:
+		case RD_HEARTBEAT:
+		{
+		    uint16_t id = 0;
+			uint8_t *enc    = pkt->data;
+			enc = packet_decodeInt16(enc, &id);
+			if(id > 0){
+				uint8_t findid = 0;
+				if(radio->role == ROLE_MAIN){
+					//update child state
+					findid = radionetwork_updateChild(radio, id);
+				}else{
+					if(radio->id == id){
+					    radio->hb_count = 0; //delay headbeart
+						radio->dis_count = 0;
+						findid = 0x1;
+					}else{
+						//update child state
+						findid = radionetwork_updateChild(radio, id);
+					}
+				}			
+
+				if((pkt->cmd==RD_HEARTBEAT) && (findid == 0x1)){
+				    pkt->cmd = RD_HEARTBEAT_ACK;
+				    radionetwork_send(pkt);
+				}
+			}
+			break;
+		}
+		case RD_PACK_EXT:
+		{
+			break;	
+	    }
+		case RD_DIS_START:
+		{			
+			radionetwork_temptask_init(radio);
+			radio->temptask->callback = radionetwork_radioDiscoery;
+			radio->temptask->arg = board;
+
+			taskmanager_add_timer(board->task, radio->temptask, 100);
+			break;
+		}
+	}
+}
+
+void radionetwork_ondata(BOARD *board,uint8_t *data, int size)
+{
+	uint8_t *enc = data+2;
+	printf("radionetwork_ondata \n");
+	RADIO_PACKET pkt = {0};
+    
+	pkt.addr = *enc++;
+	pkt.cmd  = *enc++;
+	pkt.len  = size - 6;
+	memcpy(pkt.data, enc, pkt.len);
+	enc+= pkt.len;
+
+	pkt.rssi = *enc++;
+	pkt.lqi  = *enc++;
+
+	radionetwork_onpacket(board, &pkt);
+}
+
+void radionetwork_free(TASK *task, RADIO_NETWORK *radio)
+{
+   radionetwork_stop_headbeart(radio);
+
+   if(radio->temptask != NULL){
+	   free(radio->temptask);
+	   radio->temptask = NULL;
+   }
+
+   radionetwork_removeChild (radio);
+
+   xmlCleanupParser();
+}

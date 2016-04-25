@@ -1,0 +1,19 @@
+#ifndef _TRANSFORM_H
+#define _TRANSFORM_H
+
+enum OLDSerialPortModule
+{
+	OLD_RXB8_315 = 0x01,
+	OLD_RXB8_433,
+	OLD_RXB8_315_TX,
+	OLD_RXB8_433_TX,
+	OLD_CC1101_433,
+	OLD_CAN_Chip,
+	OLD_RS485,
+	OLD_TX315_RAW,
+	OLD_TX433_RAW,
+	OLD_GSM,
+	OLD_Module_Set
+};
+
+#endif

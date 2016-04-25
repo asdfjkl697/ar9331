@@ -1,0 +1,53 @@
+#ifndef _RADIONETWORK_H
+#define _RADIONETWORK_H
+
+#include "taskmanager.h"
+
+enum RADIO_ROLE
+{
+	ROLE_MAIN = 0x1,
+	ROLE_CHILD = 0x2
+};
+
+enum RADIO_COMMAND
+{
+    RD_DISCOVERY = 0x1,
+	RD_DIS_REPLY = 0x2,
+	RD_DIS_REPLY_ACK = 0x3,
+	RD_COM = 0x50,
+	RD_BIND = 0x80,
+	RD_UNBIND = 0x88,
+	RD_HEARTBEAT = 0xF0,
+	RD_HEARTBEAT_ACK = 0xFC,
+	RD_PACK_EXT = 0x8F,
+	RD_DIS_START = 0xD0
+};
+
+enum RADIO_DISCOVERY
+{
+	DIS_DONE     = 0x0,
+	DIS_FIND     = 0x1,
+	DIS_PROGRESS = 0x2
+};
+
+typedef struct _radio_packet
+{
+	uint8_t addr;
+	uint8_t cmd;
+	uint8_t data[32];
+	uint8_t len;
+	uint8_t rssi;
+	uint8_t lqi;
+}RADIO_PACKET;
+
+void radionetwork_init(TASK *task, RADIO_NETWORK *radio);
+void radionetwork_add_radio(RADIO_NETWORK *radio, uint8_t *data, int size);
+uint8_t radionetwork_edit_radio(RADIO_NETWORK *radio, uint16_t id, uint8_t *data, int size);
+uint8_t radionetwork_delete_radio(RADIO_NETWORK *radio, uint16_t id);
+uint8_t radionetwork_config(TASK *task,RADIO_NETWORK *radio);
+uint8_t* radionetwork_read_config(uint8_t *data, RADIO_NETWORK *radio, uint16_t parent_id);
+uint8_t radionetwork_discovery(RADIO_NETWORK *radio, discovery_callback *callback, void *arg);
+void radionetwork_ondata(BOARD *board,uint8_t *data, int size);
+void radionetwork_free(TASK *task, RADIO_NETWORK *radio);
+
+#endif

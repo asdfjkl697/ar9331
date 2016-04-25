@@ -1,0 +1,45 @@
+#ifndef _TASK_MANAGER_H_
+#define _TASK_MANAGER_H_
+
+#include "typedef.h"
+#include "event2/listener.h"
+#include <stdint.h>
+
+typedef void task_callback(void *handler);
+typedef void (task_socket_callback)(void *arg, uint8_t *data, int size, struct sockaddr_in *addr);
+
+typedef struct _task_sock
+{
+	struct event *evt;
+	int socket_fd;
+	task_socket_callback *callback;
+}TASK_SOCK;
+
+typedef struct _task_queue
+{
+	void *handler;
+	task_callback *callback;
+	struct _task_queue *next;
+}TASK_QUEUE;
+
+typedef struct _task
+{
+	struct event_base *evbase;
+	struct event *timeout_event;
+	TASK_SOCK sock;
+	TASK_QUEUE *queue;
+}TASK;
+
+
+void taskmanager_init(TASK *task);
+void taskmanager_free(TASK *task);
+void taskmanager_add_socket(TASK *task, int socket_fd, task_socket_callback *callback);
+void taskmanager_remove_socket(TASK *task);
+//void taskmanager_add_timer(TASK *task, TASK_TIME *handler, uint32_t millisecond);
+//void taskmanager_remove_timer(TASK_TIME *handler);
+//void taskmanager_add_task(TASK *task, task_callback *callback, void *handler);
+//void taskmanager_remove_task(TASK *task, void *handler);
+void taskmanager_run(TASK *task);
+void taskmanager_close(TASK *task);
+
+#endif

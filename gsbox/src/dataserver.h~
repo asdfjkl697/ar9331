@@ -1,0 +1,11 @@
+#ifndef _DATA_SERVER_H_
+#define _DATA_SERVER_H_
+
+#include <stdint.h>
+#include "event2/listener.h"
+
+void data_connection_accept(struct evconnlistener *listener,
+	evutil_socket_t fd, struct sockaddr *address, int socklen,
+	void *ctx);
+
+#endif
