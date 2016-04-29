@@ -29,9 +29,10 @@ chdir: error retrieving current directory: getcwd: cannot access parent director
 #include <event2/buffer.h>
 #include <event2/util.h>
 
-#define DEVICE_ID "TW001805"
+#define DEVICE_ID "TW001806"
 
 struct bufferevent *bev;
+uint8_t send_err_cnt=0;
 
 typedef struct
 {
@@ -54,6 +55,7 @@ void sendtoserver()
 {
 	uint8_t test[34];
 	uint8_t randata=rand();
+	uint8_t ret;
 
 	glq.len=32;
 	test[0]=glq.len>>8;
@@ -110,7 +112,11 @@ void sendtoserver()
 
 	test[33]=0x30+glq.state;
 	
-	bufferevent_write(bev, test, 34);
+	ret=bufferevent_write(bev, test, 34);
+	if(ret){
+		if(++send_err_cnt<3)return;
+		system("reboot 2>&1 | tee -a reboot.log");			
+	}	
 }
 
 void read_callback(struct bufferevent *bev, void *ctx) {
