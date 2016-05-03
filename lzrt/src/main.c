@@ -115,7 +115,7 @@ void sendtoserver()
 	ret=bufferevent_write(bev, test, 34);
 	if(ret){
 		if(++send_err_cnt<3)return;
-		system("reboot 2>&1 | tee -a reboot.log");			
+		system("reboot");			
 	}	
 }
 
