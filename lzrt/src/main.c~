@@ -208,7 +208,7 @@ static void createTcpClient(TASK *task){
 
 void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg)
 {
-	glq.runtime++;	
+	if(glq.state)glq.runtime++;	
 	sendtoserver();
 	if(++reboot_cnt<5)return;
 	//system("reboot");

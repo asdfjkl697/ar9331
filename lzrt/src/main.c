@@ -98,11 +98,6 @@ void sendtoserver()
 	test[28]=0x30+(wind%100)/10;
 	test[29]=0x30+wind%10;
 
-
-	test[30]=0x30+glq.runtime/100;
-	test[31]=0x30+(glq.runtime%100)/10;
-	test[32]=0x30+glq.runtime%10;
-
 	if(glq.state>10){
 		if(glq.runtime>30){
 			glq.state++;
@@ -115,7 +110,9 @@ void sendtoserver()
 			glq.runtime=0;
 		}
 	}
-
+	test[30]=0x30+glq.runtime/100;
+	test[31]=0x30+(glq.runtime%100)/10;
+	test[32]=0x30+glq.runtime%10;
 	test[33]=0x30+glq.state%10;
 	
 	bufferevent_write(bev, test, 34);
