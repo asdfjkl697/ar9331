@@ -103,21 +103,22 @@ void sendtoserver()
 	test[31]=0x30+(glq.runtime%100)/10;
 	test[32]=0x30+glq.runtime%10;
 
-	if(glq.state){
-		if(++glq.runtime>30){
+	if(glq.state>10){
+		if(glq.runtime>30){
 			glq.state++;
 			glq.runtime=0;
 		}
-		if(glq.state>5)glq.state=0;
+		if(glq.state>15)glq.state=0;
+	}
+	else if(glq.state){
+		if(glq.runtime>999){
+			glq.runtime=0;
+		}
 	}
 
-	test[33]=0x30+glq.state;
+	test[33]=0x30+glq.state%10;
 	
-	ret=bufferevent_write(bev, test, 34);
-	if(ret){
-		if(++send_err_cnt<3)return;
-		system("reboot");			
-	}	
+	bufferevent_write(bev, test, 34);
 }
 
 void read_callback(struct bufferevent *bev, void *ctx) {
@@ -142,7 +143,7 @@ void read_callback(struct bufferevent *bev, void *ctx) {
 		}
 				
 		if(buf[14]==65&&buf[15]==65){
-			glq.state=1;
+			glq.state=11;
 		}
 		else if(buf[14]==65&&buf[15]==66){
 			glq.state=1;
@@ -207,9 +208,10 @@ static void createTcpClient(TASK *task){
 
 void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg)
 {
+	glq.runtime++;	
 	sendtoserver();
 	if(++reboot_cnt<5)return;
-	system("reboot");
+	//system("reboot");
 	exit(0);
 }
 
