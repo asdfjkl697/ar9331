@@ -33,6 +33,7 @@ chdir: error retrieving current directory: getcwd: cannot access parent director
 
 struct bufferevent *bev;
 uint8_t send_err_cnt=0;
+uint8_t reboot_cnt=0;
 
 typedef struct
 {
@@ -129,6 +130,7 @@ void read_callback(struct bufferevent *bev, void *ctx) {
 
 	uint16_t len=packet_s_readInt16(buf);
 	//printf("%d\n",len);
+	reboot_cnt=0;
 
 	if((size==len+2)&&(memcmp(&buf[2],DEVICE_ID,8)==0)){
 		if(buf[13]!=65)return;
@@ -206,6 +208,9 @@ static void createTcpClient(TASK *task){
 void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg)
 {
 	sendtoserver();
+	if(++reboot_cnt<5)return;
+	system("reboot");
+	//exit(0);
 }
 
 void taskmanager_init(TASK *task)
