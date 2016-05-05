@@ -29,7 +29,7 @@ chdir: error retrieving current directory: getcwd: cannot access parent director
 #include <event2/buffer.h>
 #include <event2/util.h>
 
-#define DEVICE_ID "TW001806"
+#define DEVICE_ID "TW001807"
 
 struct bufferevent *bev;
 uint8_t send_err_cnt=0;
@@ -98,11 +98,6 @@ void sendtoserver()
 	test[28]=0x30+(wind%100)/10;
 	test[29]=0x30+wind%10;
 
-
-	test[30]=0x30+glq.runtime/100;
-	test[31]=0x30+(glq.runtime%100)/10;
-	test[32]=0x30+glq.runtime%10;
-
 	if(glq.state>10){
 		if(glq.runtime>30){
 			glq.state++;
@@ -115,7 +110,9 @@ void sendtoserver()
 			glq.runtime=0;
 		}
 	}
-
+	test[30]=0x30+glq.runtime/100;
+	test[31]=0x30+(glq.runtime%100)/10;
+	test[32]=0x30+glq.runtime%10;
 	test[33]=0x30+glq.state%10;
 	
 	bufferevent_write(bev, test, 34);
@@ -208,10 +205,17 @@ static void createTcpClient(TASK *task){
 
 void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg)
 {
+	char chars[100];	
+	time_t timep;
+    time (&timep);
+	
 	if(glq.state)glq.runtime++;	
 	sendtoserver();
+	
 	if(++reboot_cnt<5)return;
 	//system("reboot");
+	sprintf(chars,"echo 'exit %s'>>exit.log",asctime(gmtime(&timep)));
+	system(chars);
 	exit(0);
 }
 

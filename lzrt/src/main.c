@@ -205,10 +205,17 @@ static void createTcpClient(TASK *task){
 
 void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg)
 {
+	char chars[100];	
+	time_t timep;
+    time (&timep);
+	
 	if(glq.state)glq.runtime++;	
 	sendtoserver();
+	
 	if(++reboot_cnt<5)return;
 	//system("reboot");
+	sprintf(chars,"echo 'exit %s'>>exit.log",asctime(gmtime(&timep)));
+	system(chars);
 	exit(0);
 }
 
