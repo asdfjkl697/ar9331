@@ -7,18 +7,20 @@
 #include "tcpservertask.h"
 #include "timerhandler.h"
 
+
+
 class TaskManager
 {
 	private:
-        struct event_base *evbase;
+        	struct event_base *evbase;
 		std::list<Task *> taskList;
 		struct event *socket_event;
 		struct event *timeout_event;
 		bool m_waitexit;
 		
-    public:
-	    TaskManager(void);
-	    ~TaskManager(void);
+    	public:
+	    	TaskManager(void);
+	    	~TaskManager(void);
 
 		void AddIOTask(IOTask *task);
 		void RemoveIOTask(IOTask *task);
@@ -30,6 +32,7 @@ class TaskManager
 		void RemoveTimer(TimerHandler *handler);
 		void Run();
 		void Close();
+
 };
 
 #endif

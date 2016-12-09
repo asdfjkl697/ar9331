@@ -1,0 +1,45 @@
+#include <stdio.h>
+//#include <tchar.h>
+#include <string.h>
+
+#include <limits.h>
+
+//#include "tchar.h"
+#include "embedded.h"
+
+
+
+std::string getAppPath()
+{
+//	char sPath[PATH_MAX]; 
+    //GetModuleFileNameA(NULL, sPath, PATH_MAX);
+//#ifdef UNICODE
+//	char *strPath = UnicodeToANSI(sPath);
+//#else
+//	char *strPath = sPath;
+//#endif // !UNICODE
+//	char *strPath = sPath;
+//	std::string retPath = strPath;
+//    return retPath.substr(0,retPath.find_last_of("\\"));
+}
+
+
+
+/*
+void handleSubscription( const Subscription& subscription )
+{
+	if(subscription.subtype() == Subscription::Subscribe){
+		xmppClient->rosterManager()->ackSubscriptionRequest(subscription.from(),true);
+	}
+}
+
+void handleMessage( const Message& msg, MessageSession* session)
+{
+	std::string subject = msg.subject();
+	std::string body = msg.body();
+	
+	if(body == "help"){
+	    
+	}
+}
+*/

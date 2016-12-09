@@ -7,12 +7,13 @@
 #include "taskmanager.h"
 
 int main(void)
-{
+{	
 	Hardware *hw = new Hardware();
 	if(!hw->Open()){
 		return 0;
 	}
-
+	//TimerHandler *timerhandler; //jyc20160719
+		
 	TcpServer *tcpServ = new TcpServer(SERVER_PORT);
 	tcpServ->AddBoardHandler(hw); //add hardware handler
 	
@@ -29,6 +30,8 @@ int main(void)
 	tm->AddTCPServerTask(tcpServ); //add sync tcp server handler
 	tm->AddTCPServerTask(obsServ);//add sync tcp server handler
 	tm->AddSocketTask(udpbroadcast); //add sync udp server handler
+	
+	//tm->AddTimer(timerhandler, 5000); //jyc20160719
 	
 	obsServ->AddTask(tm); //task available in class
 	
@@ -50,6 +53,8 @@ int main(void)
 	tm->RemoveTCPServerTask(tcpServ);
 	tm->RemoveTCPServerTask(obsServ);
 	tm->RemoveSocketTask(udpbroadcast);
+
+	//tm->RemoveTimer(timerhandler); //jyc20160719
 	tm->Close();
 	
 	delete(udpbroadcast);

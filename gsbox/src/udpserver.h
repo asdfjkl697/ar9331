@@ -10,6 +10,7 @@ typedef struct _network_adapter
 	uint8_t gateway[18];
 	uint8_t dns[18];
 	uint8_t mac[20];
+	uint8_t sn[30]; //jyc20160711
 }NETWORK_ADAPTER;
 
 class UDPServer:public SocketTask

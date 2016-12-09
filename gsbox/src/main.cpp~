@@ -7,12 +7,13 @@
 #include "taskmanager.h"
 
 int main(void)
-{
+{	
 	Hardware *hw = new Hardware();
 	if(!hw->Open()){
 		return 0;
 	}
-
+	TimerHandler *timerhandler; //jyc20160719
+		
 	TcpServer *tcpServ = new TcpServer(SERVER_PORT);
 	tcpServ->AddBoardHandler(hw); //add hardware handler
 	
@@ -30,17 +31,19 @@ int main(void)
 	tm->AddTCPServerTask(obsServ);//add sync tcp server handler
 	tm->AddSocketTask(udpbroadcast); //add sync udp server handler
 	
+	tm->AddTimer(timerhandler, 5000); //jyc20160719
+	
 	obsServ->AddTask(tm); //task available in class
 	
 	/*radio network*/
-	//RadioNetwork *radio = new RadioNetwork(hw, tm);
+	//RadioNetwork *radio = new RadioNetwork(hw, tm);   //remove by jyc 20160309
 	//radio->SetMac(udpbroadcast->GetMacPtr()); //mac addr to radio
 	//tcpServ->SetRadio(radio); //add radio to tcp server
 
 	/*set hardware data handler to network*/
 	hw->AddClientsHandler(tcpServ);
 	hw->AddClientsHandler(obsServ);
-	//hw->AddClientsHandler(radio);
+	//hw->AddClientsHandler(radio);  //remove by jyc 20160309
 	
 	tm->Run(); //loop forever
 
@@ -50,6 +53,8 @@ int main(void)
 	tm->RemoveTCPServerTask(tcpServ);
 	tm->RemoveTCPServerTask(obsServ);
 	tm->RemoveSocketTask(udpbroadcast);
+
+	tm->RemoveTimer(timerhandler); //jyc20160719
 	tm->Close();
 	
 	delete(udpbroadcast);

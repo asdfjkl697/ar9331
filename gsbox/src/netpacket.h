@@ -28,7 +28,7 @@ class NetPacket:public Packet
 		void SetAck(uint8_t ack){ _ack = ack;};
 		uint8_t GetAck() { return _ack; };
 		uint8_t GetCommand() { return _command; };
-		void SetPos(int size);
+		void SetDataPos(int size);
 		int GetPos(){ return (data_ptr - buffer)-18; };
 		int getDataLength(){ return _length; };
 		void ResetToSend();

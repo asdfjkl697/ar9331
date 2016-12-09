@@ -1,7 +1,7 @@
 RM = rm
 #CC = linux-gcc
 OBJS = client.o hardware.o obsolete.o packet.o rs232.o taskmanager.o tcpserver.o udpbroadcast.o main.o
-bin = gsbox
+bin = lzrt
 CFLAGS += -I.
 LIBS += -levent
 #LIBS += -lusb-1.0

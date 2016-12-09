@@ -44,7 +44,6 @@ define Package/gloox
 	CATEGORY:=Utilities
 	DEPENDS:=+libpthread
 	DEPENDS:=+libstdcpp
-	DEPENDS:=+libz
 	DEPENDS:=+libgloox
 	TITLE:=gloox -- guoshi iot project
 endef

@@ -44,7 +44,7 @@ void NetPacket::int2Data(uint32_t value)
 
 bool NetPacket::Decode()
 {	
-	if(_size < 18) return false;
+	if(_size < 16) return false;
 	
 	this->_flag = data2Int();
 	this->_version = ReadInt32();
@@ -74,7 +74,7 @@ void NetPacket::EncodeBuffer()
 }
 
 
-void NetPacket::SetPos(int size)
+void NetPacket::SetDataPos(int size)
 {
 	data_ptr = buffer + 18 + size;
 	_size = size;

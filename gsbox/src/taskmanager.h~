@@ -1,20 +1,39 @@
-#ifndef _TASK_MANAGER_H_
-#define _TASK_MANAGER_H_
+#ifndef _TASK_MANAGER_H
+#define _TASK_MANAGER_H
 
-#include "typedef.h"
-#include <stdint.h>
+#include <list>
+#include "iotask.h"
+#include "sockettask.h"
+#include "tcpservertask.h"
+#include "timerhandler.h"
 
 
-void taskmanager_init(TASK *task);
-void taskmanager_free(TASK *task);
-void taskmanager_add_socket(TASK *task, int socket_fd, task_socket_callback *callback);
-void taskmanager_remove_socket(TASK *task);
-TASK_TIME *handler taskmanager_timer_create();
-void taskmanager_add_timer(TASK *task, TASK_TIME *handler, uint32_t millisecond);
-void taskmanager_remove_timer(TASK_TIME *handler);
-//void taskmanager_add_task(TASK *task, task_callback *callback, void *handler);
-//void taskmanager_remove_task(TASK *task, void *handler);
-void taskmanager_run(TASK *task);
-void taskmanager_close(TASK *task);
+
+class TaskManager
+{
+	private:
+        	struct event_base *evbase;
+		std::list<Task *> taskList;
+		struct event *socket_event;
+		struct event *timeout_event;
+		bool m_waitexit;
+		BoardHandler *boardhandler; //jyc20160718
+		
+    	public:
+	    	TaskManager(void);
+	    	~TaskManager(void);
+
+		void AddIOTask(IOTask *task);
+		void RemoveIOTask(IOTask *task);
+		void AddSocketTask(SocketTask *task);
+		void RemoveSocketTask(SocketTask *task);	
+		void AddTCPServerTask(TCPServerTask *task);
+		void RemoveTCPServerTask(TCPServerTask *task);	
+		void AddTimer(TimerHandler *handler, uint32_t millisecond);
+		void RemoveTimer(TimerHandler *handler);
+		void Run();
+		void Close();
+
+};
 
 #endif

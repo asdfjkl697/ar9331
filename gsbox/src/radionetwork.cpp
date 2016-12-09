@@ -66,7 +66,7 @@ RadioNetwork::~RadioNetwork(void)
 
 void RadioNetwork::loadConfig()
 {
-    xmlDocPtr doc;
+    	xmlDocPtr doc;
 	xmlNodePtr cur;
 	
 	doc = xmlParseFile(RADIO_CONFIG_FILE);
@@ -175,19 +175,19 @@ void RadioNetwork::saveXml()
 		child = xmlNewNode(NULL, BAD_CAST "child");
 		sprintf(temp,"%d",cl->id);
 		xmlSetProp(child, BAD_CAST"id", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->state);
+	    	sprintf(temp,"%d",cl->state);
 		xmlSetProp(child, BAD_CAST"state", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->addr);
+	    	sprintf(temp,"%d",cl->addr);
 		xmlSetProp(child, BAD_CAST"addr", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->channel);
+	    	sprintf(temp,"%d",cl->channel);
 		xmlSetProp(child, BAD_CAST"channel", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->role);
+	    	sprintf(temp,"%d",cl->role);
 		xmlSetProp(child, BAD_CAST"role", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->recv_rssi);
+	    	sprintf(temp,"%d",cl->recv_rssi);
 		xmlSetProp(child, BAD_CAST"recv_rssi", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->send_rssi);
+	    	sprintf(temp,"%d",cl->send_rssi);
 		xmlSetProp(child, BAD_CAST"send_rssi", BAD_CAST temp);
-	    sprintf(temp,"%d",cl->ipver);
+	    	sprintf(temp,"%d",cl->ipver);
 		xmlSetProp(child, BAD_CAST"ipver", BAD_CAST temp);
 		xmlSetProp(child, BAD_CAST"mac", BAD_CAST cl->mac);
 		xmlAddChild(curNode, child);

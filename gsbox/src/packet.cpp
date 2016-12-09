@@ -56,7 +56,6 @@ int Packet::ReadBuffer(uint8_t *data, int size)
 	if(size > _size){
 		size = _size;
 	}
-	
 	memcpy(data, data_ptr, size);
 	data_ptr+=size;
 	_size-=size;

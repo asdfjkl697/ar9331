@@ -15,6 +15,29 @@
 #include <ctype.h>
 #include "netpacket.h"
 
+#include "libxml/xmlmemory.h"
+#include "libxml/parser.h"
+
+#define SN_FILE "/root/sn.xml"
+
+
+// 通用参数
+#define defParamNm_cmd		"cmd"
+#define defParamNm_id		"id"
+#define defParamNm_name		"name"
+#define defParamNm_ip		"ip"
+#define defParamNm_ip2		"ip2"
+#define defParamNm_netmask	"netmask"
+#define defParamNm_gateway	"gateway"
+#define defParamNm_dns		"dns"
+#define defParamNm_mac		"mac"
+#define defParamNm_model	"model"
+#define defParamNm_ver		"ver"
+#define defParamNm_SN		"sn"
+
+#define macEncodeParamEnd( enc, key, val ) strcat( enc, key ); strcat( enc, "=" ); strcat( enc, val );
+#define macEncodeParam( enc, key, val ) macEncodeParamEnd( enc, key, val ); strcat( enc, "," );
+
 #ifndef OS_UBUNTU
 static void getNetworkValue(char *szBuf, uint8_t *value)
 {
@@ -82,6 +105,36 @@ static void getNetworkInfo(NETWORK_ADAPTER *adapter,char *interface)
         }
     }			
     fclose(fp);
+
+	
+}
+
+static void getSNInfo(NETWORK_ADAPTER *adapter){
+	xmlDocPtr doc;  //jyc20160711 sn read
+	xmlNodePtr cur;
+	doc = xmlParseFile(SN_FILE);
+	if (doc == NULL){
+		printf("err1\n");
+		return;
+	} 
+	cur = xmlDocGetRootElement(doc);
+	if (cur == NULL){
+		xmlFreeDoc(doc);
+		printf("err2\n");
+		return;
+	}
+	if (!xmlStrEqual(cur->name, BAD_CAST"message")){
+		xmlFreeDoc(doc);
+		printf("err3\n");
+		return;
+	}
+	if (xmlHasProp(cur, BAD_CAST"sn")){
+		//this->id = atoi((char *)xmlGetProp(cur, BAD_CAST"id"));
+		char *mac = (char *)xmlGetProp(cur, BAD_CAST"sn");
+		memset(adapter->sn,'\0',30);
+		memcpy(adapter->sn,mac,strlen(mac)); //jyc20160711
+	}
+	xmlFreeDoc(doc);
 }
 #endif
 
@@ -114,6 +167,8 @@ UDPServer::UDPServer(uint16_t port)
 #ifndef OS_UBUNTU
 	getNetworkInfo(&adapter,"'lan'");
 	getNetworkInfo(&adapter2,"'wwan'");
+	getSNInfo(&adapter);
+	
 #else
 	_version = (uint8_t *)malloc(sizeof(20));
 	const char* mac = "00:11:cc:dd:33:ff";
@@ -132,6 +187,8 @@ UDPServer::~UDPServer(void)
 
 void UDPServer::PacketRead(uint8_t *data, int size, struct sockaddr_in *addr)
 {
+	data[size] = 0;
+	
     NetPacket pkt(data, size);	
 	if(pkt.Decode()){
 		switch(pkt.GetCommand()){
@@ -164,6 +221,68 @@ void UDPServer::PacketRead(uint8_t *data, int size, struct sockaddr_in *addr)
 				pkt.AutoAck();
 				pkt.EncodeBuffer();				
 				this->Send(addr, (char *)pkt.getBuffer(), pkt.getLength());
+				break;
+			}
+			
+			case CMD_BROADCAST_INFO_PARAM:
+				{
+				char *msgsrc = (char*)pkt.get_data_ptr();
+				if( strcmp( msgsrc, "cmd=find_id" )==0 )
+					{
+						//
+						break;
+					}
+				
+					break;//
+				}
+				
+			case CMD_BROADCAST_INFO_EX:
+			{
+				NETWORK_ADAPTER *adp;
+				NETWORK_ADAPTER *adp2;
+				char *route_addr;
+				route_addr=inet_ntoa(addr->sin_addr);
+				if( (cmp_route_addr(route_addr, (char *)adapter2.ipaddr)==0)
+				&& cmp_route_addr(route_addr, (char *)adapter.ipaddr)
+				)
+				{
+					adp = &adapter2;
+					adp2 = &adapter;
+				}
+				else
+				{
+					adp = &adapter;
+					adp2 = &adapter2;
+				}
+
+				//char *snstr;
+				//snstr=getDeviceSN();
+				//getSNInfo(&adapter);
+
+				pkt.ResetToSend();
+				char *enc = (char*)pkt.get_data_ptr();
+				strcpy( enc, "" );
+				
+				macEncodeParam( enc, defParamNm_ip, (const char*)adp->ipaddr );
+				if( strlen((const char*)adp2->ipaddr)>0 ) { macEncodeParam( enc, defParamNm_ip2, (const char*)adp2->ipaddr ); }
+				//macEncodeParam( enc, defParamNm_id, DEVICE_ID );
+				macEncodeParam( enc, defParamNm_id, (const char *)adp->sn ); //20160711
+				macEncodeParam( enc, defParamNm_name, DEVICE_NAME );
+				macEncodeParam( enc, defParamNm_netmask, (const char *)adp->netmask );
+				macEncodeParam( enc, defParamNm_gateway, (const char *)adp->gateway );
+				macEncodeParam( enc, defParamNm_dns, (const char *)adp->dns );
+				macEncodeParam( enc, defParamNm_mac, (const char *)adp->mac );
+				macEncodeParam( enc, defParamNm_model, "CON" );
+				macEncodeParam( enc, defParamNm_SN, (const char *)adp->sn ); //read or set sn
+				macEncodeParamEnd( enc, defParamNm_ver, (const char *)_version );
+				
+				int msg_len = strlen(enc)+1;
+				
+				pkt.SetDataPos(msg_len);
+				pkt.AutoAck();
+				pkt.EncodeBuffer();				
+				this->Send(addr, (char *)pkt.getBuffer(), pkt.getLength());
+				
 				break;
 			}
 		}

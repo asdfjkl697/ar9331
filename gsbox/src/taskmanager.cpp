@@ -43,7 +43,7 @@ static void onIOCallback(evutil_socket_t sock, short flag, void *arg)
 void TaskManager_OnTimer(evutil_socket_t fd, short what, void *arg)
 {
 	TimerHandler *handler = (TimerHandler *)arg;
-	handler->OnTimer();
+	//handler->OnTimer();
 }
 
 static void connection_read(struct bufferevent *bev, void *arg)
@@ -68,7 +68,7 @@ static void connection_event(struct bufferevent *bev, short what, void *arg)
 	Client *cl = (Client *)arg;
 	TCPServerTask *task = (TCPServerTask *)cl->GetTask();
 	task->OnDisconnect(cl);
-    delete(cl);
+    	delete(cl);
 }
 
 void connection_accept(struct evconnlistener *listener,
@@ -94,7 +94,7 @@ void connection_accept(struct evconnlistener *listener,
 
 void connection_accept_error(struct evconnlistener *listener, void *ctx)
 {
-    struct event_base *base = evconnlistener_get_base(listener);
+    	struct event_base *base = evconnlistener_get_base(listener);
 	int err = EVUTIL_SOCKET_ERROR();
 	fprintf(stderr, "Got an error %d (%s) on the listener. "
 		"Shutting down.\n", err, evutil_socket_error_to_string(err));
@@ -102,19 +102,39 @@ void connection_accept_error(struct evconnlistener *listener, void *ctx)
 	event_base_loopexit(base, NULL);
 }
 
+void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg) //jyc20160718
+{
+	//TimerHandler *task = (TimerHandler *)arg;
+	//task->OnEvent();
+	
+	uint8_t  buffer[20];
+	//Packet pkt(11);	
+	//uint8_t *enc = pkt.toHardware(buffer);
+
+	buffer[0]=0xbc;buffer[1]=0xac;buffer[2]=0x04;
+	buffer[3]=0x65;buffer[4]=0xe0;buffer[5]=0x10;
+	buffer[6]=0x0a;buffer[7]=0xac;
+	
+
+
+	/*if(boardhandler!=NULL){
+		boardhandler->Send(buffer, enc - buffer);
+	}*/
+}
+
 TaskManager::TaskManager(void)
 :m_waitexit(false)
 {
 
 		this->evbase = event_base_new();
-/*
-		struct timeval tv;
+		/*
+		struct timeval tv;  	
 		tv.tv_sec = 5;
 		tv.tv_usec = 0;
 
 		this->timeout_event = event_new(this->evbase, -1, EV_PERSIST, TaskManager_Timeout, this);
-		event_add(this->timeout_event, &tv);
-*/
+		event_add(this->timeout_event, &tv);*/
+
 }
 
 TaskManager::~TaskManager(void)
@@ -187,7 +207,7 @@ void TaskManager::AddTimer(TimerHandler *handler, uint32_t millisecond)
 	struct timeval tv;
 	struct event *evt;
 
-    if(millisecond > 1000){
+    	if(millisecond > 1000){
 	   tv.tv_sec = millisecond / 1000;
 	   tv.tv_usec = 0;
 	}else{

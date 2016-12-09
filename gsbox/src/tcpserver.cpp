@@ -89,7 +89,7 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 	{
 		case CMD_SERIAL:
 		{
-	        uint8_t temp[260] = {0};
+	        	uint8_t temp[260] = {0},i;
 			uint8_t *enc = temp;
 			enc = pkt->toHardware(enc);
 			if(boardhandler!=NULL){
@@ -104,7 +104,7 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 			struct timeval tv;
 			gettimeofday(&tv,NULL);
 
-            if(boardhandler!=NULL){
+            		if(boardhandler!=NULL){
 			   version = boardhandler->GetVersion();
 			}
 
@@ -114,7 +114,7 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 			pkt->EncodeInt32(tv.tv_sec);
 			pkt->SetCommand(pkt->GetCommand());
 			pkt->AutoAck();
-		    pkt->EncodeBuffer();
+		    	pkt->EncodeBuffer();
 			            
 			client->Send(pkt->getBuffer(), pkt->getLength());
 			break;
@@ -153,8 +153,8 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 			}
 
 			pkt->AutoAck();
-		    pkt->EncodeBuffer();
-		    client->Send(pkt->getBuffer(), pkt->getLength());
+		    	pkt->EncodeBuffer();
+		    	client->Send(pkt->getBuffer(), pkt->getLength());
 			break;
 		}
 		case CMD_RADIONETWORK:
@@ -162,12 +162,12 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 			if(radio !=NULL) radio->OnNetData(client, pkt);			
 			break;
 		}
-	    case CMD_SYSTEM:
+	    	case CMD_SYSTEM:
 		{
 			uint8_t type = pkt->ReadByte();
 			if(type == DATA_KEYVALUE){
-			    char temp_key[50] = {0};
-			    char temp_val[50] = {0};
+			    	char temp_key[50] = {0};
+			    	char temp_val[50] = {0};
 				str_st key = {0};
 				str_st val = {0};
 
@@ -175,59 +175,58 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 				pkt->DecodeString(&val);
 				
 				
-                memcpy(temp_key, key.str, key.len);
-			    memcpy(temp_val, val.str, val.len);
+                		memcpy(temp_key, key.str, key.len);
+			    	memcpy(temp_val, val.str, val.len);
 				
 				if(strcmp(temp_key, "system")==0){					
 					if(strcmp(temp_val, "reboot")==0){
-			             pkt->ResetToSend();
-				         pkt->EncodeBoolean(true);
-		                 pkt->EncodeString("reboot");						
-			             system("reboot");
-					}else if(strcmp(temp_val, "update")==0){
-						 type = pkt->ReadByte();
-						 if(type == DATA_KEYVALUE){
-				             pkt->DecodeString(&key);
-				             pkt->DecodeString(&val);
-							 memcpy(temp_key, key.str, key.len);
-							 memcpy(temp_val, val.str, val.len);
-							 if(strcmp(temp_key, "url")==0){
-								 //do something,if needed to use remote url
-							 }
-						 }
-						
-			             pkt->ResetToSend();
-				         pkt->EncodeBoolean(true);
-		                 pkt->EncodeString("update");
-								
-			             system("/root/upgsbox.sh");	
-						
-					}else if(strcmp(temp_val, "update-firmware")==0){
-						 type = pkt->ReadByte();
-						 if(type == DATA_KEYVALUE){
-				             pkt->DecodeString(&key);
-				             pkt->DecodeString(&val);
-							 memcpy(temp_key, key.str, key.len);
-							 memcpy(temp_val, val.str, val.len);
-							 if(strcmp(temp_key, "url")==0){
-								 //do something,if needed to use remote url
-							 }
-						 }
-						
-			             pkt->ResetToSend();
-				         pkt->EncodeBoolean(true);
-		                 pkt->EncodeString("update-firmware");
-						
-						 system("/root/upfirmware.sh");	
-					}	
-								        
-			        pkt->AutoAck();
-		            pkt->EncodeBuffer();
-		            client->Send(pkt->getBuffer(), pkt->getLength());
+			             	pkt->ResetToSend();
+				        pkt->EncodeBoolean(true);
+		                 	pkt->EncodeString("reboot");						
+			             	system("reboot");
+				}else if(strcmp(temp_val, "update")==0){
+					type = pkt->ReadByte();
+					if(type == DATA_KEYVALUE){
+				        pkt->DecodeString(&key);
+				        pkt->DecodeString(&val);
+					memcpy(temp_key, key.str, key.len);
+					memcpy(temp_val, val.str, val.len);
+					if(strcmp(temp_key, "url")==0){
+						//do something,if needed to use remote url
+					}
 				}
-			}
-			break;
+						
+			        pkt->ResetToSend();
+				pkt->EncodeBoolean(true);
+		                pkt->EncodeString("update");
+								
+			        system("/root/upgsbox.sh");	
+						
+			}else if(strcmp(temp_val, "update-firmware")==0){
+				type = pkt->ReadByte();
+				if(type == DATA_KEYVALUE){
+					pkt->DecodeString(&key);
+					pkt->DecodeString(&val);
+					memcpy(temp_key, key.str, key.len);
+					memcpy(temp_val, val.str, val.len);
+					if(strcmp(temp_key, "url")==0){
+						//do something,if needed to use remote url
+					}
+				}
+						
+			        pkt->ResetToSend();
+				pkt->EncodeBoolean(true);
+		                pkt->EncodeString("update-firmware");
+				system("/root/upfirmware.sh");	
+			}	
+								        
+			pkt->AutoAck();
+		        pkt->EncodeBuffer();
+		        client->Send(pkt->getBuffer(), pkt->getLength());
 		}
+	}
+	break;
+	}
 	}
 
 	if(pkt->GetAck() == ACK_ASK){
@@ -241,7 +240,7 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 void TcpServer::OnDataRead(Client *client,uint8_t *data, int size)
 {		
 	NetPacket pkt(data, size);
-    while(pkt.Decode()){
+    	while(pkt.Decode()){
 		onPacketRead(client, &pkt);
 	}
 }

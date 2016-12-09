@@ -15,7 +15,7 @@ class TcpServer:public TCPServerTask, public ClientsHandler
 		uint16_t _port;
 		bool logged;
 		char username[16];
-	    char password[16];
+	    	char password[16];
 		BoardHandler *boardhandler;
 		RadioNetwork *radio;
 		std::list<Client *> clients;
@@ -32,9 +32,9 @@ class TcpServer:public TCPServerTask, public ClientsHandler
 		void Run(){};
 		void Send(serial_packet *ser_pkt);
 		void AddBoardHandler(BoardHandler *handler){ boardhandler = handler; };
-        void OnAccept(Client *client);
+        	void OnAccept(Client *client);
 		void OnDisconnect(Client *client);
-        void OnDataRead(Client *client, uint8_t *data, int size);
+        	void OnDataRead(Client *client, uint8_t *data, int size);
 		uint16_t GetPort() { return _port; };
 };
 

@@ -20,7 +20,7 @@ include $(TOPDIR)/rules.mk
 
 # Name and release number of this package
 PKG_NAME:=lzrt
-PKG_VERSION:=2015-09-24
+PKG_VERSION:=2016-05-17
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 
@@ -42,11 +42,13 @@ include $(INCLUDE_DIR)/package.mk
 define Package/lzrt
 	SECTION:=utils
 	CATEGORY:=Utilities
-	#DEPENDS:=+liblibusb-1.0
+	#DEPENDS:=+liblibusb-1.0	
 	DEPENDS:=+libcrypt 
+	
 	DEPENDS:=+libpthread
-	DEPENDS:=+libevent2	    	
-	TITLE:=lzrt -- guoshi iot project
+	DEPENDS:=+libevent2
+	DEPENDS:=+libxml2 	
+	TITLE:=lzrt -- lz iot project
 endef
 
 
@@ -85,6 +87,7 @@ define Package/lzrt/install
 	$(INSTALL_DIR) $(1)/bin
 	$(CP) $(TOPDIR)/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/lib/libpthread.so.0 $(1)/bin/
 	$(CP) $(TOPDIR)/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/lib/libcrypt.so.0 $(1)/bin/
+	$(CP) $(TOPDIR)/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr/lib/libxml2.so.2 $(1)/bin/
 	#$(CP) $(TOPDIR)/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr/lib/libusb-1.0.so.0 $(1)/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lzrt $(1)/bin/
 endef

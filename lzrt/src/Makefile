@@ -7,6 +7,7 @@ LIBS += -levent
 #LIBS += -lusb-1.0
 LIBS += -lpthread
 LIBS += -lcrypt
+LIBS += -lxml2
 
 #LIBDIR = -L/lib/
 all : $(bin)

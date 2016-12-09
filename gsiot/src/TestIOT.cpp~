@@ -1,0 +1,27 @@
+
+#include <stdio.h>
+//#include <tchar.h>
+#include <string.h>
+
+#include "tchar.h"
+#include "embedded.h"
+//#include "libiot/GSIOTClient.h"
+
+int main(int argc, char* argv[])
+{
+	/*GSIOTClient *client = new GSIOTClient( nullptr, "" );
+
+	if( !client->GetPreInitState() )
+	{
+		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "PreInit Failed!" );
+
+		Sleep( 2000 );
+		return -1;
+	}
+
+	client->Run();
+	client->Connect();*/
+	
+
+	return 0;
+}

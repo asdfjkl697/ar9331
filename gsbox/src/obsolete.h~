@@ -14,6 +14,7 @@ class ObsoleteServer:public TCPServerTask, public ClientsHandler, public TimerHa
 	private:
 		uint16_t _port;		
         int receiver_freq;
+	uint8_t receiver_mode;
         int transmit_freq;
 		serial_packet *prve_packet;
 		BoardHandler *boardhandler;
@@ -27,9 +28,9 @@ class ObsoleteServer:public TCPServerTask, public ClientsHandler, public TimerHa
 		void Run(){};
 		void Send(serial_packet *ser_pkt);
 		void AddBoardHandler(BoardHandler *handler){ boardhandler = handler; };
-        void OnAccept(Client *client);
+        	void OnAccept(Client *client);
 		void OnDisconnect(Client *client);
-        void OnDataRead(Client *client, uint8_t *data, int size);
+        	void OnDataRead(Client *client, uint8_t *data, int size);
 		uint16_t GetPort() { return _port; };
 
 		void OnTimer();
@@ -37,8 +38,9 @@ class ObsoleteServer:public TCPServerTask, public ClientsHandler, public TimerHa
 		void AddTask(TaskManager *task){ _task = task; };
 
 	private:
-		void getFreq();
+		void getFreq();	
 		void setfreq(uint8_t module, uint32_t freq);
+		void setrecmode(uint8_t module, uint8_t recmode);
 		void transform(serial_packet *pkt);
 };
 

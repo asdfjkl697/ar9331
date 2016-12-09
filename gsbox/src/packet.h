@@ -12,6 +12,8 @@
 enum COMMAND
 {
 	CMD_BROADCAST_INFO = 0x10,
+	CMD_BROADCAST_INFO_EX = 0x11,
+	CMD_BROADCAST_INFO_PARAM = 0x12,
 	CMD_SET_NETWORK_IP = 0x20,
 	CMD_SET_WIFI_IP    = 0x30,
 	CMD_LOGIN          = 0x40,
@@ -63,6 +65,7 @@ enum OLD_SERIAL_PACKET
 enum SERIAL_PACKET
 {
 	RF_Receiver = 0x10,
+	RF_Recraw   = 0x11,
 	RF_Transmit = 0x1A,
 	IR_Receiver = 0x30,
 	IR_Transmit = 0x3A,
@@ -113,6 +116,8 @@ class Packet
 		Packet(int size);
 		Packet(uint8_t *data, int size);
 		~Packet(void);
+		
+		uint8_t* get_data_ptr() { return data_ptr; };
 		
 		uint8_t ReadByte();
 		int16_t ReadInt16();

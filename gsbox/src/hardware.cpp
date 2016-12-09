@@ -132,7 +132,7 @@ void Hardware::Close()
 }
 
 int Hardware::Send(uint8_t *data, int size)
-{
+{	
 #ifdef USESERIAL	
     return RS232_SendBuf(SERIAL_PORT, data, size);
 #endif

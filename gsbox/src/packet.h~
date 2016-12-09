@@ -1,5 +1,5 @@
-#ifndef _PACKET_H_
-#define _PACKET_H_
+#ifndef _PACKET_H
+#define _PACKET_H
 
 #include <stdint.h>
 
@@ -12,6 +12,8 @@
 enum COMMAND
 {
 	CMD_BROADCAST_INFO = 0x10,
+	CMD_BROADCAST_INFO_EX = 0x11,
+	CMD_BROADCAST_INFO_PARAM = 0x12,
 	CMD_SET_NETWORK_IP = 0x20,
 	CMD_SET_WIFI_IP    = 0x30,
 	CMD_LOGIN          = 0x40,
@@ -84,17 +86,6 @@ enum SYSTEM_ACTION
 	SYSTEM_FAIL  = 0xEE	
 };
 
-typedef struct _packet
-{
-	int      flag;
-	int      version;
-	uint32_t id;
-	uint8_t  command;
-	uint8_t  ack;
-	uint32_t length;
-	uint8_t  *data;
-}packet;
-
 typedef struct _serial_packet
 {
 	uint8_t head;
@@ -112,31 +103,54 @@ typedef struct _str_st
 	uint16_t len;
 }str_st;
 
-int16_t packet_readInt16(uint8_t *data);
-int32_t packet_readInt32(uint8_t *data);
-uint8_t *packet_writeInt16(uint8_t *data_ptr, uint16_t value);
-uint8_t *packet_writeInt32(uint8_t *data_ptr, uint32_t value);
+class Packet
+{
+	protected:		
+	    int _size;
+	    uint8_t  *data_ptr;
+		uint8_t *buffer;
+		
+	public:
+		Packet(void);
+		Packet(int size);
+		Packet(uint8_t *data, int size);
+		~Packet(void);
+		
+		uint8_t* get_data_ptr() { return data_ptr; };
+		
+		uint8_t ReadByte();
+		int16_t ReadInt16();
+		int32_t ReadInt32();
+		int ReadBuffer(uint8_t *data, int size);
+		int ReadPacket(Packet *pkt);
+		
+		void WriteByte(uint8_t value);		
+        void WriteInt16(uint16_t value);
+        void WriteInt32(uint32_t value);
+		void WriteBuffer(uint8_t *data, int size);
+		
+		void EncodeInt16(uint16_t value);
+		void EncodeInt32(uint32_t value);
+		void EncodeBoolean(bool value);
+		void EncodeByte(uint8_t value);
+		void EncodeString(const char *value);
+		
+		bool DecodeString(str_st *value);
+		uint8_t DecodeByte();
+		bool DecodeBoolean();
+		uint16_t DecodeInt16();
+		uint32_t DecodeInt32();
 
-uint8_t *packet_encodeInt16(uint8_t *data_ptr, uint16_t value);
-uint8_t *packet_encodeInt32(uint8_t *data_ptr, uint32_t value);
-uint8_t *packet_encodeBoolean(uint8_t *data_ptr, uint8_t value);
-uint8_t *packet_encodeByte(uint8_t *data_ptr, uint8_t value);
-uint8_t *packet_encodeString(uint8_t *data_ptr, const char *value);
-uint8_t *packet_decodeString(uint8_t *data_ptr, str_st *value);
-uint8_t *packet_decodeByte(uint8_t *data_ptr, uint8_t *value);
-uint8_t *packet_decodeBoolean(uint8_t *data_ptr, uint8_t *value);
-uint8_t *packet_decodeInt16(uint8_t *data_ptr, uint16_t *value);
+		void Skip(int size);
+		void SetPos(int size);
+		int GetPos(){ return (data_ptr - buffer); };
+		
+		uint8_t *getBuffer(){ return buffer; };
+		int getLength(){ return _size; };
+		void stringCopy(uint8_t *temp, str_st *value);
+        uint8_t* toHardware(uint8_t *data);
+};
 
-int packet_decode(packet *pkt, uint8_t *data, int size);
-int packet_readBuffer(packet *pkt, uint8_t *data);
-
-void packet_stringCopy(serial_packet *pkt);
-
-void packet_init_serial(serial_packet *pkt);
-void packet_free_serial(serial_packet *pkt);
-
-uint8_t *packet_to_hardware(uint8_t *buffer, uint8_t *data, uint8_t size);
-uint8_t *packet_setfreq(uint8_t *buffer, uint8_t module, uint32_t freq);
 
 #endif
 

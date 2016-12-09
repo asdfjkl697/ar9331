@@ -4,6 +4,7 @@
 #include "iotask.h"
 #include "packet.h"
 #include "boardhandler.h"
+#include "timerhandler.h" //jyc20160719
 #include "clientshandler.h"
 #include <list>
 

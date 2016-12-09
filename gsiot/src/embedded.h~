@@ -1,0 +1,23 @@
+#ifndef EMBEDDED_H_
+#define EMBEDDED_H_
+
+#include <stdio.h>
+#include <string>
+#include "gloox.h"
+
+//std::string getAppPath();
+
+
+
+/*xmpp handler*/
+//void onConnect();
+//void onDisconnect();
+//bool onTLSConnect( const CertInfo& info );
+
+//void handleIqID( const IQ& iq, int context );
+bool handleIq( const IQ& iq );
+//void handleSubscription( const Subscription& subscription );
+//void handleMessage( const Message& msg, MessageSession* session = 0 );
+
+
+#endif

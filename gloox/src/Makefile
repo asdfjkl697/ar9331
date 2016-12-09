@@ -1,6 +1,6 @@
 RM = rm
 #CC = linux-gcc
-OBJS = adhoc_example.o
+OBJS = DeviceAddress.o AddressManager.o common.o EditAttrMgr.o GSIOTDeviceInfo.o GSIOTControl.o GSIOTDevice.o GSIOTInfo.o GSIOTClient.o adhoc_example.o 
 bin = gloox
 CFLAGS += -I.
 LIBS += -lpthread
