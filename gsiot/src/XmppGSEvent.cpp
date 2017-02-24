@@ -67,7 +67,7 @@ XmppGSEvent::XmppGSEvent( const Tag* tag )
 			}
 		}
 
-		Tag *tdo = tmgr->findChild("do");
+		Tag *tdo = tmgr->findChild("do");  //jyc20170223 trans  "edit trigger"
 		if( tdo )
 		{
 			const TagList& l = tdo->children();
@@ -118,7 +118,7 @@ XmppGSEvent::XmppGSEvent( const Tag* tag )
 		if( tState )
 		{
 			m_runstate = atoi( tState->cdata().c_str() );
-		}
+		} 
 	}
 }
 

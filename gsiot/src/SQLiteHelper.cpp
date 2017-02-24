@@ -5,7 +5,10 @@ SQLite::Database* SQLiteHelper::db = NULL;
 SQLiteHelper::SQLiteHelper(void)
 {
 	//path = getAppPath();
-	//path.append("/home/chen/gsiot.db");
+//jyc20170224 UBUNTU DIFF OPENWRT
+if(OS_UBUNTU_FLAG)
+	path.append("/home/chen/gsiot.db");
+else
 	path.append("/root/gsiot.db");
 	//printf("path=%s\n",path.c_str()); //jyc2016823 test
 

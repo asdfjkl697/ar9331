@@ -24,7 +24,7 @@ DeviceManager::DeviceManager(void)
 		uint32_t pass_code =  rf_m_query.getColumn(6).getInt();
 		uint32_t addr_count =  rf_m_query.getColumn(7).getInt();
 		uint8_t addr_type =  rf_m_query.getColumn(8).getInt();
-		/**/
+		
 		RFDevice *dev = new RFDevice(pro_id,pass_code,serialno,name,addr_count,addr_type);
 
 		std::string sql = "select * from address where mudule_type="+util::int2string(CC1101_433)+" and module_id="+util::int2string(id);
@@ -46,7 +46,6 @@ DeviceManager::DeviceManager(void)
 		RFDeviceControl *rfControl = new RFDeviceControl(dev);
 		GSIOTDevice *iotdev = new GSIOTDevice(id,name,IOT_DEVICE_RFDevice,ver,serialno,factoryno,rfControl);
 		m_devices.push_back(iotdev);
-		//*/
 	}
 	SQLite::Statement can_query(*this->db,"select * from devices_canbus order by id desc");
 	while(can_query.executeStep()){
@@ -283,7 +282,7 @@ bool DeviceManager::Delete_remote_button( GSIOTDevice *iotdevice, RemoteButton *
 		return false;
 
 	DB_DeleteOne_remote_button( iotdevice->getType(), iotdevice->getId(), pRemoteButton );
-	//pctl->DeleteButton( pRemoteButton->GetId() );
+	pctl->DeleteButton( pRemoteButton->GetId() ); 
 
 	return true;
 }
@@ -471,7 +470,7 @@ bool DeviceManager::DB_ModifyDevice( GSIOTDevice *iotdevice, uint32_t ModifySubF
 			if( !pctl )
 				return false;
 
-			//pctl->set_NetUseable( defUseable_OK );
+			pctl->set_NetUseable( defUseable_OK );
 
 			snprintf( sqlbuf, sizeof(sqlbuf), "update devices_rs485 set name='%s',ver='%s', device_id=%d, enable=%d WHERE id=%d", iotdevice->getName().c_str(), iotdevice->getVer().c_str(), pctl->GetDeviceid(), iotdevice->GetEnable(), iotdevice->getId() );
 		}
@@ -1005,8 +1004,9 @@ bool DeviceManager::LoadDB_remote_button( const IOTDeviceType device_type, const
 		int read_device_id = query.getColumn(col++);
 		std::string name ;
 		if( !query.isColumnNull(col) ) { 
+			//(std::string)query.getColumn(col);  //jyc20160921
 			string tmpname = query.getColumn(col); 
-			name = tmpname ;//(std::string)query.getColumn(col);  //jyc20160921
+			name = tmpname ;
 		} 
 		col++;
 		
@@ -1146,7 +1146,7 @@ int DeviceManager::SaveToDB_rfsignal( const RFSignal &signal )
 
 	query.bind(col++, (int)signal.original_headflag);
 	query.bind(col++, (int)signal.original_headtime);
-	//query.bind(col++, signal.Get_original() );
+	query.bind(col++, signal.Get_original() );
 
 	query.exec();
 	return db->execAndGet("SELECT id FROM rfsignal ORDER BY id DESC LIMIT 1");

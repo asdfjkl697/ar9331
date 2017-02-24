@@ -43,7 +43,7 @@ bool TriggerControl::IsTrigger( bool isdoNow )
 	if( this->m_lastTimeTick_Do != 0 
 		&& timeGetTime() - this->m_lastTimeTick_Do < SYS_TriggerAlarmInterval*1000 )
 	{
-		return false;
+		return false; //notice delay limit by 'SYS_TriggerAlarmInterval'  jyc20170223 trans
 	}
 
 	if(this->m_cur_trigger_count >= this->m_signal.signal_count){

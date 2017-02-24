@@ -215,7 +215,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 
 		if( ::timeGetTime()-lastPrintTime > 180000 )
 		{
-			//LOGMSG( "Heartbeat: SerialPortThread(port=%d, br=%d)\r\n", device->m_usecfg_port, device->m_usecfg_baudrate );
+			LOGMSG( "Heartbeat: SerialPortThread(port=%d, br=%d)\r\n", device->m_usecfg_port, device->m_usecfg_baudrate );
 			lastPrintTime = ::timeGetTime();
 		}
 		
@@ -460,7 +460,8 @@ int DeviceConnection::GetAllCommunicationState( const bool getCommLink )
 	}
 
 	//locallink or remotelink
-	return ( (allConnectState && 1==PortState) ? 1:0 );
+	//return ( (allConnectState && 1==PortState) ? 1:0 );
+	return ( allConnectState ? 1:0 ); //jyc20170223 modify must connect
 }
 
 int DeviceConnection::Get_CommLinkThread_id()
@@ -1844,7 +1845,6 @@ void DeviceConnection::OnDeviceData_RFSignal( CHeartbeatGuard *phbGuard, CCommLi
 				TriggerControl *tc = (TriggerControl *)(*it)->getControl();
 				if(tc)
 				{
-					/*jyc20160824*/
 					if( tc->GetSignal().IsNear( signal ) )
 					{
 						if( (*it)->GetEnable() )
@@ -1854,7 +1854,7 @@ void DeviceConnection::OnDeviceData_RFSignal( CHeartbeatGuard *phbGuard, CCommLi
 
 						isAdd = true;
 						strAddedName = (*it)->getName();
-					}//*/
+					}
 				}
 			}
 		}

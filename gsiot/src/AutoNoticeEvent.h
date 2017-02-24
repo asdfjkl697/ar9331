@@ -24,7 +24,8 @@ public:
 		return NOTICE_Event;
 	}
 
-	void SetToJid( std::string &to_jid )
+	//void SetToJid( std::string &to_jid )
+	void SetToJid(const std::string &to_jid )
 	{
 		this->m_to_jid = to_jid;
 	}

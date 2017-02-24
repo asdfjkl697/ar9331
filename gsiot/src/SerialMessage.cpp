@@ -170,7 +170,7 @@ void SerialMessage::onTimer( CHeartbeatGuard *phbGuard, CCommLinkRun *CommLink )
 
 		if( pMsgCurCmd->Is_CurCmd(buffer->ctl) )
 		{
-			// ¿ØÖÆ´òÓ¡¼ä¸ô
+			// control print space  jyc trans
 			if( timeGetTime()-m_lastPrintIs_CurCmd > 1200 )
 			{
 				LOGMSG( "Is_CurCmd=true\r\n" );

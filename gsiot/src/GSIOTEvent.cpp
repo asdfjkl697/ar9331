@@ -1,4 +1,8 @@
 #include "GSIOTEvent.h"
+#include "stdlib.h"
+#include "string.h"
+#include "stdio.h"
+#include <string>
 #include <functional>
 
 
@@ -12,7 +16,7 @@ struct sort_ControlEvent : std::greater < ControlEvent* >
 
 GSIOTEvent::GSIOTEvent(void)
 {
-	LoadDB_event_sendsms();
+	//LoadDB_event_sendsms();
 	LoadDB_event_notice();
 	LoadDB_event_autocontrol();
 	LoadDB_event_eventthing();
@@ -204,8 +208,8 @@ bool GSIOTEvent::ModifyEvent(ControlEvent *evt, const ControlEvent *evtsrc)
 				&& evt->GetType() == evtsrc->GetType() )
 			{
 				const AutoNoticeEvent *aevtsrc = (AutoNoticeEvent*)evtsrc;
-				//jyc20160823
-				//aevt->SetToJid( aevtsrc->GetToJid() );
+				aevt->SetToJid( aevtsrc->GetToJid() );
+				//jyc20160823		
 				//aevt->SetSubject( aevtsrc->GetSubject() );
 				//aevt->SetBody( aevtsrc->GetBody() );
 			}
@@ -507,10 +511,12 @@ bool GSIOTEvent::LoadDB_event_notice()
 		evt->SetEnable(query.getColumn(col++).getInt());
 		evt->SetDoInterval(query.getColumn(col++).getInt());
 
-		//jyc20160823
-		//if( !query.isColumnNull(col) ) { evt->SetToJid((std::string)query.getColumn(col)); } col++;
+		if( !query.isColumnNull(col) ) {
+			//evt->SetToJid((std::string)query.getColumn(col));  //jyc20170223 modify
+			evt->SetToJid(query.getColumn(col));
+		}col++;
 		std::string msg_subject = query.getColumn(col++);
-		std::string msg_body = query.getColumn(col++);
+		std::string msg_body = query.getColumn(col++); 
 
 		evt->SetSubject(msg_subject);
 		evt->SetBody(msg_body);
@@ -538,7 +544,7 @@ bool GSIOTEvent::LoadDB_event_autocontrol()
 		evt->SetControlDeviceType((IOTDeviceType)query.getColumn(col++).getInt());
 		evt->SetControlDeviceId(query.getColumn(col++).getInt());
 		evt->SetAddress(query.getColumn(col++).getInt());
-		//evt->SetValue((std::string)query.getColumn(col++));
+		evt->SetValue(query.getColumn(col++)); //jyc20170223 unnote
 
 		this->m_event.push_back(evt);
 	}

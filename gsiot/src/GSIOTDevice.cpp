@@ -62,29 +62,21 @@ GSIOTDevice::GSIOTDevice( const Tag* tag)
 		return;
 	}
 
-	t = tag->findChild(defDeviceTypeTag_rfdevice);
-	if(t){
-	    	this->m_control = new RFDeviceControl(t);
-		return;
-	}
-
 	t = tag->findChild(defDeviceTypeTag_candevice);
 	if(t){
 	    	this->m_control = new CANDeviceControl(t);
 		return;
 	}*/
 
-
-	Tag *t = tag->findChild(defDeviceTypeTag_rs485device);
-	//t = tag->findChild(defDeviceTypeTag_rs485device);
+	Tag *t = tag->findChild(defDeviceTypeTag_rfdevice);
 	if(t){
-	    	this->m_control = new RS485DevControl(t);
+	    	this->m_control = new RFDeviceControl(t);
 		return;
 	}
 
-	t = tag->findChild(defDeviceTypeTag_rfdevice);
+	t = tag->findChild(defDeviceTypeTag_rs485device);
 	if(t){
-	    	this->m_control = new RFDeviceControl(t);
+	    	this->m_control = new RS485DevControl(t);
 		return;
 	}
 
@@ -105,7 +97,7 @@ GSIOTDevice::GSIOTDevice( const Tag* tag)
 	}
 	else
 	{
-		printf( "GSIOTDevice() ctl null, dev_type=%d, ctl_type unknown!\r\n", m_type );
+		printf( "\n GSIOTDevice() ctl null, dev_type=%d, ctl_type unknown!\r\n", m_type );
 	}
 
 	if( this->m_control )
@@ -679,10 +671,10 @@ bool GSIOTDevice::isDevSelfAndIncludeAddr( const IOTDeviceType deviceType, const
 
 			if( 0==address )
 			{
-				return ctl->GetFristAddress(); //20160527
+				return ctl->GetFristAddress(); 
 			}
 
-			return ctl->GetAddress(address); //20160527
+			return ctl->GetAddress(address); 
 		}
 		break;
 

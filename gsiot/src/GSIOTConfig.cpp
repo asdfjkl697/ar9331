@@ -78,10 +78,10 @@ bool GSIOTConfig::PreInit( const std::string &RunParam )
 		string tmp8 = query.getColumn(8);
 		this->m_noticejid = tmp8;
 		
-		if( !query.isColumnNull(9) ) { 
-			string tmp9 = query.getColumn(9);
-			this->m_phone = tmp9;
+		if( !query.isColumnNull(9) ) {
 			//this->m_phone = query.getColumn(9); 
+			string tmp9 = query.getColumn(9);
+			this->m_phone = tmp9;	
 		}
 		if( !query.isColumnNull(10) ) { 
 			this->m_DoInterval_ForSMS = (uint32_t)query.getColumn(10).getInt(); 

@@ -136,8 +136,8 @@ bool _sdatabuffer::IsSame(
 	if( address || other_address ) // 只要有一个address有值则进行address比较
 	{
 		//jyc20160824
-		//if( !GSIOTClient::Compare_ControlAndAddress( other_ctl, other_address, ctl, address ) )
-		//	return false;
+		if( !GSIOTClient::Compare_ControlAndAddress( other_ctl, other_address, ctl, address ) )
+			return false;
 	}
 	else // address都为空
 	{
