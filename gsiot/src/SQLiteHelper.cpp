@@ -6,11 +6,14 @@ SQLiteHelper::SQLiteHelper(void)
 {
 	//path = getAppPath();
 //jyc20170224 UBUNTU DIFF OPENWRT
-if(OS_UBUNTU_FLAG)
+/*if(OS_UBUNTU_FLAG)
 	path.append("/home/chen/gsiot.db");
 else
-	path.append("/root/gsiot.db");
-	//printf("path=%s\n",path.c_str()); //jyc2016823 test
+	path.append("/root/gsiot.db");*/
+	
+	//jyc20170227 modify
+	path.append((std::string)ROOTDIR+"gsiot.db");
+	
 
 	try
 	{

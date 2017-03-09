@@ -106,6 +106,9 @@ enum defTimeToStrFmt_
 
 #define macOperator_Less( A, B, v ) if( A.v != B.v ) { return (A.v < B.v); }
 
+uint32_t Reversebytes_uint32(unsigned int value); //jyc20170228 add
+uint16_t Reversebytes_uint16(unsigned int value); //jyc20170228 add
+
 struct stru_vobj_config
 {
 	int id;
@@ -139,7 +142,7 @@ public:
 	~IGSClientExFunc(void){};
 
 public:
-	virtual CRunCodeMgr& get_RunCodeMgr()=0; //20160526
+	virtual CRunCodeMgr& get_RunCodeMgr()=0; 
 	virtual void OnTimeOverForCmdRecv( const defLinkID LinkID, const IOTDeviceType DevType, const uint32_t DevID, const uint32_t addr )=0;
 	virtual defUseable get_all_useable_state_ForLinkID( defLinkID LinkID )=0;
 };

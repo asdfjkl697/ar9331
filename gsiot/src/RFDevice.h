@@ -16,7 +16,7 @@ private:
 	std::list<DeviceAddress *> m_AddressQueue;
 
 private:
-	//uint8_t *RFDevice::GetDataToStr(DataType type,uint8_t *data,std::string& val);
+	//uint8_t *RFDevice::GetDataToStr(DataType type,uint8_t *data,std::string& val); //jyc20160824 modify
 	uint8_t *GetDataToStr(DataType type,uint8_t *data,std::string& val);
 
 public:

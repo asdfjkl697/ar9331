@@ -101,7 +101,7 @@ std::string GSRemoteCtl_AC::Save_RefreshToSave()
 	m_param.sParam.size = sizeof(m_param.sParam);
 	//lstval.push_back( std::make_pair(defParamNm_Remote_ExType,itoa( this->GetExType(), buf, 10 )) );
 	//jyc20160919 trouble
-	//lstval.push_back( std::make_pair(defParamNm_Remote_ExType,snprintf(buf,sizeof(buf),"%d", this->GetExType())) );
+	//lstval.push_back( std::make_pair(defParamNm_Remote_ExType,snprintf(buf,10,"%d", this->GetExType())) );
 	lstval.push_back( std::make_pair(defParamNm_Remote_ip,m_param.ip) );
 	lstval.push_back( std::make_pair(defParamNm_Remote_pwd,m_param.pwd) );
 	lstval.push_back( std::make_pair(defParamNm_Remote_pam,g_BufferToString( (unsigned char*)&m_param.sParam, sizeof(m_param.sParam), false )) );

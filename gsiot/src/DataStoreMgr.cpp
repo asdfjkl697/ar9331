@@ -343,11 +343,12 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 	m_usecount(0), m_lastUseTs(0)
 {
 	const DWORD dwstart = timeGetTime();
-
-	const std::string strsub_full = g_iotstore_createdir( defIotStoreDir_Data );
+	//jyc20170227 delete
+	//const std::string strsub_full = g_iotstore_createdir( defIotStoreDir_Data );
 
 	m_dbname = dbname;
-	m_path = strsub_full + "\\" + m_dbname;
+	//m_path = strsub_full + "\\" + m_dbname;
+	m_path = ROOTDIR + m_dbname;
 
 	try
 	{
@@ -1913,23 +1914,11 @@ CDataStoreMgr::~CDataStoreMgr(void)
 
 std::string CDataStoreMgr::CreateDBNameForSpecDt( const time_t &t )
 {
-#if 1
 	struGSTime dt;
 	if( !g_UTCTime_To_struGSTime( t, dt ) )
 		return std::string("");
 
 	return CreateDBNameForSpecDt( dt );
-#else
-	struct tm p;
-
-	if( 0 != localtime_s( &p, &t ) )
-		return std::string("");
-
-	char dbname [64] = {0};
-	strftime( dbname, sizeof(dbname), "gsdata%Y%m.db", &p );
-
-	return std::string(dbname);
-#endif
 }
 
 std::string CDataStoreMgr::CreateDBNameForSpecDt( const struGSTime &dt )
@@ -1938,7 +1927,7 @@ std::string CDataStoreMgr::CreateDBNameForSpecDt( const struGSTime &dt )
 		return std::string("");
 
 	char dbname[256];
-
+/* jyc20170227 modify
 #if defined(defTEST_UseTestChangeDb)
 	//snprintf( dbname, sizeof(dbname), "test7b_%04d%02d%02d.db", dt.Year, dt.Month, dt.Day );
 	snprintf( dbname, sizeof(dbname), "test7b_%04d%02d.db", dt.Year, dt.Month );
@@ -1946,6 +1935,8 @@ std::string CDataStoreMgr::CreateDBNameForSpecDt( const struGSTime &dt )
 	snprintf( dbname, sizeof(dbname), "gsdata%04d%02d.db", dt.Year, dt.Month );
 	//snprintf( dbname, sizeof(dbname), "test7b_%04d%02d.db", dt.Year, dt.Month );
 #endif
+*/
+	snprintf( dbname, sizeof(dbname), "gsdata%04d%02d.db", dt.Year, dt.Month );
 
 	return std::string(dbname);
 }
@@ -2313,7 +2304,7 @@ void CDataStoreMgr::CheckCreateDB( const time_t utctime )
 	g_UTCTime_To_struGSTime( utctime, dt );
 
 	AutoRelease_getDBDataSave autodb( this );
-	SQLite_DBDataSave *pDBSave = autodb.get( dt, true, "CheckCreateDB", false );
+	SQLite_DBDataSave *pDBSave = autodb.get( dt, true, "CheckCreateDB", false ); 
 }
 
 // 获取指定日期的数据库实例
@@ -2327,12 +2318,15 @@ SQLite_DBDataSave* CDataStoreMgr::GetDBSave_lock( const struGSTime &dt, const bo
 
 		if( !stat_DBDataSave )
 		{
-			const std::string strsub_full = g_iotstore_createdir( defIotStoreDir_Data );
-
+			//jyc20170227 delete
+			//const std::string strsub_full = g_iotstore_createdir( defIotStoreDir_Data );
+			
 			bool doCreateDB = true;
 			if( check_file_exists )
 			{
-				const std::string path = strsub_full + "\\" + dbname;
+				//const std::string path = strsub_full + "\\" + dbname;
+				const std::string path = ROOTDIR + dbname; //jyc20170227 modify
+
 				if( !file_exists(path.c_str()) )
 				{
 					doCreateDB = false;
@@ -2503,7 +2497,7 @@ void CDataStoreMgr::DBMgr_Check( const bool CheckNow )
 	}
 
 	std::map<std::string,std::string> mapDBFile; //<name,path>
-
+	//jyc20170227 notice
 	const std::string strsub_full = std::string( defIotStoreDir_Main ) + "\\" + defIotStoreDir_Data;
 
 	struGSTime dt;
@@ -2512,7 +2506,8 @@ void CDataStoreMgr::DBMgr_Check( const bool CheckNow )
 	for( int i=0; i<50; ++i, dt.SubtractSelfMonth() )
 	{
 		const std::string dbname = CDataStoreMgr::CreateDBNameForSpecDt( dt );
-		const std::string path = strsub_full + "\\" + dbname;
+		//const std::string path = strsub_full + "\\" + dbname;
+		const std::string path = ROOTDIR + dbname; //jyc20170227 modify
 
 		if( file_exists( path.c_str() ) )
 		{

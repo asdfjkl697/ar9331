@@ -43,17 +43,14 @@ bool AddressManager::DeleteAddress_Spec( defAddressQueue &que, uint32_t address 
 {
 	defAddressQueue::const_iterator it = que.begin();
 	defAddressQueue::const_iterator itEnd = que.end();
-	for( ; it!=itEnd; ++it )
-	{
+	for( ; it!=itEnd; ++it ){
 		DeviceAddress *addr = (*it);
-		if( addr->GetAddress() == address )
-		{
+		if( addr->GetAddress() == address ){
 			delete(addr);
 			//que.erase(it); //jyc20160603
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -65,7 +62,6 @@ void AddressManager::CloneAddressQueue_Spec( defAddressQueue &quedest, const def
 	{
 		quedest.push_back( (DeviceAddress*)(*it)->clone() );
 	}
-
 }
 
 void AddressManager::AddressQueueChangeToOneAddr_Spec( defAddressQueue &que, uint32_t address )

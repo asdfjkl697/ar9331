@@ -16,7 +16,7 @@ struct sort_ControlEvent : std::greater < ControlEvent* >
 
 GSIOTEvent::GSIOTEvent(void)
 {
-	//LoadDB_event_sendsms();
+	LoadDB_event_sendsms();
 	LoadDB_event_notice();
 	LoadDB_event_autocontrol();
 	LoadDB_event_eventthing();
@@ -208,10 +208,9 @@ bool GSIOTEvent::ModifyEvent(ControlEvent *evt, const ControlEvent *evtsrc)
 				&& evt->GetType() == evtsrc->GetType() )
 			{
 				const AutoNoticeEvent *aevtsrc = (AutoNoticeEvent*)evtsrc;
-				aevt->SetToJid( aevtsrc->GetToJid() );
-				//jyc20160823		
-				//aevt->SetSubject( aevtsrc->GetSubject() );
-				//aevt->SetBody( aevtsrc->GetBody() );
+				aevt->SetToJid( aevtsrc->GetToJid() );		
+				aevt->SetSubject( aevtsrc->GetSubject() );
+				aevt->SetBody( aevtsrc->GetBody() );
 			}
 
 			SQLite::Statement query( *this->db, "UPDATE event_notice SET level=?,enable=?,do_interval=?,"\

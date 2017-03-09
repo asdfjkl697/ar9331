@@ -86,7 +86,6 @@ bool _sdatabuffer::IsSameOnlyDev(
 
 	if( other_DevType != DevType )
 		return false;
-	//jyc20160824
 	if( !GSIOTClient::Compare_Control( other_ctl, ctl ) )
 		return false;
 
@@ -135,14 +134,13 @@ bool _sdatabuffer::IsSame(
 
 	if( address || other_address ) // 只要有一个address有值则进行address比较
 	{
-		//jyc20160824
 		if( !GSIOTClient::Compare_ControlAndAddress( other_ctl, other_address, ctl, address ) )
 			return false;
 	}
-	else // address都为空
+	else // address empty
 	{
-		//if( !GSIOTClient::Compare_Control( other_ctl, ctl ) )
-		//	return false;
+		if( !GSIOTClient::Compare_Control( other_ctl, ctl ) )
+			return false;
 
 		switch( ctl->GetType() )
 		{
@@ -387,8 +385,8 @@ bool CMsgCurCmd::Is_CurCmd( ControlBase *DoCtrl )
 	const IOTDeviceType device_type = m_CurCmd->DevType;
 	const uint32_t device_id = m_CurCmd->DevID;
 	const defLinkID LinkID = m_CurCmd->LinkID;
-	const uint32_t addr = m_CurCmd->address?m_CurCmd->address->GetAddress():0;
-
+	const uint32_t addr = m_CurCmd->address?m_CurCmd->address->GetAddress():0;  
+	//jyc20170302 addr=0 have trouble
 	SERIALDATABUFFER *delbuf = NULL;
 
 	// 时间超时判断
@@ -493,7 +491,7 @@ void CMsgCurCmd::Get_CurCmd( ControlBase *DoCtrl, SERIALDATABUFFER **CurCmd )
 	}
 
 	*CurCmd = m_CurCmd;
-	m_CurCmd = NULL;
+	m_CurCmd = NULL;  
 	m_mutex_CurCmd.unlock();
 }
 

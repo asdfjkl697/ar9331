@@ -49,10 +49,10 @@ GSIOTDevice::GSIOTDevice( const Tag* tag)
 		this->m_ver= tag->findAttribute("ver");
 
 	this->UntagEditAttr( tag );
-	/*/20160527
+	/*/jyc20160527
 	Tag *t = tag->findChild(defDeviceTypeTag_media);
 	if(t){
-	    	this->m_control = new MediaControl(t); //20160527
+	    	this->m_control = new MediaControl(t); //jyc20160527
 		return;
 	}
 
@@ -158,13 +158,9 @@ bool GSIOTDevice::IsSupportAlarm( const GSIOTDevice *device )
 	{
 	case IOT_DEVICE_Trigger:
 		return true;
-	/*20160527
 	case IOT_DEVICE_Camera:
-		{
-			const IPCameraBase *ctl = (const IPCameraBase*)device->getControl();
-			return ctl->GetAdvAttrSafe().get_AdvAttr(defCamAdvAttr_SupportAlarm);
-		}
-		break;*/
+
+		break;
 
 	default:
 		break;
@@ -525,6 +521,9 @@ IOTDeviceReadType GSIOTDevice::getStaticReadType( const IOTDeviceType type )
 {
 	switch( type )
 	{
+		case IOT_DEVICE_CO2:// 温度
+		case IOT_DEVICE_HCHO:	// 湿度
+		//case IOT_DEVICE_PM25:
 		case IOT_DEVICE_Temperature:// 温度
 		case IOT_DEVICE_Humidity:	// 湿度
 		case IOT_DEVICE_Wind:		// 风速

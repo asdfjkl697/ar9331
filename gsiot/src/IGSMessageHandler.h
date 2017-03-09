@@ -6,6 +6,8 @@
 #include "gloox/tag.h"
 #include "DeviceAddress.h"
 
+#include "GSIOTDevice.h" //jyc20170224 add 
+
 using namespace gloox;
 
 enum defGSMsgType_
@@ -85,7 +87,13 @@ public:
 
 public:
 	virtual void OnGSMessage( defGSMsgType_ MsgType, uint32_t Param ){};
-	//virtual defGSReturn OnControlOperate( const defCtrlOprt CtrlOprt, const IOTDeviceType DevType, const GSIOTDevice *device, const GSIOTObjBase *obj, const uint32_t overtime=defNormSendCtlOvertime, const uint32_t QueueOverTime=defNormMsgOvertime, const void *inParam=NULL, void *outParam=NULL ){ return defGSReturn_Err; };
+	virtual defGSReturn OnControlOperate( const defCtrlOprt CtrlOprt, const IOTDeviceType DevType,
+	                                     const GSIOTDevice *device, 
+	                                     const GSIOTObjBase *obj, 
+	                                     const uint32_t overtime=defNormSendCtlOvertime, 
+	                                     const uint32_t QueueOverTime=defNormMsgOvertime, 
+	                                     const void *inParam=NULL, void *outParam=NULL ){ 
+		return defGSReturn_Err; }; //jyc20170224 unnote
 };
 
 class ITriggerDebugHandler

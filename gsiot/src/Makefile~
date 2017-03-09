@@ -9,8 +9,8 @@ PresetManager.o CommLinkManager.o rs232.o RS485DevControl.o ModbusProc.o RFRemot
 RemoteButtonManager.o RemoteButtonClass.o ControlMessage.o GSIOTEvent.o AutoCallEvent.o AutoControlEvent.o \
 AutoEventthing.o AutoNoticeEvent.o AutoSendSMSEvent.o XmppRegister.o  SerialDataBuffer.o SerialMessage.o \
 HeartbeatMon.o CommLink.o NetBaseClient.o NetMan.o NetModule.o NetTcpClient.o NetUdpClient.o \
-RFDeviceControl.o RFDevice.o RFSignalDefine.o XmppGSChange.o XmppGSEvent.o XmppGSReport.o TimerManager.o \
-gsiot.o
+RFDeviceControl.o RFDevice.o RFSignalDefine.o XmppGSChange.o XmppGSEvent.o XmppGSReport.o \
+XmppGSRelation.o TimerManager.o gsiot.o
 
 bin = gsiot
 CFLAGS += -I.

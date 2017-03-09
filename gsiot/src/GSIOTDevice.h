@@ -39,8 +39,6 @@ private:
 	std::string m_name;
 	IOTDeviceType m_type;
 	std::string m_ver;
-	//std::string m_serialno;
-	//std::string m_factoryno;
 	ControlBase *m_control;
 	
 	uint32_t m_enable;
@@ -125,12 +123,6 @@ public:
 	const std::string&  getVer() const {
 		return this->m_ver;
 	}
-	//const std::string&  getSerialno() const {
-	//	return this->m_serialno;
-	//}
-	//const std::string&  getFactoryno() const {
-	//	return this->m_factoryno;
-	//}
 	
 	ControlBase *getControl() const{
 		return this->m_control;
@@ -155,10 +147,10 @@ public:
 		m_enable = enable;
 	}
 	
-	// 综合分析可用状态
+	// 
 	defUseable get_all_useable_state() const;
 	
-	// 获取当前告警状态
+	// 
 	defAlarmState GetCurAlarmState() const;
 	
 	std::string GetPrePicChangeCode() const;

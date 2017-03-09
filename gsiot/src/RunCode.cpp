@@ -127,6 +127,11 @@ static struRunCode s_RunCode[defCodeIndex_MAX_+1] =
 	{ 19002, 490, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Temperature", StrNull, StrNull },	// 存储变化量设定值，温度变化，1000倍设置 //860
 	{ 19003, 1900, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Humidity", StrNull, StrNull },	// 存储变化量设定值，湿度变化，1000倍设置 //3000
 	{ 19004, 240, 100, 0, 0, 0,0,0,0, "SYS_WinTime_Wind", StrNull, StrNull },		// 风速窗口化时间，value1常规值, value2时间点时的最小值，单位秒
+
+	{ 19005, 20000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_CO2", StrNull, StrNull },	
+	{ 19006, 100, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_HCHO", StrNull, StrNull },	
+	//{ 19007, 10000, 0, 0, 0, 0,0,0,0, "SYS_WinTime_PM25", StrNull, StrNull },		
+	
 	{ 19101, 0, 0, 0, 0, 0,0,0,0, "SYS_MergeWindLevel", StrNull, StrNull },			// 合并风速级别，1级和2级合并
 	{ 19102, 1, 0, 0, 0, 0,0,0,0, "SYS_DataSamp_DoBatch", StrNull, StrNull },		// DataSample采集时采用批量读取值方式，否则，单个值分别读取
 	{ 19103, 5*60, 0, 0, 0, 0,0,0,0, "SYS_DataSamp_LongTimeNoData", StrNull, StrNull },	// DataSample采集时太长时间未获取数据，单位秒
@@ -663,6 +668,9 @@ void s_InitRunCode(void)
 	macCheckRunCode(SYS_VChgRng_Temperature);
 	macCheckRunCode(SYS_VChgRng_Humidity);
 	macCheckRunCode(SYS_WinTime_Wind);
+	macCheckRunCode(SYS_VChgRng_CO2);
+	macCheckRunCode(SYS_VChgRng_HCHO);
+	//macCheckRunCode(SYS_VChgRng_PM25);
 	macCheckRunCode(SYS_MergeWindLevel);
 	macCheckRunCode(SYS_DataSamp_DoBatch);
 	macCheckRunCode(SYS_DataSamp_LongTimeNoData);
@@ -857,8 +865,8 @@ void CRunCodeMgr::LoadDB_code()
 		int val4 = query.getColumn(col++).getInt();
 
 		//jyc20160825 can not run have trouble
-		//std::string str_val = query.getColumn(col++);
-		std::string str_val = "jyc20160825";
+		std::string str_val = query.getColumn(col++);
+		//std::string str_val = "jyc20160825";
 		
 		s_RunCode[RUNCODE_Index(code, codestr.c_str())].str_val = str_val;
 		RUNCODE_Set( RUNCODE_Index(code, codestr.c_str()), val1, val2, val3, val4, true, true, true, true );

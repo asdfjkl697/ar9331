@@ -96,11 +96,11 @@ GSIOTUser* GSIOTUserMgr::check_GetUser( const std::string &jid )
 defGSReturn GSIOTUserMgr::check_User( const GSIOTUser *pUser )
 {
 	// 是否屏蔽权限
-	/*if( IsRUNCODEEnable(defCodeIndex_Debug_DisableAuth) )
+	if( IsRUNCODEEnable(defCodeIndex_Debug_DisableAuth) )
 	{
 		//LOGMSGEX( defLOGNAME, defLOG_WORN, "__TEST__: <Debug_DisableAuth> check_User" );
 		return defGSReturn_Success;
-	}*/
+	}
 
 	if( !pUser )
 	{
@@ -125,11 +125,11 @@ defGSReturn GSIOTUserMgr::check_User( const GSIOTUser *pUser )
 defUserAuth GSIOTUserMgr::check_Auth( const GSIOTUser *pUser, const IOTDeviceType type, const int id )
 {
 	// 是否屏蔽权限
-	/*if( IsRUNCODEEnable(defCodeIndex_Debug_DisableAuth) )
+	if( IsRUNCODEEnable(defCodeIndex_Debug_DisableAuth) )
 	{
 		//LOGMSGEX( defLOGNAME, defLOG_WORN, "__TEST__: <Debug_DisableAuth> check_Auth" );
 		return defUserAuth_RW;
-	}*/
+	}
 
 	if( !pUser )
 	{
@@ -140,22 +140,6 @@ defUserAuth GSIOTUserMgr::check_Auth( const GSIOTUser *pUser, const IOTDeviceTyp
 	{
 		return defUserAuth_Default;
 	}
-
-	// 是否所有权限标志为true
-	//if( GSIOTUser::IsMoudle( type ) )
-	//{
-	//	if( pUser->IsAll_AuthModule() )
-	//	{
-	//		return defUserAuth_RW;
-	//	}
-	//}
-	//else
-	//{
-	//	if( pUser->IsAll_AuthDevice() )
-	//	{
-	//		return defUserAuth_RW;
-	//	}
-	//}
 
 	defUserAuth authAllVal = defUserAuth_Default;
 	if( GSIOTUser::IsMoudle( type ) )
@@ -262,12 +246,6 @@ defGSReturn GSIOTUserMgr::CfgChange_User( GSIOTUser *const pUser, const defCfgOp
 	GSIOTUser *pCurUser = GetUser( jid );
 	if( pCurUser )
 	{
-		//if( defCfgOprt_Add==oprt )
-		//{
-		//	LOGMSGEX( defLOGNAME, FailedIsErr?defLOG_ERROR:defLOG_INFO, "CfgChange_User(oprt=%d) err, isbeing! %s\r\n", oprt, jid.c_str() );
-		//	return false;
-		//}
-
 		// modify or addmodify
 		LOGMSG( "CfgChange_User(oprt=%d) isbeing, %s\r\n", oprt, jid.c_str() );
 
@@ -341,10 +319,6 @@ defGSReturn GSIOTUserMgr::CfgChange_User( GSIOTUser *const pUser, const defCfgOp
 						pCurAuth->authority = pAuth->authority;
 						db_Update_user_auth( pCurUser->GetID(), *pCurAuth );
 					}
-					//else
-					//{
-					//	LOGMSGEX( defLOGNAME, FailedIsErr?defLOG_ERROR:defLOG_INFO, "CfgChange_User(oprt=%d) err, isbeing, %s\r\n", oprt, pAuth->Print( jid.c_str(), false ).c_str() );
-					//}
 				}
 				else
 				{
@@ -359,19 +333,12 @@ defGSReturn GSIOTUserMgr::CfgChange_User( GSIOTUser *const pUser, const defCfgOp
 						continue;
 				}
 
-				//insert
-				//if( defCfgOprt_Add == oprt
-				//	|| defCfgOprt_AddModify == oprt )
 				{
 					macDebugLog_GSIOTUserMgr( "CfgChange_User(oprt=%d) do add, %s\r\n", oprt, pAuth->Print( jid.c_str(), false ).c_str() );
 
 					pCurUser->CfgChange_Auth( *pAuth, oprt, FailedIsErr );
 					db_Insert_user_auth( pCurUser->GetID(), *pAuth );
 				}
-				//else
-				//{
-				//	LOGMSGEX( defLOGNAME, FailedIsErr?defLOG_ERROR:defLOG_INFO, "CfgChange_User(oprt=%d) err, isbeing, %s\r\n", oprt, pAuth->Print( jid.c_str(), false ).c_str() );
-				//}
 			}
 			else
 			{
@@ -395,9 +362,9 @@ defGSReturn GSIOTUserMgr::CfgChange_User( GSIOTUser *const pUser, const defCfgOp
 			return defGSReturn_Err;
 		}
 
-		if( !g_CheckEMail( std::string(jid) ) )
+		if( !g_CheckEMail( std::string(jid) ) )  
 		{
-			return defGSReturn_Err;
+			//return defGSReturn_Err;  //jyc20170301 remove   no <regex> lib
 		}
 		
 		// add or addmodify
@@ -437,7 +404,8 @@ defGSReturn GSIOTUserMgr::Delete_User( const std::string &jid, const bool Failed
 	}
 
 	defmapGSIOTUser::const_iterator it = GSIOTUserMgr::usermapFind( m_mapUser, jid );
-	if( it!=m_mapUser.end() )
+	
+	if( it !=m_mapUser.end() )
 	{
 		LOGMSG( "Delete_User jid=%s\r\n", jid.c_str() );
 
@@ -446,7 +414,7 @@ defGSReturn GSIOTUserMgr::Delete_User( const std::string &jid, const bool Failed
 		this->OnNotify( defNotify_Delete, it->second );
 
 		delete (it->second);
-		//m_mapUser.erase(it);  //jyc20160922 trouble
+		m_mapUser.erase(it->first);  //jyc20170301 notice m_mapUser.erase(it);
 		return defGSReturn_Success;
 	}
 

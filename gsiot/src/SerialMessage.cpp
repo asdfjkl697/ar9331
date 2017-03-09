@@ -80,7 +80,6 @@ void SerialMessage::doMessage( defLinkID LinkID, uint8_t *data, uint32_t size, c
 		buffer->nextInterval = nextInterval;
 		buffer->DevType = DevType;
 		buffer->DevID = DevID;
-		//jyc20160824
 		buffer->ctl = GSIOTClient::CloneControl( ctl, false );
 
 		if( address )
@@ -209,7 +208,8 @@ void SerialMessage::onTimer( CHeartbeatGuard *phbGuard, CCommLinkRun *CommLink )
 
 			LOGMSG( "SendSleep=%d, lastprevInterval=%d, needprevInterval=%d", needSleep, lastprevInterval, needprevInterval );
 
-			usleep( needSleep * 1000 );
+			//usleep( needSleep * 1000 );  //jyc20170302 modify 
+			usleep( needSleep * 100 ); 
 		}
 
 		if( doSend )

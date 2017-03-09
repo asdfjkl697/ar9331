@@ -7,6 +7,7 @@
 #include "AutoEventthing.h"
 
 
+
 XmppGSEvent::XmppGSEvent( const std::string &srcmethod, const GSIOTDevice *pDevice, std::list<ControlEvent*> &Events, uint32_t RunState, const struTagParam &TagParam, bool mapSwapIn )
 	:StanzaExtension(ExtIotEvent), m_method(defCfgOprt_Unknown), m_srcmethod(srcmethod), m_TagParam(TagParam), m_runstate(RunState)
 {
@@ -30,6 +31,9 @@ XmppGSEvent::XmppGSEvent( const Tag* tag )
 {
 	if( !tag || tag->name() != "gsiot" || tag->xmlns() != XMLNS_GSIOT_EVENT )
 		return;
+
+	//GSIOTClient::XmppPrint( tag, "recv", stanza, false ); //jyc20170227 debug
+	//XmppGSEvent::PrintTag( tag , ExtIotEvent);
 
 	Tag *tmgr = tag->findChild("event");
 

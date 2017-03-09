@@ -51,6 +51,7 @@ DeviceAddress::DeviceAddress(const Tag* tag)
 	this->m_dataType = (DataType)atoi(tag->findAttribute("datatype").c_str());
 	if(tag->hasAttribute("cur_value"))
 	this->m_curValue = tag->findAttribute("cur_value");
+	
 	if(tag->hasAttribute("defualt_value"))
 	this->m_defaultValue = tag->findAttribute("defualt_value");
 	if(tag->hasAttribute("min_value"))
@@ -172,19 +173,20 @@ Tag* DeviceAddress::tag(const struTagParam &TagParam)
 	Tag* i = new Tag( "address" );
 	i->addAttribute("data",(int)this->m_address);
 
-	if( TagParam.isValid && TagParam.isResult )
+	if( TagParam.isValid && TagParam.isResult )  //jyc20170302 notice TagParam.isResult always=false
+	//if( TagParam.isValid )  //jyc20170305 notice data cannot refresh
 	{
 		this->tagEditAttr( i, TagParam );
 
 		return i;
 	}
-
+	
 	if( 1==TagParam.fmt )
 	{
 		i->addAttribute("cur_value",this->GetCurValue());
 		return i;
 	}
-	
+
 	i->addAttribute("name",ASCIIToUTF8(this->m_name));
 	if( IOT_DEVICE_Unknown != this->m_type ) { i->addAttribute("type",this->m_type); }
 	if( IOT_Unknow != this->m_readType ) { i->addAttribute("readtype",this->m_readType); }
@@ -194,12 +196,14 @@ Tag* DeviceAddress::tag(const struTagParam &TagParam)
 	if( this->m_minValue != "0" ) { i->addAttribute("min_value",this->m_minValue); }
 	if( this->m_maxValue != "0" ) { i->addAttribute("max_value",this->m_maxValue); }
 
+	i->addAttribute("unit",ASCIIToUTF8(g_GetUnitBaseForType (this->m_type))); //jyc20170306 add
+	
 	int attr = 0;
 	if( this->GetAttrObj().get_AdvAttr( DeviceAddressAttr::defAttr_IsReSwitch ) )
 		attr = DeviceAddressAttr::defAttr_IsReSwitch;
 	else if( this->GetAttrObj().get_AdvAttr( DeviceAddressAttr::defAttr_IsAutoBackSwitch ) )
 		attr = DeviceAddressAttr::defAttr_IsAutoBackSwitch;
-
+	
 	if( attr ) { i->addAttribute( "attr", attr ); }
 
 	return i;
@@ -394,7 +398,9 @@ bool DeviceAddress::SetCurValue( const std::string& newValue, const time_t newVa
 // 温湿度等常规监测量是发生变化存储，判断门限参考SYS_VChgRng_***。
 // 风速这种按照窗口化处理后判断变化存储，门限参考SYS_WinTime_Wind，并对小值做合并处理参考SYS_MergeWindLevel/g_WindSpeedLevel()等。
 // 存储时间点的判断，在时间点之前2分钟以内已经存储的，认为这个存储已经接近时间点，算作时间点存储，算完成了时间点存储。从时间点整点开始记，一个时间范围内都算作时间点存储。相关参考g_isTimePoint、g_TransToTimePoint等。
-void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newValTime, bool *doSave, time_t *SaveTime, std::string *SaveValue, defDataFlag_* dataflag, std::string *strlog )
+void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newValTime, bool *doSave, 
+                                time_t *SaveTime, std::string *SaveValue, defDataFlag_* dataflag, 
+                                std::string *strlog )
 {
 	gloox::util::MutexGuard( this->m_pmutex_addr );
 
@@ -409,8 +415,6 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 			{
 				std::string WindowFinishValue;
 
-				// 此类型的数据，采集到的值先做窗口化处理
-				// 窗口化数值处理：找到这段时间内更符合的值
 				if( ValueWindow( newValue, newValTime, WindowFinishValue, RUNCODE_Get(defCodeIndex_SYS_WinTime_Wind), RUNCODE_Get(defCodeIndex_SYS_WinTime_Wind,defRunCodeValIndex_2) ) )
 				{
 					isFinishValue = true;
@@ -418,14 +422,17 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 				}
 			}
 			break;
+				
+		case IOT_DEVICE_CO2:
+		case IOT_DEVICE_HCHO:
+		//case IOT_DEVICE_PM25:
+			//break;
 
 		case IOT_DEVICE_Temperature:
 		case IOT_DEVICE_Humidity:
 		default:
-			{
-				// 此类型的数据，采集到的值直接可用
+				// direct use jyc trans
 				isFinishValue = true;
-			}
 			break;
 		}
 
@@ -435,7 +442,9 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 			{
 				// 先进行存储时间点相关的判断
 				// 当前时间所在时间点和上次存储的时间所在时间点不同。即，当前存储时间点还未存储过值。
-				if( g_TransToTimePoint(newValTime, m_type, false)!=g_TransToTimePoint(m_lastSaveTime, m_type, true) )
+				time_t newtimepointf = g_TransToTimePoint(newValTime, m_type, false);
+				time_t lasttimepoint = g_TransToTimePoint(m_lastSaveTime, m_type, true); //jyc20170228 modify
+				if( newtimepointf != lasttimepoint ) //jyc20170228 debug 5s one time
 				{
 					*doSave = true;
 
@@ -453,7 +462,7 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 					}
 				}
 
-				// 是否达到需要存储的变化量
+				// change save 
 				if( !(*doSave) )
 				{
 					const float oldSaveValueF = atof(m_lastSaveValue.c_str());
@@ -476,6 +485,10 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 						}
 						break;
 
+					case IOT_DEVICE_CO2:
+					case IOT_DEVICE_HCHO:
+					//case IOT_DEVICE_PM25:
+						//break;
 					case IOT_DEVICE_Temperature:
 					case IOT_DEVICE_Humidity:
 					default:
@@ -520,17 +533,6 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 				*SaveValue = m_lastSaveValue;
 			}
 		}
-
-//#ifdef _DEBUG
-//		switch( m_type )
-//		{
-//		case IOT_DEVICE_Wind:
-//			{
-//				*dataflag = (defDataFlag_)(g_WindSpeedLevel( atof(newFinishValue.c_str()), false )*100 + (*dataflag));
-//			}
-//			break;
-//		}
-//#endif
 	}
 }
 

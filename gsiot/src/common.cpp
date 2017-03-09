@@ -28,6 +28,18 @@
 //#include <regex>  // regular expression 正则表达式
 #include "gloox/md5.h"
 
+uint32_t Reversebytes_uint32(unsigned int value){
+	uint32_t v = value;
+	return (v&0x000000ff)<<24 | (v&0x0000ff00)<<8 |
+		(v&0x00ff0000)>>8 | (v&0xff000000)>>24;
+}
+
+uint16_t Reversebytes_uint16(unsigned int value){
+	unsigned short vv = value;
+	uint16_t vvv = (uint16_t)(vv&0xff)<<8|vv>>8;
+	return vvv;
+}
+
 void GetLocalTime(SYSTEMTIME *st)
 {
     if(st)
@@ -804,10 +816,12 @@ uint16_t crc16_verify( uint8_t *buf, uint16_t len )
 		uchCRCHi = auchCRCLo[uIndex] ; 
 	} 
 //jyc20170224 bigend or smallend UBUNTU DIFF OPENWRT
-if(OS_UBUNTU_FLAG)
+//if(OS_UBUNTU_FLAG)
+#ifdef OS_UBUNTU_FLAG
 	return ( (uchCRCHi << 8)| uchCRCLo );
-else
+#else
 	return ( (uchCRCLo << 8)| uchCRCHi );
+#endif
 }
 
 uint32_t g_StringToBuffer( const std::string &str, uint8_t *buf, uint32_t len, bool hasspace )
@@ -1215,28 +1229,19 @@ bool g_CheckEMail( const std::string &email_address )
 
 	if( email_address.empty() )
 		return false;
-	/*
+/*	jyc20170301 remove because no <regex>
 	std::regex pattern("([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)");
-	// 正则表达式，匹配规则：
-	// 第1组（即用户名），匹配规则：0至9、A至Z、a至z、下划线、点、连字符之中
-	// 的任意字符，重复一遍或以上
-	// 中间，一个“@”符号
-	// 第二组（即域名），匹配规则：0至9或a至z之中的任意字符重复一遍或以上，
-	// 接着一个点，接着a至z之中的任意字符重复2至3遍（如com或cn等），
-	// 第二组内部的一组，一个点，接着a至z之中的任意字符重复2遍（如cn或fr等）
-	// 内部一整组重复零次或一次
 
 	if ( regex_match( email_address, pattern ) )
 	{
-		// 截取第一组
+
 		user_name = regex_replace( email_address, pattern, std::string("$1") );
 
-		// 截取第二组
 		domain_name = regex_replace( email_address, pattern, std::string("$2") );
 
 		return true;
-	}*/
-
+	}
+*/
 	return false;
 }
 
@@ -1346,7 +1351,14 @@ std::string g_Trans_GSReturn( defGSReturn ret )
 time_t g_GetUTCTime()
 {
 #if 1
-	return time(NULL);
+	//return time(NULL); //jyc20170224 modify linux time
+	// now time
+	SYSTEMTIME st;
+	memset( &st, 0, sizeof(st) );
+	//::GetLocalTime(&st);
+	GetLocalTime(&st);
+	tm temptm = {st.wSecond,st.wMinute,st.wHour,st.wDay,st.wMonth,st.wYear-1900,st.wDayOfWeek,0,0};
+	return mktime(&temptm);
 #else
 	time_t t;
 	struct tm *p;
@@ -1361,50 +1373,26 @@ bool g_UTCTime_To_struGSTime( const time_t utctime, struGSTime &dest )
 {
 	memset( &dest, 0, sizeof(struGSTime) );
 
-#if 1
 	struct tm p;
 	
 	//if( 0 != localtime_s( &p, &utctime ) ) //jyc20160922
-	if( 0 != localtime_r( &utctime, &p ) )
+	/*if( 0 != localtime_r( &utctime, &p ) )
 	{
 		memset( &dest, 0, sizeof(struGSTime) );
 		return false;
-	}
+	}*/
 
-	g_tm_To_struGSTime( p, dest );
+	localtime_r( &utctime, &p ); //jyc20170227 modify
+	//g_tm_To_struGSTime( p, dest );
+
+	dest.Year = p.tm_year+1900;
+	dest.Month = (unsigned char)p.tm_mon+1;
+	dest.Day = (unsigned char)p.tm_mday;
+	dest.Hour = (unsigned char)p.tm_hour;
+	dest.Minute = (unsigned char)p.tm_min;
+	dest.Second = (unsigned char)p.tm_sec;
 
 	return true;
-#else
-	FILETIME ftUTC = {0};
-	FILETIME ftLoc = {0};
-	LONGLONG ll = Int32x32To64( utctime, 10000000) + 116444736000000000;
-	ftUTC.dwLowDateTime = (DWORD) ll;
-	ftUTC.dwHighDateTime = (DWORD)(ll >> 32);
-	if( !FileTimeToLocalFileTime( &ftUTC, &ftLoc ) )
-	{
-		return false;
-	}
-
-	SYSTEMTIME st = {0};
-	if( !FileTimeToSystemTime( &ftLoc, &st ) )
-	{
-		return false;
-	}
-
-	dest.Year = st.wYear;
-	dest.Month = (unsigned char)st.wMonth;
-	dest.Day = (unsigned char)st.wDay;
-	dest.Hour = (unsigned char)st.wHour;
-	dest.Minute = (unsigned char)st.wMinute;
-	dest.Second = (unsigned char)st.wSecond;
-
-	//// 中国时区的信息
-	//TIME_ZONE_INFORMATION DEFAULT_TIME_ZONE_INFORMATION = {-480};
-
-	//// 将UTC时间转换为中国时区的本地时间
-	//SystemTimeToTzSpecificLocalTime( &DEFAULT_TIME_ZONE_INFORMATION, &sysTime, &sysTime );
-	return true;
-#endif
 }
 
 time_t g_struGSTime_To_UTCTime( const struGSTime &src )
@@ -2006,6 +1994,9 @@ bool g_isNeedSaveType( const IOTDeviceType type )
 {
 	switch( type )
 	{
+	case IOT_DEVICE_CO2:
+	case IOT_DEVICE_HCHO:
+	case IOT_DEVICE_PM25:
 	case IOT_DEVICE_Wind:
 	case IOT_DEVICE_Temperature:
 	case IOT_DEVICE_Humidity:
@@ -2032,6 +2023,9 @@ time_t g_GetTimePointSecond( const IOTDeviceType type, const bool isPrevSecond )
 		case IOT_DEVICE_Wind:
 			return (5*60);
 
+		case IOT_DEVICE_CO2:
+		case IOT_DEVICE_HCHO:
+		//case IOT_DEVICE_PM25:
 		case IOT_DEVICE_Temperature:
 		case IOT_DEVICE_Humidity:
 		default:
@@ -2046,9 +2040,8 @@ time_t g_GetTimePointSecond( const IOTDeviceType type, const bool isPrevSecond )
 bool g_isTimePoint( const time_t utctime, const IOTDeviceType type )
 {
 	const time_t TimePoint = ( utctime / 1800 ) * 1800;
-
 	const time_t PrevSecond = g_GetTimePointSecond( type, true );
-	const time_t AfterSecond = g_GetTimePointSecond( type, false );
+	const time_t AfterSecond = g_GetTimePointSecond( type, false );  //jyc20170228 modify
 
 	return ( utctime > (TimePoint-PrevSecond) ||  utctime < (TimePoint+AfterSecond) );
 }
@@ -2063,13 +2056,16 @@ time_t g_TransToTimePoint( const time_t utctime, const IOTDeviceType type, const
 	{
 		const time_t NextTimePoint = TimePoint + 1800;
 
-		if( utctime > (NextTimePoint-g_GetTimePointSecond(type, true)) )
+		//if( utctime > (NextTimePoint-g_GetTimePointSecond(type, true)) ) //jyc20170228 have problem
+		if( utctime > (NextTimePoint-60) )
 		{
 			struct tm loT;
 			//localtime_s( &loT, &TimePoint );
+			localtime_r( &TimePoint, &loT ); //jyc20170227modify
 
 			struct tm loTNext;
 			//localtime_s( &loTNext, &NextTimePoint );
+			localtime_r( &NextTimePoint, &loTNext ); //jyc20170227modify
 
 			if( loT.tm_mday == loTNext.tm_mday )
 			{
@@ -2092,6 +2088,22 @@ float g_SYS_VChgRng( const IOTDeviceType type )
 	switch( type )
 	{
 	case IOT_DEVICE_Wind:
+		break;
+
+	case IOT_DEVICE_CO2:
+		{
+			rng = (float)RUNCODE_Get(defCodeIndex_SYS_VChgRng_CO2);
+		}
+		break;
+	case IOT_DEVICE_HCHO:
+		{
+			rng = (float)RUNCODE_Get(defCodeIndex_SYS_VChgRng_HCHO);
+		}
+		break;
+	case IOT_DEVICE_PM25:
+		{
+			//rng = (float)RUNCODE_Get(defCodeIndex_SYS_VChgRng_PM25);
+		}
 		break;
 
 	case IOT_DEVICE_Temperature:
@@ -2118,6 +2130,13 @@ std::string g_GetUnitBaseForType( const IOTDeviceType type )
 {
 	switch( type )
 	{
+	case IOT_DEVICE_CO2:
+		return "ppm";
+	case IOT_DEVICE_HCHO:
+		return "ug/m3";
+	case IOT_DEVICE_PM25:
+		return "ug/m3";
+			
 	case IOT_DEVICE_Temperature:
 		return "℃";
 

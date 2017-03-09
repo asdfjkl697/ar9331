@@ -142,6 +142,9 @@ enum defCodeIndex_
 	defCodeIndex_SYS_VChgRng_Temperature,
 	defCodeIndex_SYS_VChgRng_Humidity,
 	defCodeIndex_SYS_WinTime_Wind,
+	defCodeIndex_SYS_VChgRng_CO2,  //jyc201703034 add notice
+	defCodeIndex_SYS_VChgRng_HCHO,
+	//defCodeIndex_SYS_VChgRng_PM25,
 	defCodeIndex_SYS_MergeWindLevel,
 	defCodeIndex_SYS_DataSamp_DoBatch,
 	defCodeIndex_SYS_DataSamp_LongTimeNoData,

@@ -817,9 +817,9 @@ bool DeviceManager::LoadDB_rfsignal()
 
 		signal.signal_type = (defRFSignalType)query.getColumn(col++).getInt();
 		signal.freq = (defFreq)query.getColumn(col++).getInt();
+#ifdef OS_UBUNTU_FLAG
 		signal.code = query.getColumn(col++).getInt();
-		signal.codeValidLen = query.getColumn(col++).getInt();
-
+		signal.codeValidLen = query.getColumn(col++).getInt();		
 		signal.one_high_time =  query.getColumn(col++).getInt();
 		signal.one_low_time =  query.getColumn(col++).getInt();
 		signal.zero_high_time = query.getColumn(col++).getInt();
@@ -846,11 +846,42 @@ bool DeviceManager::LoadDB_rfsignal()
 		signal.tailcode[5] = query.getColumn(col++).getInt();
 		signal.tailcode[6] = query.getColumn(col++).getInt();
 
-		// 
 		signal.original_headflag = query.getColumn(col++).getInt();
-		signal.original_headtime = query.getColumn(col++).getInt();
+		signal.original_headtime = query.getColumn(col++).getInt(); 
+#else  //jyc20170228 add
+		signal.code = Reversebytes_uint32(query.getColumn(col++).getInt());
+		signal.codeValidLen = query.getColumn(col++).getInt();	
+		signal.one_high_time = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.one_low_time =  Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.zero_high_time = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.zero_low_time =  Reversebytes_uint16(query.getColumn(col++).getInt());
+
+		signal.silent_interval =  Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.signal_count = query.getColumn(col++).getInt();
+		signal.headlen = query.getColumn(col++).getInt();
+		signal.taillen = query.getColumn(col++).getInt();
+
+		signal.headcode[0] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.headcode[1] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.headcode[2] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.headcode[3] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.headcode[4] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.headcode[5] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.headcode[6] = Reversebytes_uint16(query.getColumn(col++).getInt());
+
+		signal.tailcode[0] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.tailcode[1] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.tailcode[2] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.tailcode[3] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.tailcode[4] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.tailcode[5] = Reversebytes_uint16(query.getColumn(col++).getInt());
+		signal.tailcode[6] = Reversebytes_uint16(query.getColumn(col++).getInt());
+
+		signal.original_headflag = query.getColumn(col++).getInt();        		
+		signal.original_headtime = Reversebytes_uint16(query.getColumn(col++).getInt());
+#endif
 		std::string stroriginal = query.getColumn(col++);
-		signal.Set_original( stroriginal ); //jyc20160921 un note
+		signal.Set_original( stroriginal ); 
 
 		m_mapRFSignal[signal.id] = signal;
 	}

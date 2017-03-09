@@ -39,6 +39,9 @@ void g_DeleteRS485MsgQue( defRS485MsgQue &que );
 
 #define defRS485_Ver_Humidity_1601_201506A	"15061-YGCTS"	// 20150601 // 易谷科技 土壤湿度
 
+#define defRS485_Ver_HCHO_201706A	"autoc-16121-HCHO"
+#define defRS485_Ver_CO2_201706A	"autoc-16121-CO2"
+
 //-----------------------------------------------
 // 特定RS485地址
 
@@ -50,7 +53,15 @@ void g_DeleteRS485MsgQue( defRS485MsgQue &que );
 	pCtrl->AddSpecAddr( DeviceAddress( SwitchNumStart+defSwitchNumAddrFix, "开关", IOT_DEVICE_Switch, IOT_Byte, IOT_READWRITE, "0", "1" ), \
 	SwitchNumStart+defSwitchNumAddrFix, SwitchNumEnd+defSwitchNumAddrFix, SwitchNumStart );
 
-// 温度 读取温度
+#define defSpecAddr_CO2_Read( pCtrl ) \
+	pCtrl->AddSpecAddr( DeviceAddress( 1+1, "CO2", IOT_DEVICE_CO2, IOT_Float, IOT_READ ) );
+
+#define defSpecAddr_HCHO_Read( pCtrl ) \
+	pCtrl->AddSpecAddr( DeviceAddress( 2+1, "HCHO", IOT_DEVICE_HCHO, IOT_Float, IOT_READ ) );
+
+//#define defSpecAddr_PM25_Read( pCtrl ) \
+	pCtrl->AddSpecAddr( DeviceAddress( 1+1, "PM2.5", IOT_DEVICE_PM25, IOT_Float, IOT_READ ) );
+
 #define defSpecAddr_Temperature_Read( pCtrl ) \
 	pCtrl->AddSpecAddr( DeviceAddress( 1+1, "温度", IOT_DEVICE_Temperature, IOT_Float, IOT_READ ) );
 

@@ -803,9 +803,11 @@ uint16_t crc16_verify( uint8_t *buf, uint16_t len )
 		uchCRCLo = uchCRCHi ^ auchCRCHi[uIndex];
 		uchCRCHi = auchCRCLo[uIndex] ; 
 	} 
-
-	return ( (uchCRCHi << 8)| uchCRCLo );  //jyc20160918 big_end or small_end notice
-	//return ( (uchCRCLo << 8)| uchCRCHi );
+//jyc20170224 bigend or smallend UBUNTU DIFF OPENWRT
+if(OS_UBUNTU_FLAG)
+	return ( (uchCRCHi << 8)| uchCRCLo );
+else
+	return ( (uchCRCLo << 8)| uchCRCHi );
 }
 
 uint32_t g_StringToBuffer( const std::string &str, uint8_t *buf, uint32_t len, bool hasspace )
@@ -1344,7 +1346,14 @@ std::string g_Trans_GSReturn( defGSReturn ret )
 time_t g_GetUTCTime()
 {
 #if 1
-	return time(NULL);
+	//return time(NULL); //jyc20170224 modify linux time
+	// now time
+	SYSTEMTIME st;
+	memset( &st, 0, sizeof(st) );
+	//::GetLocalTime(&st);
+	GetLocalTime(&st);
+	tm temptm = {st.wSecond,st.wMinute,st.wHour,st.wDay,st.wMonth-1,st.wYear-1900,st.wDayOfWeek,0,0};
+	return mktime(&temptm);
 #else
 	time_t t;
 	struct tm *p;
@@ -1359,50 +1368,26 @@ bool g_UTCTime_To_struGSTime( const time_t utctime, struGSTime &dest )
 {
 	memset( &dest, 0, sizeof(struGSTime) );
 
-#if 1
 	struct tm p;
 	
 	//if( 0 != localtime_s( &p, &utctime ) ) //jyc20160922
-	if( 0 != localtime_r( &utctime, &p ) )
+	/*if( 0 != localtime_r( &utctime, &p ) )
 	{
 		memset( &dest, 0, sizeof(struGSTime) );
 		return false;
-	}
+	}*/
 
-	g_tm_To_struGSTime( p, dest );
+	localtime_r( &utctime, &p ); //jyc20170227 modify
+	//g_tm_To_struGSTime( p, dest );
+
+	dest.Year = p.tm_year+1900;
+	dest.Month = (unsigned char)p.tm_mon+1;
+	dest.Day = (unsigned char)p.tm_mday;
+	dest.Hour = (unsigned char)p.tm_hour;
+	dest.Minute = (unsigned char)p.tm_min;
+	dest.Second = (unsigned char)p.tm_sec;
 
 	return true;
-#else
-	FILETIME ftUTC = {0};
-	FILETIME ftLoc = {0};
-	LONGLONG ll = Int32x32To64( utctime, 10000000) + 116444736000000000;
-	ftUTC.dwLowDateTime = (DWORD) ll;
-	ftUTC.dwHighDateTime = (DWORD)(ll >> 32);
-	if( !FileTimeToLocalFileTime( &ftUTC, &ftLoc ) )
-	{
-		return false;
-	}
-
-	SYSTEMTIME st = {0};
-	if( !FileTimeToSystemTime( &ftLoc, &st ) )
-	{
-		return false;
-	}
-
-	dest.Year = st.wYear;
-	dest.Month = (unsigned char)st.wMonth;
-	dest.Day = (unsigned char)st.wDay;
-	dest.Hour = (unsigned char)st.wHour;
-	dest.Minute = (unsigned char)st.wMinute;
-	dest.Second = (unsigned char)st.wSecond;
-
-	//// 中国时区的信息
-	//TIME_ZONE_INFORMATION DEFAULT_TIME_ZONE_INFORMATION = {-480};
-
-	//// 将UTC时间转换为中国时区的本地时间
-	//SystemTimeToTzSpecificLocalTime( &DEFAULT_TIME_ZONE_INFORMATION, &sysTime, &sysTime );
-	return true;
-#endif
 }
 
 time_t g_struGSTime_To_UTCTime( const struGSTime &src )
@@ -2044,9 +2029,8 @@ time_t g_GetTimePointSecond( const IOTDeviceType type, const bool isPrevSecond )
 bool g_isTimePoint( const time_t utctime, const IOTDeviceType type )
 {
 	const time_t TimePoint = ( utctime / 1800 ) * 1800;
-
 	const time_t PrevSecond = g_GetTimePointSecond( type, true );
-	const time_t AfterSecond = g_GetTimePointSecond( type, false );
+	const time_t AfterSecond = g_GetTimePointSecond( type, false );  //jyc20170228 modify
 
 	return ( utctime > (TimePoint-PrevSecond) ||  utctime < (TimePoint+AfterSecond) );
 }
@@ -2061,13 +2045,16 @@ time_t g_TransToTimePoint( const time_t utctime, const IOTDeviceType type, const
 	{
 		const time_t NextTimePoint = TimePoint + 1800;
 
-		if( utctime > (NextTimePoint-g_GetTimePointSecond(type, true)) )
+		//if( utctime > (NextTimePoint-g_GetTimePointSecond(type, true)) ) //jyc20170228 have problem
+		if( utctime > (NextTimePoint-60) )
 		{
 			struct tm loT;
 			//localtime_s( &loT, &TimePoint );
+			localtime_r( &TimePoint, &loT ); //jyc20170227modify
 
 			struct tm loTNext;
 			//localtime_s( &loTNext, &NextTimePoint );
+			localtime_r( &NextTimePoint, &loTNext ); //jyc20170227modify
 
 			if( loT.tm_mday == loTNext.tm_mday )
 			{

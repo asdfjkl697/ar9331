@@ -122,29 +122,22 @@ bool RFSignal::IsNear( const RFSignal &other ) const
 {
 	if( !other.isValid() || !this->isValid() )
 		return false;
-
 	if( other.signal_type != this->signal_type )
 		return false;
-
 	if( other.freq != this->freq )
 		return false;
-
 	switch( signal_type )
 	{
 	case defRFSignalType_code:
 		{
 			if( other.code != this->code )
 				return false;
-
 			if( other.codeValidLen != this->codeValidLen )
 				return false;
-
 			if( other.headlen != this->headlen )
 				return false;
-
 			if( other.taillen != this->taillen )
 				return false;
-
 			return true;
 		}
 		break;
@@ -160,7 +153,6 @@ bool RFSignal::IsNear( const RFSignal &other ) const
 
 			if( abs( (int)other.original_headtime-(int)this->original_headtime ) > 200 )
 				return false;
-
 			const int originallen = this->original_len <= defRFSignalOriginalMax ? this->original_len : defRFSignalOriginalMax;
 
 			for( int i=0; i<originallen; ++i )
@@ -168,7 +160,6 @@ bool RFSignal::IsNear( const RFSignal &other ) const
 				if( abs( (int)other.original[i]-(int)this->original[i] ) > 200 )
 					return false;
 			}
-
 			return true;
 		}
 	break;
@@ -402,8 +393,11 @@ bool RFSignal::Set_original( const std::string &stroriginal, const bool isByteSt
 			stopstring = NULL;
 			uint16_t val2 = (uint16_t)strtoul( msg, &stopstring, 16 );
 			pc += 2;
-
+#ifdef OS_UBUNTU_FLAG  
 			this->original[count] = val2<<8 | val1&0xFF;
+#else
+			this->original[count] = val1<<8 | val2&0xFF;  //jyc20170228 add
+#endif
 
 			++count;
 			if( count>=defRFSignalOriginalMax )
@@ -524,7 +518,7 @@ std::string RFSignal::Get_original( int format, const bool isByteStr ) const
 
 //#define macRFFSave_Str(key,strval) if( !::WritePrivateProfileStringA( defRFSignalFile_AppName, key, strval, filename.c_str() ) ) { return false; }
 //#define macRFFSave_Int(key,intval) _ultoa_s(intval, buf, sizeof(buf), 10); macRFFSave_Str( key, buf );
-bool RFSignal::SaveToFile( const std::string &filename ) const
+bool RFSignal::SaveToFile( const std::string &filename ) const //jyc20170224 notice
 {
 	char buf[256] = {0};
 
@@ -573,7 +567,7 @@ bool RFSignal::SaveToFile( const std::string &filename ) const
 
 //#define macRFFLoad_Str(key) ::GetPrivateProfileStringA( defRFSignalFile_AppName, key, "", buf, sizeof(buf), filename.c_str() )
 //#define macRFFLoad_Int(key) ::GetPrivateProfileIntA( defRFSignalFile_AppName, key, 0, filename.c_str() )
-bool RFSignal::LoadFromFile( const std::string &filename )
+bool RFSignal::LoadFromFile( const std::string &filename ) //jyc20170224 notice
 {
 	char buf[1024] = {0};
 

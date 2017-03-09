@@ -13,11 +13,6 @@ XmppGSChange::XmppGSChange( const Tag* tag )
 {
 	if( !tag || tag->name() != "gsiot" || tag->xmlns() != XMLNS_GSIOT_Change )
 		return;
-
-	//Tag *tmgr = tag->findChild("change");
-	//if( tmgr )
-	//{
-	//}
 }
 
 XmppGSChange::~XmppGSChange(void)

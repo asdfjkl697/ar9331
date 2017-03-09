@@ -55,7 +55,7 @@ void CommLinkCfg::set_default()
 {
 	lastCfgTs = 0;
 	id = 0;
-	name = "Á´Â·";
+	name = "link"; //jyc name
 	enable = 1;
 	link_type = defCommLinkType_TCP;
 	trans_mod = defTransMod_GSIOT;

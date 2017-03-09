@@ -1,6 +1,6 @@
 #include "XmppGSVObj.h"
 #include "GSIOTClient.h"
-#include "util.h"
+#include "gloox/util.h"
 #include "VObjClass.h"
 
 

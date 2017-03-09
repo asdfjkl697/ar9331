@@ -258,23 +258,15 @@ Tag* XmppGSState::tag() const
 				{
 				case IOT_DEVICE_Trigger:
 					{
-						/*jyc20160607*/
 						TriggerControl *ctl = (TriggerControl*)(*it)->getControl();
-
 						id = (*it)->getId();
 						AGRunStateFinalST = ctl->GetAGRunStateFinalST();
-						//*/
 					}
 					break;
 
 				case IOT_DEVICE_Camera:
 					{
-						/*20160607
-						IPCameraBase *ctl = (IPCameraBase*)(*it)->getControl();
 
-						id = (*it)->getId();
-						AGRunStateFinalST = ctl->GetAGRunStateFinalST();
-						*/
 					}
 					break;
 

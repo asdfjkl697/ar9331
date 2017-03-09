@@ -59,6 +59,13 @@ public:
 		case IOT_DEVICE_Humidity:
 			return std::string("Êª¶È");
 
+		case IOT_DEVICE_CO2:
+			return std::string("CO2");  //jyc20170304 add
+		case IOT_DEVICE_HCHO:
+			return std::string("HCHO");  //jyc20170304 add
+		case IOT_DEVICE_PM25:
+			return std::string("PM2.5");  //jyc20170304 add
+
 		case IOT_DEVICE_Trigger:
 			return std::string("´¥·¢Æ÷");
 
@@ -117,6 +124,13 @@ public:
 
 		case IOT_DEVICE_Humidity:
 			return std::string("Humi");
+
+		case IOT_DEVICE_CO2:
+			return std::string("Co2");
+		case IOT_DEVICE_HCHO:
+			return std::string("Hcho");
+		case IOT_DEVICE_PM25:
+			return std::string("Pm2.5");
 
 		case IOT_DEVICE_Trigger:
 			return std::string("Trig");

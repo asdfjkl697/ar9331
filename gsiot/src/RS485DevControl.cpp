@@ -13,6 +13,15 @@
 #define defValueRange_Wind_Min			(0)
 #define defValueRange_Wind_Max			(999)
 
+#define defValueRange_CO2_Min			(0)
+#define defValueRange_CO2_Max			(9999)
+
+#define defValueRange_HCHO_Min			(0)
+#define defValueRange_HCHO_Max			(999)
+
+#define defValueRange_PM25_Min			(0)
+#define defValueRange_PM25_Max			(9999)
+
 
 void g_DeleteRS485MsgQue( defRS485MsgQue &que )
 {
@@ -85,7 +94,7 @@ void RS485DevControl::InitNewMutex( bool CreateLock )
 		return;
 	}
 
-	// 只有在新建实例时才会调用，所以这里是不判断是否已分配，总是强制分配
+	// new dev use
 	m_pmutex_RS485DevCtl = new gloox::util::Mutex();
 }
 
@@ -182,6 +191,17 @@ RS485DevControl* RS485DevControl::CreateRS485DevControl_ModifyDevAddr( IOTDevice
 	case IOT_DEVICE_Switch:
 		address = 1+1;
 		break;
+
+	case IOT_DEVICE_CO2:
+		address = 115;
+		break;
+	case IOT_DEVICE_HCHO:
+		address = 119;
+		break;
+	case IOT_DEVICE_PM25:
+		address = 0x10+1;
+		break;
+			
 	case IOT_DEVICE_Temperature:
 		address = 0x10+1;
 		break;
@@ -226,7 +246,8 @@ RS485DevControl* RS485DevControl::CreateRS485DevControl_ModifyDevAddr( IOTDevice
 	snprintf( chID, sizeof(chID), "%d", newDevID );
 
 	RS485DevControl *prs485 = new RS485DevControl( oldDevID, defModbusCmd_Write, defProtocol_Unknown, ver );
-	//prs485->AddSpecAddr( DeviceAddress( address, "", DeviceType, IOT_Byte, IOT_WRITE, chID ) ); //20160614
+	//jyc20170306 notice 
+	//prs485->AddSpecAddr( DeviceAddress( address, "", DeviceType, IOT_Byte, IOT_WRITE, chID ) ); 
 
 	return prs485;
 }
@@ -265,6 +286,31 @@ bool RS485DevControl::IsValueOverRange( IOTDeviceType DeviceType, float val )
 {
 	switch( DeviceType )
 	{
+	case IOT_DEVICE_CO2:
+		{
+			if( macIsValueOverRange( val, defValueRange_CO2_Min, defValueRange_CO2_Max ) )
+			{
+				return true;
+			}
+		}
+		break;
+	case IOT_DEVICE_HCHO:
+		{
+			if( macIsValueOverRange( val, defValueRange_HCHO_Min, defValueRange_HCHO_Max ) )
+			{
+				return true;
+			}
+		}
+		break;
+	case IOT_DEVICE_PM25:
+		{
+			if( macIsValueOverRange( val, defValueRange_PM25_Min, defValueRange_PM25_Max ) )
+			{
+				return true;
+			}
+		}
+		break;
+			
 	case IOT_DEVICE_Temperature:
 		{
 			if( macIsValueOverRange( val, defValueRange_Temperature_Min, defValueRange_Temperature_Max ) )
@@ -300,6 +346,24 @@ float RS485DevControl::ValueRangeFix( IOTDeviceType DeviceType, float val )
 {
 	switch( DeviceType )
 	{
+	case IOT_DEVICE_CO2:
+		{
+			macValueRangeFix_Min( val, defValueRange_CO2_Min );
+			macValueRangeFix_Max( val, defValueRange_CO2_Max );
+		}
+		break;
+	case IOT_DEVICE_HCHO:
+		{
+			macValueRangeFix_Min( val, defValueRange_HCHO_Min );
+			macValueRangeFix_Max( val, defValueRange_HCHO_Max );
+		}
+		break;
+	case IOT_DEVICE_PM25:
+		{
+			macValueRangeFix_Min( val, defValueRange_PM25_Min );
+			macValueRangeFix_Max( val, defValueRange_PM25_Max );
+		}
+		break;
 	case IOT_DEVICE_Temperature:
 		{
 			macValueRangeFix_Min( val, defValueRange_Temperature_Min );
@@ -365,8 +429,7 @@ ControlBase* RS485DevControl::clone( bool CreateLock ) const
 
 std::string RS485DevControl::Print( const char *info, bool doPrint, DeviceAddress *const pSpecAddr ) const
 {
-	/**/
-		//jyc20160824
+	//jyc20160824
 	//const int thisThreadId = ::GetCurrentThreadId();
 	//pthread_t pthread_self();
 	const int thisThreadId = ::pthread_self(); //jyc20160825add get threadid must test later
@@ -399,7 +462,9 @@ std::string RS485DevControl::Print( const char *info, bool doPrint, DeviceAddres
 		}
 	}
 	
-	snprintf( buf, sizeof(buf), "RS485Ctl(%s) cnt=%d, 485id=%d, cmd=%d, addr=%d, val=(%s) -ThId%d\n", info?info:"", this->GetAddressList().size(), this->m_deviceID, this->m_command, addr?addr->GetAddress():0, strvalues.c_str(), thisThreadId );
+	snprintf( buf, sizeof(buf), "RS485Ctl(%s) cnt=%d, 485id=%d, cmd=%d, addr=%d, val=(%s) -ThId%d\n", info?info:"", 
+	         this->GetAddressList().size(), this->m_deviceID, this->m_command, addr?addr->GetAddress():0, 
+	         strvalues.c_str(), thisThreadId );
 	
 	if( doPrint )
 	{
@@ -407,7 +472,6 @@ std::string RS485DevControl::Print( const char *info, bool doPrint, DeviceAddres
 	}
 
 	return std::string(buf);
-	//*/
 }
 
 bool RS485DevControl::GetBtachReadParam( uint16_t &addressStart, uint16_t &addressCount, uint16_t &addressEnableCount ) const
@@ -502,6 +566,9 @@ bool RS485DevControl::Encode( defRS485MsgQue &que, DeviceAddress *const pSpecAdd
 			switch( pAddr->GetType() )
 			{
 			case IOT_DEVICE_Switch:
+			case IOT_DEVICE_CO2:
+			case IOT_DEVICE_HCHO:
+			case IOT_DEVICE_PM25:
 			case IOT_DEVICE_Temperature:
 			case IOT_DEVICE_Humidity:
 			case IOT_DEVICE_Wind:
@@ -560,6 +627,10 @@ bool RS485DevControl::Encode( defRS485MsgQue &que, DeviceAddress *const pSpecAdd
 
 			switch( pAddr->GetType() )
 			{
+			case IOT_DEVICE_CO2:
+			case IOT_DEVICE_HCHO:
+			//case IOT_DEVICE_PM25:
+				//break;
 			case IOT_DEVICE_Switch:
 			case IOT_DEVICE_Temperature:
 			case IOT_DEVICE_Humidity:
