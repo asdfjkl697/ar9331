@@ -38,6 +38,9 @@
 #define macEncodeParamEnd( enc, key, val ) strcat( enc, key ); strcat( enc, "=" ); strcat( enc, val );
 #define macEncodeParam( enc, key, val ) macEncodeParamEnd( enc, key, val ); strcat( enc, "," );
 
+using namespace std;  //jyc20170309 add
+#include <string>
+
 #ifndef OS_UBUNTU
 static void getNetworkValue(char *szBuf, uint8_t *value)
 {
@@ -104,9 +107,7 @@ static void getNetworkInfo(NETWORK_ADAPTER *adapter,char *interface)
 			getNetworkValue(szBuf, adapter->mac);
         }
     }			
-    fclose(fp);
-
-	
+    fclose(fp);	
 }
 
 static void getSNInfo(NETWORK_ADAPTER *adapter){
@@ -185,13 +186,221 @@ UDPServer::~UDPServer(void)
 #endif
 }
 
+int findaddr(uint8_t *s_str,uint8_t *d_str,uint16_t len){
+	int i,j,k,count=0;
+	char temp[80];
+	int length=sizeof(d_str);
+	for(i=0;i<len;i++){
+		k=0;
+		for(j=i;j<i+length;j++)
+			temp[k++]=s_str[j];
+		if(memcmp(temp,d_str,length))count++;
+		else{
+			return count;
+		}			
+	}
+	return -1;
+}
+
+static void modifysmartconfig(char *buf,char *flag,char *path)
+{
+    char szBuf[64];
+	FILE *fp = NULL;
+
+    if((fp=fopen(path, "r+"))==NULL)            
+    {
+        printf( "Can 't   open   file!\n"); 
+        return;
+    }
+	
+	while(fgets(szBuf,64,fp)!=NULL){
+		if(strstr(szBuf,flag)!=NULL){
+			long int position;
+			char q[40];
+			int szlen = strlen(szBuf);
+			int len = strlen(buf);
+			int flaglen = strlen(flag);
+			int lentmp = szlen - 9 -flaglen;
+			if(szlen!=40)break; //jyc20170315 set notice
+			if(flaglen+len+9>38)break; 
+			memset(q,' ',40);
+			q[0]='\t';
+			memcpy(&q[1],"option ",7);
+			memcpy(&q[8],flag,flaglen);
+			q[flaglen+8]=' ';
+			q[flaglen+9]='\'';
+			memcpy(&q[flaglen+10],buf,len);
+			q[flaglen+len+10]='\'';
+			q[39]='\0';
+			printf(" %s len=%d szlen=%d flaglen=%d lentmp=%d\n",q,len,szlen,flaglen,lentmp);
+			position = ftell(fp);
+			fseek(fp, position-szlen, SEEK_SET);
+			fwrite(q, szlen-1, 1, fp);
+			break;
+		}
+	}
+    fclose(fp);	
+}
+
+
+int Udpconfignet(uint8_t *buffer,uint16_t size){
+	char macch[18];
+	uint8_t macflag[4]={'m','a','c',':'};
+	uint8_t jidflag[4]={'j','i','d',':'};
+	uint8_t crcflag[4]={'c','r','c',':'};
+	uint8_t keyflag[4]={'k','e','y',':'};
+#ifdef OS_UBUNTU
+	char netpath[64]="/home/chen/smartconfig/sta/network";
+	char wifipath[64]="/home/chen/smartconfig/sta/wireless";
+	char jidpath[64]="/home/chen/smartconfig/gsjid";
+#else
+	char netpath[64]="/root/smartconfig/sta/network";
+	char wifipath[64]="/root/smartconfig/sta/wireless";
+	char jidpath[64]="/root/smartconfig/gsjid";
+#endif
+	uint8_t i,temp[20];
+	int macaddr,jidaddr,crcaddr,keyaddr;
+	int len;
+	uint32_t len_r;
+	len_r=(uint32_t)buffer[0]|buffer[1]<<8;
+	if(size!=len_r+4)return -1;
+	buffer+=4;
+	macaddr=findaddr(buffer,macflag,size);
+	jidaddr=findaddr(buffer,jidflag,size);
+	keyaddr=findaddr(buffer,keyflag,size);
+	crcaddr=findaddr(buffer,crcflag,size);
+	if((macaddr<0)||(jidaddr<0)||(keyaddr<0)||(crcaddr<0)) //fail config
+		return -1;
+	len=jidaddr-macaddr-sizeof(macflag);
+	if(len!=6)return -2; //mac failed
+	memcpy(temp,&buffer[macaddr+sizeof(macflag)],len);
+	for(i=0;i<6;i++){
+		uint8_t m=temp[i]>>4;
+		uint8_t n=temp[i]&0xf;
+		macch[3*i]=(m<10)?('0'+m):('a'-10+m);
+		macch[3*i+1]=(n<10)?('0'+n):('a'-10+n);
+		macch[3*i+2]=':';
+	}
+	macch[17]='\0';
+	printf("mac=%s\n",macch);
+	modifysmartconfig(macch,(char*)"macaddr",netpath);
+	modifysmartconfig(macch,(char*)"macaddr",wifipath);
+	len=keyaddr-jidaddr-sizeof(jidflag);
+	if(len<1)return -1;
+	memcpy(temp,&buffer[jidaddr+sizeof(jidflag)],len);
+	temp[len]='\0';
+	printf("jid=%s\n",(char*)temp);
+	modifysmartconfig((char*)temp,(char*)"hostname",netpath);
+	modifysmartconfig((char*)temp,(char*)"gsjid",jidpath);
+	len=crcaddr-keyaddr-sizeof(keyflag);
+	if(len<1)return -1;
+	memcpy(temp,&buffer[keyaddr+sizeof(keyflag)],len);
+	temp[len]='\0';
+	printf("key=%s\n",(char*)temp);
+	modifysmartconfig((char*)temp,(char*)"key",jidpath);
+#ifndef OS_UBUNTU
+	system("/root/smartconfig/netconfig.sh");
+#endif
+	return 1;
+}
+
+
+int Udpconfigwifi(uint8_t *buffer,uint16_t size){
+	uint8_t chlflag[4]={'c','h','l',':'};
+	uint8_t sidflag[4]={'s','i','d',':'};
+	uint8_t cptflag[4]={'c','p','t',':'};
+	uint8_t keyflag[4]={'k','e','y',':'};
+	uint8_t crcflag[4]={'c','r','c',':'};
+#ifdef OS_UBUNTU
+	char netpath[64]="/home/chen/smartconfig/sta/network";
+	char wifipath[64]="/home/chen/smartconfig/sta/wireless";
+	char jidpath[64]="/home/chen/smartconfig/gsjid";
+#else
+	char netpath[64]="/root/smartconfig/sta/network";
+	char wifipath[64]="/root/smartconfig/sta/wireless";
+	char jidpath[64]="/root/smartconfig/gsjid";
+#endif
+	uint8_t i,temp[20];
+	int chladdr,sidaddr,cptaddr,keyaddr,crcaddr;
+	int len;
+	uint32_t len_r;
+	len_r=(uint32_t)buffer[0]|buffer[1]<<8;
+	if(size!=len_r+4)return -1;
+	buffer+=4;
+	chladdr=findaddr(buffer,chlflag,size);
+	sidaddr=findaddr(buffer,sidflag,size);
+	cptaddr=findaddr(buffer,cptflag,size);
+	keyaddr=findaddr(buffer,keyflag,size);
+	crcaddr=findaddr(buffer,crcflag,size);
+	if((chladdr<0)||(sidaddr<0)||(cptaddr<0)||(keyaddr<0)||(crcaddr<0)) //fail config
+		return -1;
+	len=sidaddr-chladdr-sizeof(chlflag);
+	if(len<1)return -1;
+	memcpy(temp,&buffer[chladdr+sizeof(chlflag)],len);
+	temp[len]='\0';
+	printf("chl=%s\n",(char*)temp);
+	modifysmartconfig((char*)temp,(char*)"channel",wifipath);
+	len=cptaddr-sidaddr-sizeof(sidflag);
+	if(len<1)return -1;
+	memcpy(temp,&buffer[sidaddr+sizeof(sidflag)],len);
+	temp[len]='\0';
+	printf("sid=%s\n",(char*)temp);
+	modifysmartconfig((char*)temp,(char*)"ssid",wifipath);
+	len=keyaddr-cptaddr-sizeof(cptflag);
+	if(len<1)return -1;
+	memcpy(temp,&buffer[cptaddr+sizeof(cptflag)],len);
+	temp[len]='\0';
+	printf("cpt=%s\n",(char*)temp);
+	modifysmartconfig((char*)temp,(char*)"encryption",wifipath);
+	len=crcaddr-keyaddr-sizeof(keyflag);
+	if(len<1)return -1;
+	memcpy(temp,&buffer[keyaddr+sizeof(keyflag)],len);
+	temp[len]='\0';
+	printf("key=%s\n",(char*)temp);
+	modifysmartconfig((char*)temp,(char*)"key",wifipath);
+#ifndef OS_UBUNTU
+	system("/root/smartconfig/wificonfig.sh");
+#endif
+	return 1;
+}
+
 void UDPServer::PacketRead(uint8_t *data, int size, struct sockaddr_in *addr)
 {
 	data[size] = 0;
+	int result;
+	uint16_t i,crctemp,crcvalue;
 	
-    NetPacket pkt(data, size);	
+    	NetPacket pkt(data, size);	
+
 	if(pkt.Decode()){
 		switch(pkt.GetCommand()){
+			case CMD_BROADCAST_NETCONFIG: //jyc20170310 add
+
+				crcvalue=(uint16_t)data[size-1]<<8|data[size-2];
+				crctemp=0;
+				for(i=0;i<size-2;i++)crctemp+=data[i];
+				if(crctemp!=crcvalue){ //crc failed
+					printf("crc failed\n");
+					break;
+				}
+				result=Udpconfignet(&data[14],size-14); //jyc20170310
+				if(result<1)break;
+				pkt.AutoAck();
+				pkt.EncodeBuffer();		
+				this->Send(addr, (char *)pkt.getBuffer(), pkt.getLength()); //jyc20170309 debug
+				break;
+			case CMD_BROADCAST_WIFICONFIG: //jyc20170310 add
+				crcvalue=(uint16_t)data[size-1]<<8|data[size-2];
+				crctemp=0;
+				for(i=0;i<size-2;i++)crctemp+=data[i];
+				if(crctemp!=crcvalue) //crc failed
+					break;
+				result=Udpconfigwifi(&data[14],size-14); //jyc20170310
+				if(result<1)break;
+				pkt.AutoAck();
+				pkt.EncodeBuffer();		
+				this->Send(addr, (char *)pkt.getBuffer(), pkt.getLength()); //jyc20170309 debug
+				break;
 			case CMD_BROADCAST_INFO:
 			{
 				NETWORK_ADAPTER *adp;
@@ -257,7 +466,7 @@ void UDPServer::PacketRead(uint8_t *data, int size, struct sockaddr_in *addr)
 
 				//char *snstr;
 				//snstr=getDeviceSN();
-				getSNInfo(&adapter);
+				//getSNInfo(&adapter);
 
 				pkt.ResetToSend();
 				char *enc = (char*)pkt.get_data_ptr();

@@ -14,6 +14,8 @@ enum COMMAND
 	CMD_BROADCAST_INFO = 0x10,
 	CMD_BROADCAST_INFO_EX = 0x11,
 	CMD_BROADCAST_INFO_PARAM = 0x12,
+	CMD_BROADCAST_NETCONFIG = 0x13,
+	CMD_BROADCAST_WIFICONFIG = 0x14,
 	CMD_SET_NETWORK_IP = 0x20,
 	CMD_SET_WIFI_IP    = 0x30,
 	CMD_LOGIN          = 0x40,
@@ -151,7 +153,6 @@ class Packet
 		void stringCopy(uint8_t *temp, str_st *value);
         uint8_t* toHardware(uint8_t *data);
 };
-
 
 #endif
 

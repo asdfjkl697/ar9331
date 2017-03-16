@@ -20,9 +20,9 @@
 #define VERSION_SOFT "20150119"
 
 
-//#define OS_UBUNTU 1
+//#define OS_UBUNTU 1	   //jyc20170309 notice  linux openwrt swtich
 
-#define USESERIAL 1
+#define USESERIAL 1  
 #define SERIAL_BAND 115200 
 
 #ifdef OS_UBUNTU

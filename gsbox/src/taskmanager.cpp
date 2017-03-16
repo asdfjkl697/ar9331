@@ -106,17 +106,10 @@ void TaskManager_Timeout(evutil_socket_t fd, short what, void *arg) //jyc2016071
 {
 	//TimerHandler *task = (TimerHandler *)arg;
 	//task->OnEvent();
-	
-	uint8_t  buffer[20];
+
 	//Packet pkt(11);	
 	//uint8_t *enc = pkt.toHardware(buffer);
-
-	buffer[0]=0xbc;buffer[1]=0xac;buffer[2]=0x04;
-	buffer[3]=0x65;buffer[4]=0xe0;buffer[5]=0x10;
-	buffer[6]=0x0a;buffer[7]=0xac;
 	
-
-
 	/*if(boardhandler!=NULL){
 		boardhandler->Send(buffer, enc - buffer);
 	}*/
@@ -127,13 +120,13 @@ TaskManager::TaskManager(void)
 {
 
 		this->evbase = event_base_new();
-		/*
+		
 		struct timeval tv;  	
 		tv.tv_sec = 5;
 		tv.tv_usec = 0;
 
 		this->timeout_event = event_new(this->evbase, -1, EV_PERSIST, TaskManager_Timeout, this);
-		event_add(this->timeout_event, &tv);*/
+		event_add(this->timeout_event, &tv);
 
 }
 

@@ -10,7 +10,7 @@ int main(void)
 {	
 	Hardware *hw = new Hardware();
 	if(!hw->Open()){
-		return 0;
+		//return 0;  //jyc20170309 debug
 	}
 	//TimerHandler *timerhandler; //jyc20160719
 		
