@@ -2,7 +2,7 @@
 
 #include "XmppGSPlayback.h"
 #include "GSIOTClient.h"
-#include "util.h"
+#include "gloox/util.h"
 
 
 XmppGSUpdate::XmppGSUpdate( const struTagParam &TagParam, const std::string &cur_ver, const std::string &last_ver, defUPState state )

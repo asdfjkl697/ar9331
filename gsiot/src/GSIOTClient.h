@@ -39,7 +39,7 @@
 #include "XmppGSReport.h"
 #include "XmppGSUpdate.h"
 #include "IGSMessageHandler.h"
-//#include "Parser.h"
+//#include "Parser.h"  
 //#include "GSRemoteTalkMgr.h"
 #include "RunCode.h"
 #include "DataStoreMgr.h"
@@ -48,8 +48,6 @@ namespace httpreq
 {
 	#include "HttpRequest.h"
 }
-
-//#include "typedef.h"
 
 
 #define LOGMSG printf

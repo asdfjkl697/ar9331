@@ -14,6 +14,8 @@
 #include <stdlib.h> 
 //#include <string.h> 
 //#include <winsock2.h> 
+#include <sys/socket.h>  //jyc20170318 add
+#include <netdb.h>		//jyc20170318 add
  
 #include "memmacro.h"
 #include "common.h"
@@ -57,7 +59,8 @@ private:
 	void		MemBufferGrow(MemBuffer *b); 
 	void		MemBufferAddByte(MemBuffer *b, unsigned char byt); 
 	void		MemBufferAddBuffer(MemBuffer *b, unsigned char *buffer, size_t size); 
-	DWORD		GetHostAddress(const char* host); 
+	DWORD		GetHostAddress(const char* host); //jyc20170318 remove const
+	//DWORD		GetHostAddress(char* host);
 	void		SendString(SOCKET sock,LPCSTR str); 
 	BOOL		ValidHostChar(char ch); 
 	void		ParseURL(LPCSTR url,LPSTR protocol,int lprotocol, LPSTR host,int lhost,LPSTR request,int lrequest,int *port); 
@@ -67,6 +70,7 @@ private:
 public: 
 	//void		SendRequest(bool IsPost, char* url, char *pszHeaderSend, char *pszHeaderReceive, char *pszMessage); 
 	bool		SendRequest(bool IsPost, const char* url, std::string &psHeaderSend, std::string &psHeaderReceive, std::string &psMessage); 
+	//bool		SendRequest(bool IsPost, const char* url);
 }; 
  
 #endif // !defined(AFX_REQUEST_H__9F2C9BB6_CBA7_40AF_80A4_09A1CE1CE220__INCLUDED_) 

@@ -174,7 +174,6 @@ Tag* DeviceAddress::tag(const struTagParam &TagParam)
 	i->addAttribute("data",(int)this->m_address);
 
 	if( TagParam.isValid && TagParam.isResult )  //jyc20170302 notice TagParam.isResult always=false
-	//if( TagParam.isValid )  //jyc20170305 notice data cannot refresh
 	{
 		this->tagEditAttr( i, TagParam );
 
@@ -487,8 +486,7 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 
 					case IOT_DEVICE_CO2:
 					case IOT_DEVICE_HCHO:
-					//case IOT_DEVICE_PM25:
-						//break;
+
 					case IOT_DEVICE_Temperature:
 					case IOT_DEVICE_Humidity:
 					default:

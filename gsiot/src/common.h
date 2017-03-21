@@ -18,25 +18,38 @@
 
 #include <string.h> //jyc20160526
 #include <time.h>
-#define BOOL int
-#define BYTE unsigned char
-#define DWORD unsigned long int
-#define CHAR char
+
+
 #define LOGMSG printf
 
-//jyc20160824 modify 
-#define SOCKET int
-#define SOCKADDR_IN sockaddr_in
-#define SOCKADDR sockaddr
-#define INVALID_SOCKET -1
-#define SOCKET_ERROR -1
+//jyc20160824 modify socket for linux 
+#define SOCKET				int
+#define SOCKADDR_IN			sockaddr_in
+#define SOCKADDR			sockaddr
+#define INVALID_SOCKET		-1
+#define SOCKET_ERROR		-1
 
-#define LPSTR char *  //jyc20160824
-#define LPCSTR char*
+//#define BOOL int
+//#define BYTE unsigned char
+//#define DWORD unsigned long int
+//#define CHAR char
+//#define LPSTR char *  //jyc20160824
+//#define LPCSTR char*
+//#define LPVOID void*
+//#define LPCVOID const void*
 
-#define __stdcall //jyc20160826
-#define LPVOID void*
-#define LPCVOID const void*
+#define TRUE                true			//jyc20170319 modify type for linux
+#define FALSE               false
+#define __stdcall 
+typedef int                 BOOL;		
+typedef unsigned char       BYTE;
+typedef char                CHAR;
+typedef unsigned long       DWORD;
+typedef char               *LPSTR;    
+typedef const char         *LPCSTR;
+typedef void			   *LPVOID;
+typedef const void	       *LPCVOID;
+
 
 class nullptr_tt
 {

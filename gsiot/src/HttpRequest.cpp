@@ -19,7 +19,19 @@ Request::~Request()
 {   
        
 }   
-       
+
+
+char *strupr(char *str)  //jyc20170318 add for linux
+{
+	char *ptr = str;
+
+	while (*ptr != '\0 ') {
+		if (islower(*ptr))
+		*ptr = toupper(*ptr);
+		ptr++;
+	}
+	return str;
+}
        
 //*******************************************************************************************************   
 //MemBufferCreate:    
@@ -77,7 +89,7 @@ void Request::MemBufferAddBuffer(MemBuffer *b,
 //                  Resolve using DNS or similar(WINS,etc) the IP    
 //                   address for a domain name such as www.wdj.com.    
 //*******************************************************************************************************   
-DWORD Request::GetHostAddress(LPCSTR host)   
+DWORD Request::GetHostAddress(LPCSTR host)  
 {   
     struct hostent *phe;   
     char *p;   
@@ -85,19 +97,19 @@ DWORD Request::GetHostAddress(LPCSTR host)
     phe = gethostbyname( host );   
                    
     if(phe==NULL)   
-        return 0;   
-           
+        return 0;        
     p = *phe->h_addr_list;   
     return *((DWORD*)p);   
-}   
-       
+}  
+
+      
 //*******************************************************************************************************   
 // SendString:    
 //                  Send a string(null terminated) over the specified socket.   
 //*******************************************************************************************************   
 void Request::SendString(SOCKET sock,LPCSTR str)   
 {   
-    send(sock,str,strlen(str),0);   
+    send(sock,str,strlen(str),0);
 }   
        
 //*******************************************************************************************************   
@@ -132,11 +144,13 @@ void Request::ParseURL(LPCSTR url,LPSTR protocol,int lprotocol,
     if(ptr!=NULL)   
     {   
         *(ptr++) = 0;   
-        lstrcpynA(protocol,work,lprotocol);   
+        //lstrcpynA(protocol,work,lprotocol);   //jyc20170319 modify
+		strncpy(protocol,work,lprotocol);
     }   
     else   
     {   
-        lstrcpynA(protocol,"HTTP",lprotocol);   
+        //lstrcpynA(protocol,"HTTP",lprotocol); 
+		strncpy(protocol,"HTTP",lprotocol);
         ptr = work;   
     }   
        
@@ -148,9 +162,11 @@ void Request::ParseURL(LPCSTR url,LPSTR protocol,int lprotocol,
         ptr2++;   
        
     *ptr2=0;   
-    lstrcpynA(host,ptr,lhost);   
+    //lstrcpynA(host,ptr,lhost); 
+	strncpy(host,ptr,lhost);
        
-    lstrcpynA(request,url + (ptr2-work),lrequest);   // find the request   
+    //lstrcpynA(request,url + (ptr2-work),lrequest);   // find the request  
+	strncpy(request,url + (ptr2-work),lrequest);
        
     ptr = strchr(host,':');                         // find the port number, if any   
     if(ptr!=NULL)   
@@ -160,7 +176,7 @@ void Request::ParseURL(LPCSTR url,LPSTR protocol,int lprotocol,
     }   
        
     free(work);   
-}   
+}  
        
 //*******************************************************************************************************   
 // SendHTTP:    
@@ -173,179 +189,111 @@ void Request::ParseURL(LPCSTR url,LPSTR protocol,int lprotocol,
 //   
 //                    returns 1 on failure, 0 on success.   
 //*******************************************************************************************************   
-int Request::SendHTTP(LPCSTR url,LPCSTR headerReceive,BYTE *post,   
-        DWORD postLength,HTTPRequest *req)   
+int Request::SendHTTP(LPCSTR url,
+                      LPCSTR headerReceive,
+                      BYTE *post,   
+    				  DWORD postLength,
+                      HTTPRequest *req)   
 {   
-    WSADATA         WsaData;   
+    //WSADATA         WsaData;   //jyc20170318 remove
     SOCKADDR_IN     sin;   
     SOCKET          sock;   
     char            buffer[512];   
-    char            protocol[20],host[256],request[1024];   
+    //char            protocol[20],host[256],request[1024];   
     int             l,port,chars,err;   
     MemBuffer       headersBuffer,messageBuffer;   
     char            headerSend[1024];   
     BOOL            done;   
-           
-       
-       
-       
-    ParseURL(url,protocol,sizeof(protocol),host,sizeof(host),       // Parse the URL   
+	
+	/*
+	ParseURL(url,protocol,sizeof(protocol),host,sizeof(host),       // Parse the URL   
         request,sizeof(request),&port);   
-    if(strcmp(protocol,"HTTP"))   
+	if(strcmp(protocol,"HTTP"))   
         return 1;   
-       
-    err = WSAStartup (0x0101, &WsaData);                            // Init Winsock   
-    if(err!=0)   
-        return 1;   
-       
-    sock = socket (AF_INET, SOCK_STREAM, 0);   
-    //if (socket == INVALID_SOCKET)   
+    */   
+	char protocol[20]={"HTTP"};  //jyc20170321 modify  parseurl have trouble
+	char host[256]={"API.GSSS.CN"};
+	char request[1024]={"/iot_ctl_update.ashx?getupdate=box_update"};//{"/iot_ctl_update.ashx"}; //
+	port = 80;
+    sock = socket (AF_INET, SOCK_STREAM, 0);      
     if (sock == INVALID_SOCKET)   
-        return 1;   
-       
-           
-    sin.sin_family = AF_INET;                                       //Connect to web sever   
-    sin.sin_port = htons( (unsigned short)port );   
-    sin.sin_addr.s_addr = GetHostAddress(host);   
-       
-    if( connect (sock,(LPSOCKADDR)&sin, sizeof(SOCKADDR_IN) ) )   
-    {   
-       
-        return 1;   
-    }   
-       
-       
-          
-    //printf("\r\n\r\n <<SEND   HTTP   REQUEST  : >> \r\n\r\n");         //Send request   
-           
-       
-       
-    if( !*request )   
-        lstrcpynA(request,"/",sizeof(request));   
-       
-    if( post == NULL )   
-    {   
-        //SendString(sock,"GET ");   
+        return 1; 
+    sin.sin_family = AF_INET;                                       //Connect to web sever  
+	sin.sin_port = htons( (unsigned short)port );  
+	printf("host =%s...\n",host); //jyc20170320 debug
+    sin.sin_addr.s_addr = GetHostAddress(host); 	//jyc20170320 sometimes have trouble
+	//jyc20170318 modify for linux
+    //if( connect (sock,(LPSOCKADDR)&sin, sizeof(SOCKADDR_IN) ) )   
+    //{          
+    //    return 1;   
+    //}    
+	
+	if(-1 == connect(sock,(struct sockaddr*)&sin,sizeof(struct sockaddr)))  //linux
+    {
+        return 1;
+    }
+    if( !*request ){   
+        //lstrcpynA(request,"/",sizeof(request));  //
+		strncpy(request,"/",sizeof(request)); //cannot do this have trouble memory bad
+	}    
+    if( post == NULL ) {    
         strcpy(headerSend, "GET ");   
     }   
-    else    
-    {   
-        //SendString(sock,"POST ");   
+    else{ 
         strcpy(headerSend, "POST ");   
-    }   
-    //SendString(sock,request);   
+    }     
     strcat(headerSend, request);   
-       
-    //SendString(sock," HTTP/1.0\r\n");   
-    strcat(headerSend, " HTTP/1.0\r\n");   
-	//SendString(sock,"Accept: */*\r\n");
+    strcat(headerSend, " HTTP/1.0\r\n");
 	strcat(headerSend,"Accept: */*\r\n");
-
-    //SendString(sock,"Accept: image/gif, image/x-xbitmap,"   
-    //    " image/jpeg, image/pjpeg, application/vnd.ms-excel,"   
-    //    " application/msword, application/vnd.ms-powerpoint,"   
-    //    " */*\r\n");   
-    //    strcat(headerSend, "Accept: image/gif, image/x-xbitmap,"   
-    //    " image/jpeg, image/pjpeg, application/vnd.ms-excel,"   
-    //    " application/msword, application/vnd.ms-powerpoint,"   
-    //    " */*\r\n"); 
-       
-    //SendString(sock,"Accept-Language: en-us\r\n");   
-    //    strcat(headerSend, "Accept-Language: en-us\r\n");   
-       
-    //SendString(sock,"Accept-Encoding: gzip, deflate\r\n");   
-    //    strcat(headerSend, "Accept-Encoding: gzip, deflate\r\n");   
-       
-    //SendString(sock,"User-Agent: Mozilla/4.0\r\n");   
-    strcat(headerSend, "User-Agent: Mozilla/4.0\r\n");   
-       
-    if(postLength)   
-    {   
-        wsprintfA(buffer,"Content-Length: %ld\r\n",postLength);   
-        //SendString(sock,buffer);   
-        strcat(headerSend, buffer);   
+	strcat(headerSend, "User-Agent: Mozilla/4.0\r\n");      
+    if(postLength){   
+        //wsprintfA(buffer,"Content-Length: %ld\r\n",postLength); //jyc20170318 modify
+		sprintf(buffer,"Content-Length: %ld\r\n",postLength);
+		strcat(headerSend, buffer);   
     }   
-    //SendString(sock,"Cookie: mycookie=blablabla\r\n");   
-    //  printf("Cookie: mycookie=blablabla\r\n");   
-    //SendString(sock,"Host: ");   
-    strcat(headerSend, "Host: ");   
-       
-    //SendString(sock,host);   
+    strcat(headerSend, "Host: ");       
     strcat(headerSend, host);   
-       
-    //SendString(sock,"\r\n");   
     strcat(headerSend, "\r\n");   
-       
-    if( (headerReceive!=NULL) && *headerReceive )   
-    {   
-        //SendString(sock,headerReceive);   
+    if( (headerReceive!=NULL) && *headerReceive ){   
         strcat(headerSend, headerReceive);   
-    }   
-           
-    //SendString(sock,"\r\n");                                // Send a blank line to signal end of HTTP headerReceive   
-    strcat(headerSend, "\r\n");   
-
-
+    }           
+    strcat(headerSend, "\r\n"); 
+	
 	// SEND HEADER ALL
-	LOGMSG( headerSend );
+	LOGMSG("%s", headerSend );
 	SendString( sock, headerSend );
-       
     if( (post!=NULL) && postLength )   
     {   
         send(sock,(const char*)post,postLength,0);   
         post[postLength]    = '\0';   
                
         strcat(headerSend, (const char*)post);   
-    }   
-           
-    //strcpy(req->headerSend, headerSend);   
-    req->headerSend      = (char*) malloc( sizeof(char*) * strlen(headerSend));   
-    strcpy(req->headerSend, (char*) headerSend );   
-//  req->headerSend      = (char*) headerSend ;   
-       
-       
-//  free(req->headerSend);   
-       
-       
-       
-       
-    // Read the result   
-    //printf("\r\n\r\n <<RECEIVE   HTTP   REQUEST  : >> \r\n\r\n\r\n"); // First read HTTP headerReceive   
-       
-    MemBufferCreate(&headersBuffer );   
+    }  
+	req->headerSend      = (char*) malloc( sizeof(char*) * strlen(headerSend));   
+	strcpy(req->headerSend, (char*) headerSend ); 
+	MemBufferCreate(&headersBuffer );   
     chars = 0;   
-    done = FALSE;   
-       
-    while(!done)   
-    {   
+    done = false; //done = FALSE;   //jyc20170318 FALSE ->false  TRUE->true 
+	while(!done){   
         l = recv(sock,buffer,1,0);   
-        if(l<0)   
-            done=TRUE;   
+        if(l<0)done=true;   
        
-        switch(*buffer)   
-        {   
+        switch(*buffer){   
             case '\r':   
                 break;   
             case '\n':   
-                if(chars==0)   
-                    done = TRUE;   
+                if(chars==0)done = true;   
                 chars=0;   
                 break;   
             default:   
                 chars++;   
                 break;   
-        }   
-       
+        }     	 
         MemBufferAddByte(&headersBuffer,*buffer);   
     }   
-       
-    req->headerReceive   = (char*) headersBuffer.buffer;   
-    *(headersBuffer.position) = 0;   
-       
-           
-       
-    MemBufferCreate(&messageBuffer);                            // Now read the HTTP body   
-       
+	req->headerReceive   = (char*) headersBuffer.buffer;   //jyc20170320 remove
+    *(headersBuffer.position) = 0; 
+	MemBufferCreate(&messageBuffer);                            // Now read the HTTP body    
     do   
     {   
         l = recv(sock,buffer,sizeof(buffer)-1,0);   
@@ -353,14 +301,12 @@ int Request::SendHTTP(LPCSTR url,LPCSTR headerReceive,BYTE *post,
             break;   
         *(buffer+l)=0;   
         MemBufferAddBuffer(&messageBuffer, (unsigned char*)&buffer, l);   
-    } while(l>0);   
-    *messageBuffer.position = 0;   
-    req->message = (char*) messageBuffer.buffer;   
+    } while(l>0); 
+	*messageBuffer.position = 0; 
+	req->message = (char*) messageBuffer.buffer;   
     req->messageLength = (messageBuffer.position - messageBuffer.buffer);   
-       
-       
-    closesocket(sock);                                          // Cleanup   
-       
+	//closesocket(sock);                                          // Cleanup 
+	close(sock); //jyc20170318 modify
     return 0;   
 }   
        
@@ -369,8 +315,8 @@ int Request::SendHTTP(LPCSTR url,LPCSTR headerReceive,BYTE *post,
 // SendRequest   
 //   
 //*******************************************************************************************************   
-//void Request::SendRequest(bool IsPost, LPCSTR url, char *pszHeaderSend, char *pszHeaderReceive, char *pszMessage)   
-bool Request::SendRequest(bool IsPost, const char* url, std::string &psHeaderSend, std::string &psHeaderReceive, std::string &psMessage)   
+bool Request::SendRequest(bool IsPost, const char* url, std::string &psHeaderSend, 
+                          std::string &psHeaderReceive, std::string &psMessage) 
 {   
     HTTPRequest         req;   
     int                 i,rtn;
@@ -378,41 +324,28 @@ bool Request::SendRequest(bool IsPost, const char* url, std::string &psHeaderSen
        
     req.headerSend                          = NULL;   
     req.headerReceive                       = NULL;   
-    req.message                             = NULL;   
-       
-    //Read in arguments   
-           
-       
+    req.message                             = NULL;  
+    //Read in arguments             
     if(IsPost)   
-    {                                                   /* POST */   
-        i       = psHeaderSend.size();   
+    {                                                    /* POST */   
+		i       = psHeaderSend.size();   
         buffer  = (char*) malloc(i+1);   
-        strcpy(buffer, psHeaderSend.c_str());   
-       
-        rtn             = SendHTTP( url,   
-                                    "Content-Type: application/x-www-form-urlencoded\r\n",   
-                                    (unsigned char*)buffer,   
-                                    i,   
-                                    &req);   
-               
-        free(buffer);   
+        strcpy(buffer, psHeaderSend.c_str());         
+        rtn             = SendHTTP( url,"Content-Type: application/x-www-form-urlencoded\r\n",   
+                                    (unsigned char*)buffer,i,&req);               
+        free(buffer);  
     }   
     else                                                /* GET */   
-        rtn = SendHTTP(url,NULL,NULL,0,&req);   
-       
-       
-    if(!rtn)                                            //Output message and/or headerSend    
+        rtn = SendHTTP(url,NULL,NULL,0,&req);  
+	if(!rtn)                                            //Output message and/or headerSend    
     {   
         psHeaderSend        = req.headerSend;   
         psHeaderReceive     = req.headerReceive;   
         psMessage           = req.message;   
-       
-       
-        free(req.headerSend);   
-        free(req.headerReceive);   
-        free(req.message);   
+   		free(req.headerSend); 
+		free(req.headerReceive); 
+		free(req.message); 
 		return true;
     }
-
 	return false;
 }

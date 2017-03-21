@@ -1,7 +1,7 @@
 #pragma once
 #include "typedef.h"
-#include "stanzaextension.h"
-#include "tag.h"
+#include "gloox/stanzaextension.h"
+#include "gloox/tag.h"
 
 using namespace gloox;
 

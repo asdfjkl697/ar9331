@@ -30,6 +30,12 @@
 
 //#define defForceDataSave  //jyc20170228 debug
 
+static int sg_blUpdatedProc = 0;  //jyc20170318 resume
+
+namespace httpreq  //jyc20170318 resume
+{
+	#include "HttpRequest.cpp"
+}
 
 std::string g_IOTGetVersion()
 {
@@ -343,8 +349,8 @@ GSIOTClient::~GSIOTClient(void)  //jyc20170302 modify
 	   xmppClient->removeIqHandler(this, ExtIotReport);
 	   xmppClient->removeStanzaExtension(ExtIotMessage);
 	   xmppClient->removeIqHandler(this, ExtIotMessage);
-	   //xmppClient->removeStanzaExtension(ExtIotUpdate);
-	   //xmppClient->removeIqHandler(this, ExtIotUpdate);
+	   xmppClient->removeStanzaExtension(ExtIotUpdate);
+	   xmppClient->removeIqHandler(this, ExtIotUpdate);
 	   xmppClient->removeSubscriptionHandler(this);
 	   xmppClient->removeMessageHandler(this);
 	   xmppClient->removeIqHandler(this,ExtPing);
@@ -1747,27 +1753,28 @@ bool GSIOTClient::handleIq( const IQ& iq )
 					handleIq_Get_XmppGSReport( pExXmppGSReport, iq, pUser );
 					return true;
 				}
-				//*jyc20160922
+
 				XmppGSVObj *pExXmppGSVObj = (XmppGSVObj*)iq.findExtension(ExtIotVObj);
 				if( pExXmppGSVObj )
 				{
 					handleIq_Get_XmppGSVObj( pExXmppGSVObj, iq, pUser );
 					return true;
 				}
-				/*jyc20170306 add
+				/*jyc20170306 remove
 				XmppGSTrans *pExXmppGSTrans = (XmppGSTrans*)iq.findExtension( ExtIotTrans );
 				if( pExXmppGSTrans )
 				{
 					handleIq_Get_XmppGSTrans( pExXmppGSTrans, iq, pUser );
 					return true;
 				}
+				*/
 				
 				XmppGSUpdate *pExXmppGSUpdate = (XmppGSUpdate*)iq.findExtension(ExtIotUpdate);
 				if( pExXmppGSUpdate )
 				{
 					handleIq_Set_XmppGSUpdate( pExXmppGSUpdate, iq, pUser );
 					return true;
-				}*/
+				}
 				
 				GSIOTInfo *iotInfo = (GSIOTInfo *)iq.findExtension(ExtIot);
 				if(iotInfo){
@@ -2068,7 +2075,6 @@ bool GSIOTClient::handleIq( const IQ& iq )
 				XmppGSVObj *pExXmppGSVObj = (XmppGSVObj*)iq.findExtension(ExtIotVObj);
 				if( pExXmppGSVObj )
 				{
-					//*jyc20160923 notice
 					defUserAuth curAuth = m_cfg->m_UserMgr.check_Auth( pUser, IOT_Module_manager, defAuth_ModuleDefaultID );
 					if( !GSIOTUser::JudgeAuth( curAuth, defUserAuth_WO ) )
 					{
@@ -2081,21 +2087,20 @@ bool GSIOTClient::handleIq( const IQ& iq )
 						XmppClientSend(re,"handleIq Send(Set ExtIotVObj ACK)");
 						return true;
 					}
-
-					this->AddGSMessage( new GSMessage(defGSMsgType_Notify, iq.from(), iq.id(), pExXmppGSVObj->clone() ) );
-					//*/
+					//jyc20170318 modify
+					//this->AddGSMessage( new GSMessage(defGSMsgType_Notify, iq.from(), iq.id(), pExXmppGSVObj->clone() ) );
+					GSMessage *pMsg = new GSMessage(defGSMsgType_Notify, iq.from(), iq.id(), pExXmppGSVObj->clone() );
+					handleIq_Set_XmppGSVObj( pMsg );
+					delete pMsg;
 					return true;
 				}
 
 				XmppGSUpdate *pExXmppGSUpdate = (XmppGSUpdate*)iq.findExtension(ExtIotUpdate);
 				if( pExXmppGSUpdate )
 				{
-					//jyc20160923
-					//handleIq_Set_XmppGSUpdate( pExXmppGSUpdate, iq, pUser );
+					handleIq_Set_XmppGSUpdate( pExXmppGSUpdate, iq, pUser );
 					return true;
 				}
-
-				
 
 				GSIOTControl *iotControl = (GSIOTControl *)iq.findExtension(ExtIotControl);
 				if(iotControl){
@@ -3459,103 +3464,6 @@ void GSIOTClient::handleIq_Get_XmppGSVObj( const XmppGSVObj *pXmpp, const IQ& iq
 	XmppClientSend(re,"handleIq Send(Get ExtIotVObj ACK)");
 }
 
-/*void GSIOTClient::handleIq_Get_XmppGSTrans( const XmppGSTrans *pXmpp, const IQ& iq, const GSIOTUser *pUser )
-{
-	XmppGSTrans *pRetXmpp = new XmppGSTrans( struTagParam( true, true ), pXmpp->get_iXmppType(), pXmpp->get_device_type(), pXmpp->get_device_id(), pXmpp->get_srcPicPreSize(), pXmpp->get_PicPreSize() );
-	pRetXmpp->m_result = defGSReturn_Err;
-
-	defUserAuth curAuth = m_cfg->m_UserMgr.check_Auth( pUser, pXmpp->get_device_type(), pXmpp->get_device_id() );
-
-	if( GSIOTUser::JudgeAuth( curAuth, defUserAuth_RO ) )
-	{
-		switch( pXmpp->get_iXmppType() )
-		{
-		case XmppGSTrans::iXmppType_prepic:
-		{
-			const int PicPreSize = pXmpp->get_PicPreSize();
-			if( PicPreSize > defPicPreSize_Unknown && PicPreSize < defPicPreSize_MAX )
-			{
-				pRetXmpp->m_filetype = "jpg";
-				pRetXmpp->m_filename = g_createPicPre_Name(pXmpp->get_device_type(), pXmpp->get_device_id(), str_PicPreSize[PicPreSize]);
-				pRetXmpp->m_result = g_FileToBase64( g_createPicPre_FullPathName( pXmpp->get_device_type(), pXmpp->get_device_id(), str_PicPreSize[PicPreSize] ), pRetXmpp->m_base64data ) ? defGSReturn_Success : defGSReturn_Err;
-			}
-			else
-			{
-				pRetXmpp->m_result = defGSReturn_ErrParam;
-			}
-
-			break;
-		}
-
-		case XmppGSTrans::iXmppType_realpic:
-		{
-			const int PicPreSize = pXmpp->get_PicPreSize();
-			if( PicPreSize > defPicPreSize_Unknown && PicPreSize < defPicPreSize_MAX )
-			{
-				GSIOTDevice *device = this->GetIOTDevice( pXmpp->get_device_type(), pXmpp->get_device_id() );
-				if( device )
-				{
-					char buf[768*1024];
-					DWORD bufsize = sizeof( buf );
-
-					defPicPreSize PicPreSize = pXmpp->get_PicPreSize();
-					void *inParam = &PicPreSize;
-
-					int *outParam[2];
-					outParam[0] = (int*)buf;
-					outParam[1] = (int*)&bufsize;
-
-					if( m_IGSMessageHandler )
-					{
-						pRetXmpp->m_result = m_IGSMessageHandler->OnControlOperate( defCtrlOprt_DoRealPic, device->getExType(), device, NULL, defNormSendCtlOvertime, defNormMsgOvertime, inParam, outParam );
-					}
-					else
-					{
-						pRetXmpp->m_result = defGSReturn_UnSupport;
-					}
-
-					if( macGSSucceeded(pRetXmpp->m_result) )
-					{
-						if( g_base64_encode_str( pRetXmpp->m_base64data, (uint8_t*)buf, bufsize ) )
-						{
-							pRetXmpp->m_result = defGSReturn_Success;
-							pRetXmpp->m_filetype = "jpg";
-							pRetXmpp->m_filename = g_createPicPre_BaseName( pXmpp->get_device_type(), pXmpp->get_device_id() ) + g_TimeToStr( g_GetUTCTime(), defTimeToStrFmt_UTC ) + ".jpg";
-						}
-						else
-						{
-							pRetXmpp->m_result = defGSReturn_Err;
-						}
-					}
-				}
-				else
-				{
-					pRetXmpp->m_result = defGSReturn_NoExist;
-				}
-			}
-			else
-			{
-				pRetXmpp->m_result = defGSReturn_ErrParam;
-			}
-
-			break;
-		}
-
-		default:
-			pRetXmpp->m_result = defGSReturn_UnSupport;
-			break;
-		}
-	}
-	else
-	{
-		pRetXmpp->m_result = defGSReturn_NoAuth;
-	}
-	
-	IQ re( IQ::Result, iq.from(), iq.id() );
-	re.addExtension( pRetXmpp );
-	XmppClientSend( re, "handleIq Send(Get ExtIotTrans ACK)" );
-}*/
-									
 void GSIOTClient::handleIq_Get_XmppGSReport( const XmppGSReport *pXmpp, const IQ& iq, const GSIOTUser *pUser )
 {
 	XmppGSReport *pRetXmpp = new XmppGSReport(struTagParam(true,true));
@@ -3628,6 +3536,53 @@ void GSIOTClient::handleIq_Get_XmppGSReport( const XmppGSReport *pXmpp, const IQ
 	IQ re( IQ::Result, iq.from(), iq.id() );
 	re.addExtension( pRetXmpp );
 	XmppClientSend(re,"handleIq Send(Get ExtIotReport ACK)");
+}
+
+void GSIOTClient::handleIq_Set_XmppGSUpdate( const XmppGSUpdate *pXmpp, const IQ& iq, const GSIOTUser *pUser )
+{
+	if( !pXmpp )
+	{
+		return;
+	}
+
+	defUserAuth curAuth = m_cfg->m_UserMgr.check_Auth( pUser, IOT_Module_system, defAuth_ModuleDefaultID );
+	if( !GSIOTUser::JudgeAuth( curAuth, defUserAuth_WO ) )
+	{
+		IQ re( IQ::Result, iq.from(), iq.id());
+		re.addExtension( new XmppGSResult( XMLNS_GSIOT_UPDATE, defGSReturn_NoAuth ) );
+		XmppClientSend(re,"handleIq Send(ExtIotUpdate ACK)");
+		return ;
+	}
+
+	switch( pXmpp->get_state() )
+	{
+	case XmppGSUpdate::defUPState_check:
+		{
+			this->Update_Check_fromremote( iq.from(), iq.id() );
+		}
+		break;
+
+	case XmppGSUpdate::defUPState_update:
+	case XmppGSUpdate::defUPState_forceupdate:
+		{
+			std::string runparam;
+			if( XmppGSUpdate::defUPState_forceupdate == pXmpp->get_state() )
+			{
+				runparam = "-forceupdate";
+			}
+			else
+			{
+				runparam =  "-update";
+			}
+			Update_DoUpdateNow_fromremote( iq.from(), iq.id(), runparam ); //jyc20170318 debug
+		}
+		break;
+
+	default:
+		LOGMSG( "un support, state=%d", pXmpp->get_state() );
+		break;
+	}
+
 }
 
 
@@ -3775,7 +3730,7 @@ void GSIOTClient::Connect()
 		    return;
 		}
 		m_cfg->SaveToFile();
-		SetJidToServer( strjid, strmac ); //jyc20160823 have trouble, no httprequest.h
+		SetJidToServer( strjid, strmac ); //jyc20170319 resume
 	}
 	
 	/*push stream timer*/
@@ -3786,19 +3741,11 @@ void GSIOTClient::Connect()
 	timer->registerTimer(this,4,60);	// 间隔发ping
 	timer->registerTimer(this,5,300);	// check system
 	
-	//JID jid("000c2988989d@gsss.cn");
-	//jid.setResource("gsiot");
-	//xmppClient = new Client(jid,"cfqgleukxk");
-
-	//JID jid("000c29066dd5@gsss.cn");
-	//jid.setResource("gsiot");
-	//xmppClient = new Client(jid,"ljlhnqiiev");
-
 	JID jid(m_cfg->getJid());
 	jid.setResource("gsiot");
 	xmppClient = new Client(jid,m_cfg->getPassword());
 	
-	//注册物联网协议
+	//register iot protocol
 	xmppClient->disco()->addFeature(XMLNS_GSIOT);
 	xmppClient->disco()->addFeature(XMLNS_GSIOT_CONTROL);
 	xmppClient->disco()->addFeature(XMLNS_GSIOT_DEVICE);
@@ -3812,25 +3759,23 @@ void GSIOTClient::Connect()
 	xmppClient->disco()->addFeature(XMLNS_GSIOT_VObj);
 	xmppClient->disco()->addFeature(XMLNS_GSIOT_Report);
 	xmppClient->disco()->addFeature(XMLNS_GSIOT_MESSAGE);
-
-
+	xmppClient->disco()->addFeature(XMLNS_GSIOT_UPDATE);
 	xmppClient->registerStanzaExtension(new GSIOTInfo());
-	xmppClient->registerStanzaExtension(new XmppGSResult(NULL)); //jyc20160921
+	xmppClient->registerStanzaExtension(new XmppGSResult(NULL)); 
 	xmppClient->registerStanzaExtension(new GSIOTControl());
 	xmppClient->registerStanzaExtension(new GSIOTDeviceInfo());
 	xmppClient->registerStanzaExtension(new GSIOTHeartbeat());
 	xmppClient->registerStanzaExtension(new XmppGSAuth(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSAuth_User(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSManager(NULL));
-	xmppClient->registerStanzaExtension(new XmppGSEvent(NULL)); //jyc20160921
+	xmppClient->registerStanzaExtension(new XmppGSEvent(NULL)); 
 	xmppClient->registerStanzaExtension(new XmppGSState(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSChange(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSRelation(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSVObj(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSReport(NULL));
 	xmppClient->registerStanzaExtension(new XmppGSMessage(NULL));
-
-	
+	xmppClient->registerStanzaExtension(new XmppGSUpdate(NULL)); //jyc20170319 add	
 	xmppClient->registerIqHandler(this, ExtIot);
 	xmppClient->registerIqHandler(this, ExtIotControl);
 	xmppClient->registerIqHandler(this, ExtIotDeviceInfo);
@@ -3845,7 +3790,7 @@ void GSIOTClient::Connect()
 	xmppClient->registerIqHandler(this, ExtIotVObj);
 	xmppClient->registerIqHandler(this, ExtIotReport);
 	xmppClient->registerIqHandler(this, ExtIotMessage);
-
+	xmppClient->registerIqHandler(this, ExtIotUpdate);
 
 	xmppClient->registerConnectionListener( this );
 	//register direct access
@@ -3947,8 +3892,7 @@ bool GSIOTClient::SetJidToServer( const std::string &strjid, const std::string &
 {
 	char chreq_setjid[256] = {0};
 	snprintf( chreq_setjid, sizeof(chreq_setjid), "api.gsss.cn/gsiot.ashx?method=SetJID&jid=%s&mac=%s", strjid.c_str(), strmac.c_str() );
-	//jyc20160823
-	/*
+	//jyc20170319 resume
 	httpreq::Request req_setjid;
 	std::string psHeaderSend;
 	std::string psHeaderReceive;
@@ -3957,7 +3901,7 @@ bool GSIOTClient::SetJidToServer( const std::string &strjid, const std::string &
 	{
 		printf( "SetJID to server send success. HeaderReceive=\"%s\", Message=\"%s\"", UTF8ToASCII(psHeaderReceive).c_str(), UTF8ToASCII(psMessage).c_str() );
 		return true;
-	}*/
+	}
 	
 	printf( "SetJID to server send failed." );
 	return false;
@@ -4348,6 +4292,125 @@ void GSIOTClient::EventNoticeMsg_Send( const std::string &tojid, const std::stri
 	XmppClientSend( re, callinfo );
 }
 
+int _System(const char * cmd, char *pRetMsg, int msg_len)  //jyc20170319 add
+{  
+    FILE * fp;  
+    char * p = NULL;  
+    int res = -1;  
+    if (cmd == NULL || pRetMsg == NULL || msg_len < 0)  
+    {  
+        printf("Param Error!\n");  
+        return -1;  
+    }  
+    if ((fp = popen(cmd, "r") ) == NULL)  
+    {  
+        printf("Popen Error!\n");  
+        return -2;  
+    }  
+    else  
+    {  
+        memset(pRetMsg, 0, msg_len);  
+        //get lastest result  
+        while(fgets(pRetMsg, msg_len, fp) != NULL)  
+        {  
+            printf("Msg:%s",pRetMsg); //print all info  
+        }  
+  
+        if ( (res = pclose(fp)) == -1)  
+        {  
+            printf("close popenerror!\n");  
+            return -3;  
+        }  
+        pRetMsg[strlen(pRetMsg)-1] = '\0';  
+        return 0;  
+    }  
+} 
+
+bool GSIOTClient::Update_Check( std::string &strVerLocal, std::string &strVerNew )
+{
+	m_retCheckUpdate = false;
+	strVerLocal = "";
+	strVerNew = "";
+	m_strVerLocal = "";
+	m_strVerNew = "";
+	//std::string strPath = getAppPath();
+
+	// get local version  jyc notice 
+	/*char bufval[256] = {0};
+	const DWORD nSize = sizeof(bufval);
+	DWORD ReadSize = ::GetPrivateProfileStringA( "sys", "version", "0",  //jyc20170318 debug
+		bufval,
+		nSize,
+		(std::string(defFilePath)+"\\version.ini").c_str()
+		);*/
+#ifdef OS_UBUNTU_FLAG   //jyc20170319 add
+	char *cmd = "pwd";  
+#else
+	char *cmd = "opkg list-installed|grep gsiot";
+	//system("cd /root"); //jyc20170321 add
+#endif
+    char a8Result[128] = {0};  
+    int res = 0;  
+    res  = _System(cmd, a8Result, sizeof(a8Result));  
+	
+	m_strVerLocal = &a8Result[8];  //jyc20170319 modify
+
+	printf("ret = %d \na8Result = %s\nlength = %d \n", res, m_strVerLocal.c_str(), strlen(a8Result));
+
+	//std::string reqstr = "http://api.gsss.cn/iot_ctl_update.ashx";
+	std::string reqstr = "http://api.gsss.cn/iot_ctl_update.ashx?getupdate=box_update";
+	httpreq::Request req_setjid;
+	std::string psHeaderSend;
+	std::string psHeaderReceive;
+	std::string psMessage;
+	if( !req_setjid.SendRequest( false, reqstr.c_str(), psHeaderSend, psHeaderReceive, psMessage ) )  //?ver=20131200
+	{
+		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "SendRequest to server send failed." );
+		return false;
+	}
+	//LOGMSGEX( defLOGNAME, defLOG_INFO, "SendRequest to server send success. HeaderReceive=\"%s\", Message=\"%s\"", UTF8ToASCII(psHeaderReceive).c_str(), UTF8ToASCII(psMessage).c_str() );	
+	std::string copy = psMessage;
+	printf("copy=%s",copy.c_str());
+	int ret = 0; 
+	if( ( ret = m_parser.feed( copy ) ) >= 0 )
+	{
+		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "parser err. ret=%d", ret );
+		return false;
+	}
+	strVerLocal = m_strVerLocal;
+	strVerNew = m_strVerNew;
+	return m_retCheckUpdate;
+}
+
+void GSIOTClient::Update_Check_fromremote( const JID &fromjid, const std::string& from_id )
+{
+	sg_blUpdatedProc++;
+	std::string strVerLocal;
+	std::string strVerNew;
+	XmppGSUpdate::defUPState state = XmppGSUpdate::defUPState_Unknown;
+
+	if( this->Update_Check( strVerLocal, strVerNew ) )
+	{
+		if( strVerLocal == strVerNew )
+		{
+			state = XmppGSUpdate::defUPState_latest;
+		}
+		else
+		{
+			state = XmppGSUpdate::defUPState_update;
+		}
+	}
+	else
+	{
+		state = XmppGSUpdate::defUPState_checkfailed;
+	}
+	IQ re( IQ::Result, fromjid, from_id );
+	re.addExtension( new XmppGSUpdate( struTagParam(), 
+		strVerLocal, strVerNew, state
+		) );
+	XmppClientSend(re,"handleIq Send(ExtIotUpdate check ACK)");
+}
+
 void GSIOTClient::handleTag( Tag* tag )
 {
 	std::string strPath = getAppPath();
@@ -4372,6 +4435,99 @@ void GSIOTClient::handleTag( Tag* tag )
 	m_retCheckUpdate = true;
 
 	printf( "localver=%s, newver=%s", m_strVerLocal.c_str(), m_strVerNew.c_str() );
+}
+
+bool GSIOTClient::Update_DoUpdateNow( uint32_t &err, std::string runparam )
+{
+	err = 0;
+	/*LOGMSGEX( defLOGWatch, defLOG_SYS, "update program...\r\n" );
+	//LOGMSGEX( defLOGNAME, defLOG_SYS, "run update" );
+	HINSTANCE h = ShellExecuteA( NULL, "open", (std::string(defFilePath)+"\\"+defFileName_Update).c_str(), runparam.c_str(), NULL, SW_SHOWNORMAL );
+	if( (uint32_t)h > 32 )
+		return true;
+
+	err = (uint32_t)h;
+	*/
+#ifndef OS_UBUNTU_FLAG
+	char *cmd1 = "opkg install /root/gsbox.ipk";
+	char *cmd2 = "opkg install /root/gsiot.ipk";
+    char a8Result[128] = {0};
+	char debugmsg[64] = "echo \"$(date)\" 00000000000 >>/root/err.log";	
+	//system(debugmsg);
+	system("/root/getgsipk.sh");
+	//system(debugmsg);
+	//system("cd /root"); //jyc20170321 add
+	_System(cmd1, a8Result, sizeof(a8Result));
+	if(memcmp(a8Result,"Configuring",11))return false;
+	memcpy(&debugmsg[15],a8Result,(sizeof(a8Result)>11)?11:sizeof(a8Result));
+	system(debugmsg);
+	//system("cd /root"); //jyc20170321 add
+	_System(cmd2, a8Result, sizeof(a8Result));
+	if(memcmp(a8Result,"Configuring",11))return false;
+	memcpy(&debugmsg[15],a8Result,(sizeof(a8Result)>11)?11:sizeof(a8Result));
+	system(debugmsg);	
+	return true;
+#endif
+	return false;
+}
+
+void GSIOTClient::Update_DoUpdateNow_fromremote( const JID &fromjid, const std::string& from_id, std::string runparam )
+{
+	uint32_t err = 0;
+
+	if( this->Update_DoUpdateNow( err, runparam ) )  //jyc20170321 modify
+	{
+		IQ re( IQ::Result, fromjid, from_id);
+		re.addExtension( new XmppGSUpdate( struTagParam(), 
+			"", "", XmppGSUpdate::defUPState_successupdated //XmppGSUpdate::defUPState_progress 
+			) );
+		XmppClientSend(re,"handleIq Send(ExtIotUpdate update ACK)");
+	}
+	else
+	{
+		IQ re( IQ::Result, fromjid, from_id);
+		re.addExtension( new XmppGSUpdate( struTagParam(), 
+			"", "", XmppGSUpdate::defUPState_updatefailed
+			) );
+		XmppClientSend(re,"handleIq Send(ExtIotUpdate update ACK)");
+	}
+}
+
+void GSIOTClient::Update_UpdatedProc()
+{
+	if( sg_blUpdatedProc )
+	{
+		return;
+	}
+
+	static uint32_t st_Update_UpdatedProc = timeGetTime();
+	if( timeGetTime()-st_Update_UpdatedProc < 5000 )
+		return;
+
+	sg_blUpdatedProc++;
+
+	char bufval_fromjid[256] = {0};
+	/*const DWORD nSize_fromjid = sizeof(bufval_fromjid);
+	ReadSize = ::GetPrivateProfileStringA( 
+		"update", 
+		"fromjid", "", 
+		bufval_fromjid,
+		nSize_fromjid,
+		(std::string(defFilePath)+"\\temp.ini").c_str()
+		);*/
+
+	std::string fromjid = bufval_fromjid;
+	//fromjid = "chen009@gsss.cn";//test
+	if( fromjid.empty() )
+	{
+		return;
+	}
+
+	IQ re( IQ::Set, fromjid );
+	re.addExtension( new XmppGSUpdate( struTagParam(), 
+		"", "", XmppGSUpdate::defUPState_successupdated
+		) );
+	XmppClientSend(re,"handleIq Send(ExtIotUpdate successupdated ACK)");
 }
 
 

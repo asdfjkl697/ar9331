@@ -306,9 +306,7 @@ int Udpconfignet(uint8_t *buffer,uint16_t size){
 
 
 int Udpconfigwifi(uint8_t *buffer,uint16_t size){
-	uint8_t chlflag[4]={'c','h','l',':'};
 	uint8_t sidflag[4]={'s','i','d',':'};
-	uint8_t cptflag[4]={'c','p','t',':'};
 	uint8_t keyflag[4]={'k','e','y',':'};
 	uint8_t crcflag[4]={'c','r','c',':'};
 #ifdef OS_UBUNTU
@@ -321,37 +319,23 @@ int Udpconfigwifi(uint8_t *buffer,uint16_t size){
 	char jidpath[64]="/root/smartconfig/gsjid";
 #endif
 	uint8_t i,temp[20];
-	int chladdr,sidaddr,cptaddr,keyaddr,crcaddr;
+	int sidaddr,keyaddr,crcaddr;
 	int len;
 	uint32_t len_r;
 	len_r=(uint32_t)buffer[0]|buffer[1]<<8;
 	if(size!=len_r+4)return -1;
 	buffer+=4;
-	chladdr=findaddr(buffer,chlflag,size);
 	sidaddr=findaddr(buffer,sidflag,size);
-	cptaddr=findaddr(buffer,cptflag,size);
 	keyaddr=findaddr(buffer,keyflag,size);
 	crcaddr=findaddr(buffer,crcflag,size);
-	if((chladdr<0)||(sidaddr<chladdr)||(cptaddr<sidaddr)||(keyaddr<cptaddr)||(crcaddr<keyaddr)) //sort
+	if((sidaddr<0)||(keyaddr<sidaddr)||(crcaddr<keyaddr)) //sort
 		return -1;
-	len=sidaddr-chladdr-sizeof(chlflag);
-	if(len<1)return -1;
-	memcpy(temp,&buffer[chladdr+sizeof(chlflag)],len);
-	temp[len]='\0';
-	printf("chl=%s\n",(char*)temp);
-	modifysmartconfig((char*)temp,(char*)"channel",wifipath);
-	len=cptaddr-sidaddr-sizeof(sidflag);
+	len=keyaddr-sidaddr-sizeof(sidflag);
 	if(len<1)return -1;
 	memcpy(temp,&buffer[sidaddr+sizeof(sidflag)],len);
 	temp[len]='\0';
 	printf("sid=%s\n",(char*)temp);
 	modifysmartconfig((char*)temp,(char*)"ssid",wifipath);
-	len=keyaddr-cptaddr-sizeof(cptflag);
-	if(len<1)return -1;
-	memcpy(temp,&buffer[cptaddr+sizeof(cptflag)],len);
-	temp[len]='\0';
-	printf("cpt=%s\n",(char*)temp);
-	modifysmartconfig((char*)temp,(char*)"encryption",wifipath);
 	len=crcaddr-keyaddr-sizeof(keyflag);
 	if(len<1)return -1;
 	memcpy(temp,&buffer[keyaddr+sizeof(keyflag)],len);

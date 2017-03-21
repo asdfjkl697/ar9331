@@ -10,7 +10,7 @@ RemoteButtonManager.o RemoteButtonClass.o ControlMessage.o GSIOTEvent.o AutoCall
 AutoEventthing.o AutoNoticeEvent.o AutoSendSMSEvent.o XmppRegister.o  SerialDataBuffer.o SerialMessage.o \
 HeartbeatMon.o CommLink.o NetBaseClient.o NetMan.o NetModule.o NetTcpClient.o NetUdpClient.o \
 RFDeviceControl.o RFDevice.o RFSignalDefine.o XmppGSChange.o XmppGSEvent.o XmppGSReport.o \
-XmppGSRelation.o XmppGSVObj.o VObjClass.o TimerManager.o gsiot.o
+XmppGSRelation.o XmppGSUpdate.o XmppGSVObj.o VObjClass.o TimerManager.o HttpRequest.o gsiot.o
 
 bin = gsiot
 CFLAGS += -I.
