@@ -63,7 +63,6 @@ void SerialMessage::doMessage( defLinkID LinkID, uint8_t *data, uint32_t size, c
 					m_queue_mutex.unlock();
 					return;
 				}
-
 				++it;
 			}
 		}
@@ -104,7 +103,7 @@ void SerialMessage::Check()
 	{
 		buffer = (*it);
 
-		// ÒÑ³¬Ê±µÄ²»·¢ËÍ£¬Ö±½ÓÉ¾³ý
+		// ï¿½Ñ³ï¿½Ê±ï¿½Ä²ï¿½ï¿½ï¿½ï¿½Í£ï¿½Ö±ï¿½ï¿½É¾ï¿½ï¿½
 		if( buffer->IsQueueOverTime() )
 		{
 			buffer->Print( "Check: SerialMsg buf IsQueueOverTime" );

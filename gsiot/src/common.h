@@ -87,7 +87,7 @@ void GetLocalTime(SYSTEMTIME *st);
 
 unsigned int timeGetTime();
 
-// Ê±¼äÖµ×ª»»³É×Ö·û´®ÐÎÊ½µÄ¸ñÊ½
+// Ê±ï¿½ï¿½Öµ×ªï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ê½ï¿½Ä¸ï¿½Ê½
 enum defTimeToStrFmt_
 {
 	defTimeToStrFmt_Full6 = 1,
@@ -108,13 +108,13 @@ enum defTimeToStrFmt_
 #define macValueRangeFix_Min( val, valmin ) if( val < valmin ) { val = valmin; }
 #define macValueRangeFix_Max( val, valmax ) if( val > valmax ) { val = valmax; }
 
-#define defFilePath "E:\\iotcontrol"						// ³ÌÐò°²×°Â·¾¶
+#define defFilePath "E:\\iotcontrol"						// ï¿½ï¿½ï¿½ï¿½×°Â·ï¿½ï¿½
 
-#define defFileName_App		"GSIOTController.exe"			// Ó¦ÓÃ³ÌÐòÃû³Æ
-#define defFileName_AppNew	"GSIOTController_newupdate.exe"	// Ó¦ÓÃ³ÌÐò¸üÐÂÃû³Æ
-#define defFileName_Update	"gsupdate.exe"					// Éý¼¶³ÌÐòÃû³Æ
+#define defFileName_App		"GSIOTController.exe"			// Ó¦ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define defFileName_AppNew	"GSIOTController_newupdate.exe"	// Ó¦ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define defFileName_Update	"gsupdate.exe"					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-#define defFileRenameFix	".tempold"						// ÖØÃüÃûÁÙÊ±ÎÄ¼þºó×º
+#define defFileRenameFix	".tempold"						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä¼ï¿½ï¿½ï¿½×º
 
 
 #define macOperator_Less( A, B, v ) if( A.v != B.v ) { return (A.v < B.v); }
@@ -179,7 +179,7 @@ std::string g_StrToPrecision( const std::string &srcstr, const int precision );
 bool operator< ( const GSIOTAddrObjKey &key1, const GSIOTAddrObjKey &key2 );
 bool operator< ( const struGSTime &key1, const struGSTime &key2 );
 
-// ¼à¿ØµãÀàÐÍµÄ¼ÆËãÖµÏà¹Øº¯Êý£¬ÀýÈç·çËÙÊÇ¼ÆËã³ö·çËÙ¼¶±ðÖµ
+// ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ÍµÄ¼ï¿½ï¿½ï¿½Öµï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¼ï¿½ï¿½ï¿½Öµ
 bool g_AddrTypeValue_hasTypeValue( const IOTDeviceType type );
 int g_AddrTypeValue_getTypeValue( const IOTDeviceType type, const int v1k, const bool ValueForType=true );
 
@@ -196,21 +196,21 @@ bool file_exists(const char *filename);
 std::string getAppPath();
 std::string getRandomCode();
 
-// ÏÈµÍºó¸ß×Ö½ÚÐò
+// ï¿½ÈµÍºï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 int ByteToInt32(uint8_t *buf);
 uint16_t ByteToInt16(uint8_t *buf);
 float ByteToFloat(uint8_t *buf);
 double ByteToDouble(uint8_t *buf);
 std::string ByteToString(uint8_t *buf,uint32_t len);
 
-// ÏÈµÍºó¸ß×Ö½ÚÐò
+// ï¿½ÈµÍºï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 uint8_t *Int16ToByte(uint8_t *buf,uint16_t val);
 uint8_t *Int32ToByte(uint8_t *buf,uint32_t val);
 uint8_t *LongToByte(uint8_t *buf,uint64_t val);
 uint8_t *DoubleToByte(uint8_t *buf,double val);
 uint8_t *FloatToByte(uint8_t *buf,float val);
 
-// ÏÈ¸ßºóµÍ×Ö½ÚÐò
+// ï¿½È¸ßºï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 uint16_t Big_ByteToInt16(uint8_t *buf);
 uint8_t *Big_Int16ToByte(uint8_t *buf,uint16_t val);
 
@@ -272,7 +272,7 @@ bool g_IsNowMonth( const struGSTime &dt );
 
 bool md5_CheckFile( const std::string& filename, std::string& digest );
 
-// ½«wavÍ·ÐÅÏ¢´æÈëout_buffer»º´æ£¬²ÎÊýin_buffer¿ÉÎª¿Õ
+// ï¿½ï¿½wavÍ·ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½out_bufferï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½in_bufferï¿½ï¿½Îªï¿½ï¿½
 int write_wav_head( /*WAVEFORMATEX*/void *wf, char *in_buffer, int in_len, char *out_buffer, int *out_len );
 std::string& g_replace_all_distinct( std::string& str, const std::string& old_value, const std::string& new_value );
 
@@ -285,7 +285,7 @@ std::string g_Trans_GSAGCurState( GSAGCurState_ state );
 
 std::string g_parseAddrForHttp( const std::string &url );
 
-// ´æ´¢Ïà¹Ø
+// ï¿½æ´¢ï¿½ï¿½ï¿½
 bool g_isNeedSaveType( const IOTDeviceType type );
 time_t g_GetTimePointSecond( const IOTDeviceType type, const bool isPrevSecond );
 bool g_isTimePoint( const time_t utctime, const IOTDeviceType type );
@@ -294,8 +294,9 @@ float g_SYS_VChgRng( const IOTDeviceType type );
 
 std::string g_GetUnitBaseForType( const IOTDeviceType type );
 std::string g_GetUnitUseValueForType( const IOTDeviceType type, const bool ValueForType );
+int g_GetPrecisionForType(const IOTDeviceType type); //jyc20170422 add by jianguang
 std::string g_V1kToStr( const int v1k, const std::string &strunit=c_NullStr, const int precision=1 );
-std::string g_V1kToStrUseValueForType( const IOTDeviceType type, const int v1k, const bool ValueForType, const bool showunit=true, const int precision=1 );
+std::string g_V1kToStrUseValueForType( const IOTDeviceType type, const int v1k, const bool ValueForType, const bool showunit=true, const int precision=0 );
 
 bool g_IsRTMFP_url( const std::string &strurl );
 

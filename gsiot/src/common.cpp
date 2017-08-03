@@ -8,7 +8,7 @@
 #include <cctype>
 #include "RunCode.h"
 #include "jid.h"
-#include <regex>  // regular expression ÕýÔò±í´ïÊ½
+#include <regex>  // regular expression ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 #include "md5.h"
 #include <tchar.h>
 
@@ -25,7 +25,7 @@
 #include <cctype>
 #include "RunCode.h"
 #include "gloox/jid.h"
-//#include <regex>  // regular expression ÕýÔò±í´ïÊ½
+//#include <regex>  // regular expression ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 #include "gloox/md5.h"
 
 uint32_t Reversebytes_uint32(unsigned int value){
@@ -87,7 +87,7 @@ IGSClientExFunc* g_SYS_GetGSIOTClient()
 
 //crc
 //High-Order Byte Table
-/* Table of CRC values for high¡§Corder byte */
+/* Table of CRC values for highï¿½ï¿½Corder byte */
 const unsigned auchCRCHi[256] = {
 	0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81,
 	0x40, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0,
@@ -111,7 +111,7 @@ const unsigned auchCRCHi[256] = {
 
 
 //Low-Order Byte Table
-/* Table of CRC values for low¡§Corder byte */
+/* Table of CRC values for lowï¿½ï¿½Corder byte */
 const unsigned auchCRCLo[256] = {
 	0x00, 0xC0, 0xC1, 0x01, 0xC3, 0x03, 0x02, 0xC2, 0xC6, 0x06, 0x07, 0xC7, 0x05, 0xC5, 0xC4,
 	0x04, 0xCC, 0x0C, 0x0D, 0xCD, 0x0F, 0xCF, 0xCE, 0x0E, 0x0A, 0xCA, 0xCB, 0x0B, 0xC9, 0x09,
@@ -141,16 +141,16 @@ std::string g_GetConnectStateStr( defConnectState state )
 		return std::string("");
 
 	case defConnectState_Connecting:
-		return std::string("Á¬½ÓÖÐ");
+		return std::string("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 	case defConnectState_Connected:
-		return std::string("ÒÑÁ¬½Ó");
+		return std::string("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 	case defConnectState_Disconnected:
-		return std::string("Á¬½Ó¶Ï¿ª");
+		return std::string("ï¿½ï¿½ï¿½Ó¶Ï¿ï¿½");
 	}
 
-	return std::string("ÆäËü");
+	return std::string("ï¿½ï¿½ï¿½ï¿½");
 }
 
 std::string g_getstr_Useable( const defUseable Useable )
@@ -158,23 +158,23 @@ std::string g_getstr_Useable( const defUseable Useable )
 	switch(Useable)
 	{
 	case defUseable_OK:
-		return std::string( "Õý³£" );
+		return std::string( "ï¿½ï¿½" );
 		break;
 
 	case defUseable_ErrConfig:
-		return std::string("ÅäÖÃ´íÎó");
+		return std::string("ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½");
 		break;
 
 	case defUseable_ErrNoData:
-		return std::string("ÓÐÒì³£ÎÞÊý¾Ý");
+		return std::string("ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½");
 		break;
 
 	case defUseable_ErrNet:
-		return std::string("Á¬½ÓÖÐ¶Ï");//return std::string("ÓÐÒì³£Á¬½ÓÖÐ¶Ï");
+		return std::string("ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½");//return std::string("ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½");
 		break;
 
 	default:
-		if( Useable < 0 ) return std::string("ÓÐÒì³£");
+		if( Useable < 0 ) return std::string("ï¿½ï¿½ï¿½ì³£");
 		break;
 	}
 
@@ -217,7 +217,7 @@ void g_Changed( const defCfgOprt_ oprt, const IOTDeviceType DevType, const uint3
 		break;
 	}
 
-	//¶¨Ê±¼ì²âÐ´¿â
+	//ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ð´ï¿½ï¿½
 
 	if( !IsRUNCODEEnable(defCodeIndex_Dis_ChangeSaveDB) )
 	{
@@ -241,7 +241,7 @@ void g_Changed( const defCfgOprt_ oprt, const IOTDeviceType DevType, const uint3
 /*jyc20160826 
 int sys_reset( const char* strdesc, int bFlag )
 {
-	//LOGMSGEX( defLOGWatch, defLOG_SYS, "ÏµÍ³ÖØÆô£¬reason=%s\r\n", strdesc?strdesc:"" );
+	//LOGMSGEX( defLOGWatch, defLOG_SYS, "ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½reason=%s\r\n", strdesc?strdesc:"" );
 	//LOGMSGEX( defLOGNAME, defLOG_SYS, "sys_reset. reason=%s\r\n", strdesc?strdesc:"" );
 	usleep( 700000 );
 
@@ -301,7 +301,7 @@ int sys_reset( const char* strdesc, int bFlag )
 }
 */
 
-// °´¾«¶ÈÒÆ³ýÐ¡ÊýµãºóÃæ¶à³öµÄÖµ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 std::string g_StrToPrecision( const std::string &srcstr, const int precision )
 {
 	if( precision < 0 )
@@ -312,7 +312,7 @@ std::string g_StrToPrecision( const std::string &srcstr, const int precision )
 	if( pos == std::string::npos )
 		return srcstr;
 
-	const size_t getpos = pos + precision + (precision>0?1:0); // °üÀ¨"."
+	const size_t getpos = pos + precision + (precision>0?1:0); // ï¿½ï¿½ï¿½ï¿½"."
 
 	if( getpos >= srcstr.size() )
 		return srcstr;
@@ -449,7 +449,7 @@ bool operator< ( const struGSTime &key1, const struGSTime &key2 )
 	return (key1.Milliseconds < key2.Milliseconds);
 }
 
-// ¼à¿ØµãÀàÐÍµÄ¼ÆËãÖµÏà¹Øº¯Êý£¬ÀýÈç·çËÙÊÇ¼ÆËã³ö·çËÙ¼¶±ðÖµ
+// ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ÍµÄ¼ï¿½ï¿½ï¿½Öµï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¼ï¿½ï¿½ï¿½Öµ
 bool g_AddrTypeValue_hasTypeValue( const IOTDeviceType type )
 {
 	switch( type )
@@ -485,11 +485,11 @@ int g_WindSpeedLevel( const float WindSpeed, const bool trymerge )
 {
 	if( WindSpeed < 0 )
 	{
-		return -1;	// ÎÞ·ç //(Î´Ê¶±ð£¬Ò²ÏÔÊ¾ÎÞ·ç)
+		return -1;	// ï¿½Þ·ï¿½ //(Î´Ê¶ï¿½ï¿½Ò²ï¿½ï¿½Ê¾ï¿½Þ·ï¿½)
 	}
 	else if( WindSpeed < 0.3 )	// 0-0.2x
 	{
-		return 0;	// ÎÞ·ç
+		return 0;	// ï¿½Þ·ï¿½
 	}
 	else if( WindSpeed < 1.6 )	// 0.3-1.5x
 	{
@@ -498,7 +498,7 @@ int g_WindSpeedLevel( const float WindSpeed, const bool trymerge )
 			return 1;
 		}
 
-		return 1;	// Èí·ç
+		return 1;	// ï¿½ï¿½ï¿½
 	}
 	else if( WindSpeed < 3.4 )	// 1.6-3.3x
 	{
@@ -507,71 +507,71 @@ int g_WindSpeedLevel( const float WindSpeed, const bool trymerge )
 			return 1;
 		}
 
-		return 2;	// Çá·ç
+		return 2;	// ï¿½ï¿½ï¿½
 	}
 	else if( WindSpeed < 5.5 )	// 3.4-5.4x
 	{
-		return 3;	// Î¢·ç
+		return 3;	// Î¢ï¿½ï¿½
 	}
 	else if( WindSpeed < 8.0 )	// 5.5-7.9x
 	{
-		return 4;	// ºÍ·ç
+		return 4;	// ï¿½Í·ï¿½
 	}
 	else if( WindSpeed < 10.8 )	// 8.0-10.7x
 	{
-		return 5;	// Çá¾¢·ç
+		return 5;	// ï¿½á¾¢ï¿½ï¿½
 	}
 	else if( WindSpeed < 13.9 )	// 10.8-13.8x
 	{
-		return 6;	// Ç¿·ç
+		return 6;	// Ç¿ï¿½ï¿½
 	}
 	else if( WindSpeed < 17.2 )	// 13.9-17.1x
 	{
-		return 7;	// ¼²·ç
+		return 7;	// ï¿½ï¿½ï¿½ï¿½
 	}
 	else if( WindSpeed < 20.8 )	// 17.2-20.7x
 	{
-		return 8;	// ´ó·ç
+		return 8;	// ï¿½ï¿½ï¿½
 	}
 	else if( WindSpeed < 24.5 )	// 20.8-24.4x
 	{
-		return 9;	// ÁÒ·ç
+		return 9;	// ï¿½Ò·ï¿½
 	}
 	else if( WindSpeed < 28.5 )	// 24.5-28.4x
 	{
-		return 10;	// ¿ñ·ç
+		return 10;	// ï¿½ï¿½ï¿½
 	}
 	else if( WindSpeed < 32.7 )	// 28.5-32.6x
 	{
-		return 11;	// ±©·ç
+		return 11;	// ï¿½ï¿½ï¿½ï¿½
 	}
 	else if( WindSpeed < 37.0 )	// 32.7-36.9x
 	{
-		return 12;	// Ì¨·ç
+		return 12;	// Ì¨ï¿½ï¿½
 	}
 	else if( WindSpeed < 41.5 )	// 37.0-41.4x
 	{
-		return 13;	// Ì¨·ç
+		return 13;	// Ì¨ï¿½ï¿½
 	}
 	else if( WindSpeed < 46.2 )	// 41.5-46.1x
 	{
-		return 14;	// Ì¨·ç
+		return 14;	// Ì¨ï¿½ï¿½
 	}
 	else if( WindSpeed < 51.0 )	// 46.2-50.9x
 	{
-		return 15;	// Ì¨·ç
+		return 15;	// Ì¨ï¿½ï¿½
 	}
 	else if( WindSpeed < 56.1 )	// 51.0-56.0x
 	{
-		return 16;	// Ì¨·ç
+		return 16;	// Ì¨ï¿½ï¿½
 	}
 	else if( WindSpeed < 61.3 )	// 56.1-61.2x
 	{
-		return 17;	// Ì¨·ç
+		return 17;	// Ì¨ï¿½ï¿½
 	}
 	else
 	{
-		return -2;	// ÎÞ·ç //(Î´Ê¶±ð£¬Ò²ÏÔÊ¾ÎÞ·ç)
+		return -2;	// ï¿½Þ·ï¿½ //(Î´Ê¶ï¿½ï¿½Ò²ï¿½ï¿½Ê¾ï¿½Þ·ï¿½)
 	}
 }
 
@@ -787,7 +787,7 @@ uint8_t *FloatToByte(uint8_t *buf,float val)
 	return buf+4;
 }
 
-// ÏÈ¸ßºóµÍ
+// ï¿½È¸ßºï¿½ï¿½
 uint16_t Big_ByteToInt16(uint8_t *buf)
 {
 	return ((uint16_t)buf[0] << 8) | (uint16_t)(buf[1] & 0xFF);
@@ -1098,7 +1098,7 @@ uint32_t g_h264_find_next_start_code_ex( const uint8_t *pBuf, uint32_t bufLen, u
   return 0;
 }
 
-// µ±ÓÐ¶à¸ö°üÊ±£¬ÒÆ³ýÖÐ¼äµÄËùÓÐÍ·
+// ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Æ³ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·
 uint32_t g_h264_remove_all_start_code( uint8_t *pBuf_src, uint32_t bufLen_src )
 {
 	uint8_t *pBuf = pBuf_src;
@@ -1579,17 +1579,17 @@ std::string g_SecondToStr( const uint32_t second )
 
 	if( m>0 )
 	{
-		snprintf( chtime, sizeof( chtime ), "%d·Ö", m );
+		snprintf( chtime, sizeof( chtime ), "%dï¿½ï¿½", m );
 		str += chtime;
 	}
 
-	snprintf( chtime, sizeof( chtime ), "%dÃë", s );
+	snprintf( chtime, sizeof( chtime ), "%dï¿½ï¿½", s );
 	str += chtime;
 
 	return str;
 }
 
-// AºÍBÊÇ·ñÔÚÍ¬Ò»ÔÂ£¬ÊäÈëUTCÊ±¼ä
+// Aï¿½ï¿½Bï¿½Ç·ï¿½ï¿½ï¿½Í¬Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½UTCÊ±ï¿½ï¿½
 bool g_IsSameMonth( const time_t utctimeA, const time_t utctimeB )
 {
 	struGSTime dtA;
@@ -1604,7 +1604,7 @@ bool g_IsSameMonth( const time_t utctimeA, const time_t utctimeB )
 	return g_IsSameMonth( dtA, dtB );
 }
 
-// AºÍBÊÇ·ñÔÚÍ¬Ò»Ìì£¬ÊäÈëUTCÊ±¼ä
+// Aï¿½ï¿½Bï¿½Ç·ï¿½ï¿½ï¿½Í¬Ò»ï¿½ì£¬ï¿½ï¿½ï¿½ï¿½UTCÊ±ï¿½ï¿½
 bool g_IsSameDay( const time_t utctimeA, const time_t utctimeB )
 {
 	struGSTime dtA;
@@ -1619,7 +1619,7 @@ bool g_IsSameDay( const time_t utctimeA, const time_t utctimeB )
 	return g_IsSameDay( dtA, dtB );
 }
 
-// AºÍBÊÇ·ñÔÚÍ¬Ò»ÔÂ£¬ÊäÈë±¾µØÊ±¼ä
+// Aï¿½ï¿½Bï¿½Ç·ï¿½ï¿½ï¿½Í¬Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ë±¾ï¿½ï¿½Ê±ï¿½ï¿½
 bool g_IsSameMonth( const struGSTime &dtA, const struGSTime &dtB )
 {
 	if( dtA.Month != dtB.Month )
@@ -1631,7 +1631,7 @@ bool g_IsSameMonth( const struGSTime &dtA, const struGSTime &dtB )
 	return true;
 }
 
-// AºÍBÊÇ·ñÔÚÍ¬Ò»Ìì£¬ÊäÈë±¾µØÊ±¼ä
+// Aï¿½ï¿½Bï¿½Ç·ï¿½ï¿½ï¿½Í¬Ò»ï¿½ì£¬ï¿½ï¿½ï¿½ë±¾ï¿½ï¿½Ê±ï¿½ï¿½
 bool g_IsSameDay( const struGSTime &dtA, const struGSTime &dtB )
 {
 	if( dtA.Day != dtB.Day )
@@ -1640,7 +1640,7 @@ bool g_IsSameDay( const struGSTime &dtA, const struGSTime &dtB )
 	return g_IsSameMonth( dtA, dtB );
 }
 
-// AºÍBÊÇ·ñÔÚÍ¬Ò»Ð¡Ê±£¬ÊäÈë±¾µØÊ±¼ä
+// Aï¿½ï¿½Bï¿½Ç·ï¿½ï¿½ï¿½Í¬Ò»Ð¡Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ë±¾ï¿½ï¿½Ê±ï¿½ï¿½
 bool g_IsSameHour( const struGSTime &dtA, const struGSTime &dtB )
 {
 	if( dtA.Hour != dtB.Hour )
@@ -1674,7 +1674,7 @@ int g_CompareMonth( const struGSTime &dtA, const struGSTime &dtB )
 	return ( (int)dtA.Month - (int)dtB.Month );
 }
 
-// ÊÇ·ñÎªµ±Ç°Ìì
+// ï¿½Ç·ï¿½Îªï¿½ï¿½Ç°ï¿½ï¿½
 bool g_IsNowDay( const time_t utctime )
 {
 	struGSTime dt;
@@ -1690,7 +1690,7 @@ bool g_IsNowDay( const struGSTime &dt )
 	return g_IsSameDay( curdt, dt );
 }
 
-// ÊÇ·ñÎªµ±Ç°ÔÂ
+// ï¿½Ç·ï¿½Îªï¿½ï¿½Ç°ï¿½ï¿½
 bool g_IsNowMonth( const time_t utctime )
 {
 	struGSTime dt;
@@ -1754,7 +1754,7 @@ int write_wav_head( /*WAVEFORMATEX*/void *wf, char *in_buffer, int in_len, char 
 	pos = 4;
 
 	int_tmp = (int*)(buffer+pos);
-	*int_tmp = WAVE_HEADER_SIZE + in_len - 8;/*²¨ÐÎ¿éµÄ´óÐ¡£¨µµ°¸´óÐ¡¼õ8£©*/
+	*int_tmp = WAVE_HEADER_SIZE + in_len - 8;/*ï¿½ï¿½ï¿½Î¿ï¿½Ä´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½8ï¿½ï¿½*/
 	pos += 4;
 
 	memcpy(buffer+pos,"WAVEfmt ",8);
@@ -1764,7 +1764,7 @@ int write_wav_head( /*WAVEFORMATEX*/void *wf, char *in_buffer, int in_len, char 
 	*int_tmp = 16;
 	pos += 4;
 
-	/*¸ñÊ½ÐÅÏ¢*/
+	/*ï¿½ï¿½Ê½ï¿½ï¿½Ï¢*/
 	memcpy(buffer+pos,wf,16);
 	pos += 16;
 
@@ -1898,7 +1898,7 @@ void g_GetAlarmGuardTime( defCodeIndex_ dayOfWeek, std::vector<uint32_t> &vecFla
 		dayOfWeek = defCodeIndex_Unknown;
 	}
 	
-	// ½ûÓÃ²¼·ÀÊ±¼ä¹¦ÄÜ£¬²¼·À×ÜÊÇÓÐÐ§
+	// ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Ê±ï¿½ä¹¦ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
 	if( defCodeIndex_Unknown==dayOfWeek || IsRUNCODEEnable(defCodeIndex_TEST_DisableAlarmGuard) )
 	{
 		for( int i=0; i<defAlarmGuard_AGTimeCount; ++i )
@@ -1920,7 +1920,7 @@ void g_GetAlarmGuardTime( defCodeIndex_ dayOfWeek, std::vector<uint32_t> &vecFla
 		rcode.value4
 	};
 	
-	// ²¼·ÀÓÐÐ§Ê±¼äÅäÖÃ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	for( int i=0; i<defAlarmGuard_AGTimeCount; ++i )
 	{
 		const uint32_t agTime_Flag = agTimeArray[i]/100000000;
@@ -2036,7 +2036,7 @@ time_t g_GetTimePointSecond( const IOTDeviceType type, const bool isPrevSecond )
 	return (3*60);
 }
 
-// ÈÏÎªÔÚ´æ´¢Ê±¼äµã£¨·¶Î§£©
+// ï¿½ï¿½Îªï¿½Ú´æ´¢Ê±ï¿½ï¿½ã£¨ï¿½ï¿½Î§ï¿½ï¿½
 bool g_isTimePoint( const time_t utctime, const IOTDeviceType type )
 {
 	const time_t TimePoint = ( utctime / 1800 ) * 1800;
@@ -2046,12 +2046,12 @@ bool g_isTimePoint( const time_t utctime, const IOTDeviceType type )
 	return ( utctime > (TimePoint-PrevSecond) ||  utctime < (TimePoint+AfterSecond) );
 }
 
-// ×ª»»³ÉËùÔÚ´æ´¢Ê±¼äµã g_isTimePoint=true
+// ×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´æ´¢Ê±ï¿½ï¿½ï¿½ g_isTimePoint=true
 time_t g_TransToTimePoint( const time_t utctime, const IOTDeviceType type, const bool isSave )
 {
 	const time_t TimePoint = ( utctime / 1800 ) * 1800;
 	
-	// µ±Ç°Ê±¼ä½Ó½üÓÚÏÂÒ»¸ö´æ´¢Ê±¼äµã
+	// ï¿½ï¿½Ç°Ê±ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½æ´¢Ê±ï¿½ï¿½ï¿½
 	if( isSave )
 	{
 		const time_t NextTimePoint = TimePoint + 1800;
@@ -2069,7 +2069,7 @@ time_t g_TransToTimePoint( const time_t utctime, const IOTDeviceType type, const
 
 			if( loT.tm_mday == loTNext.tm_mday )
 			{
-				// ÊÇ·ñÔÚÏàÍ¬Ìì(±¾µØÊ±Çø)
+				// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½)
 				return NextTimePoint;
 			}
 		}
@@ -2102,7 +2102,7 @@ float g_SYS_VChgRng( const IOTDeviceType type )
 		break;
 	case IOT_DEVICE_PM25:
 		{
-			//rng = (float)RUNCODE_Get(defCodeIndex_SYS_VChgRng_PM25);
+			rng = (float)RUNCODE_Get(defCodeIndex_SYS_VChgRng_PM25);
 		}
 		break;
 
@@ -2122,10 +2122,10 @@ float g_SYS_VChgRng( const IOTDeviceType type )
 		break;
 	}
 
-	return ( rng / 1000.0f ); // 1000±¶ÉèÖÃ
+	return ( rng / 1000.0f ); // 1000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
-// ÖµµÄ»ù±¾µ¥Î»
+// Öµï¿½Ä»ï¿½Î»
 std::string g_GetUnitBaseForType( const IOTDeviceType type )
 {
 	switch( type )
@@ -2133,15 +2133,15 @@ std::string g_GetUnitBaseForType( const IOTDeviceType type )
 	case IOT_DEVICE_CO2:
 		return "ppm";
 	case IOT_DEVICE_HCHO:
-		return "ug/m3";
+		return "mg/m3"; //jyc20170422 modify
 	case IOT_DEVICE_PM25:
 		return "ug/m3";
 			
-	case IOT_DEVICE_Temperature:
-		return "¡æ";
+	case IOT_DEVICE_Temperature: //jyc20170422 modify
+		return "â„ƒ"; //return "ï¿½ï¿½";
 
 	case IOT_DEVICE_Humidity:
-		return "%%RH";
+		return "%RH";
 
 	case IOT_DEVICE_Wind:
 		return "m/s";
@@ -2153,7 +2153,7 @@ std::string g_GetUnitBaseForType( const IOTDeviceType type )
 	return c_NullStr;
 }
 
-// ÓÃÀàÐÍ¼ÆËãÖµÏÔÊ¾ÊÇµÄµ¥Î»
+// ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾ï¿½ÇµÄµï¿½Î»
 std::string g_GetUnitUseValueForType( const IOTDeviceType type, const bool ValueForType )
 {
 	if( !ValueForType )
@@ -2162,13 +2162,23 @@ std::string g_GetUnitUseValueForType( const IOTDeviceType type, const bool Value
 	switch( type )
 	{
 	case IOT_DEVICE_Wind:
-		return "¼¶";
+		return "ï¿½ï¿½";
 
 	default:
 		break;
 	}
 
 	return c_NullStr;
+}
+
+int g_GetPrecisionForType(const IOTDeviceType type) {
+	switch (type) {
+	case IOT_DEVICE_HCHO:
+		return 3;
+	default:
+		break;
+	}
+	return 1;
 }
 
 std::string g_V1kToStr( const int v1k, const std::string &strunit, const int precision )
@@ -2181,12 +2191,25 @@ std::string g_V1kToStr( const int v1k, const std::string &strunit, const int pre
 	return ( g_StrToPrecision(std::string(buf), precision) + strunit );
 }
 
-std::string g_V1kToStrUseValueForType( const IOTDeviceType type, const int v1k, const bool ValueForType, const bool showunit, const int precision )
-{
-	return g_V1kToStr( g_AddrTypeValue_getTypeValue(type,v1k,ValueForType), showunit?g_GetUnitUseValueForType(type,ValueForType):c_NullStr, precision );
+//std::string g_V1kToStrUseValueForType( const IOTDeviceType type, const int v1k, const bool ValueForType, const bool showunit, const int precision )
+//{
+//	return g_V1kToStr( g_AddrTypeValue_getTypeValue(type,v1k,ValueForType), showunit?g_GetUnitUseValueForType(type,ValueForType):c_NullStr, precision );
+//}
+
+std::string g_V1kToStrUseValueForType(const IOTDeviceType type, const int v1k,
+		const bool ValueForType, const bool showunit, const int precision) {
+	int use_precision = precision;
+	if (0 == precision) // auto
+	{
+		use_precision = g_GetPrecisionForType(type); //jyc20170422 add by jianguang
+	}
+
+	return g_V1kToStr(g_AddrTypeValue_getTypeValue(type, v1k, ValueForType),
+			showunit ? g_GetUnitUseValueForType(type, ValueForType) : c_NullStr,
+			use_precision);
 }
 
-// ÅÐ¶ÏÒ»¸öurlÊÇ·ñÎªRTMFPÀàÐÍµÄurl
+// ï¿½Ð¶ï¿½Ò»ï¿½ï¿½urlï¿½Ç·ï¿½ÎªRTMFPï¿½ï¿½ï¿½Íµï¿½url
 bool g_IsRTMFP_url( const std::string &strurl )
 {
 	if( strurl.size() < 5 )
@@ -2214,7 +2237,7 @@ BOOL g_DeleteFileEx( const char *filename )
 	return DeleteFileA( filename );*/
 }
 
-// ÎÄ¼þ´óÐ¡
+// ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡
 int g_FileSize( const std::string &filename ) //jyc20160922
 {
 	FILE *fd = NULL;
@@ -2239,7 +2262,7 @@ int g_FileSize( const std::string &filename ) //jyc20160922
 	return nFileLen;
 }
 
-// Ð´×Ö·û´®ÐÅÏ¢µ½ÎÄ¼þ
+// Ð´ï¿½Ö·ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ä¼ï¿½
 bool g_SaveStringToFile( const std::string &pathname, const std::string &strsave )
 {
 	if( strsave.length() > 2*1024*1024 )
@@ -2261,7 +2284,7 @@ bool g_SaveStringToFile( const std::string &pathname, const std::string &strsave
 	return true;
 }
 
-// Ð´ÄÚÈÝµ½ÎÄ¼þ
+// Ð´ï¿½ï¿½ï¿½Ýµï¿½ï¿½Ä¼ï¿½
 // toTail: Ä©Î²
 bool g_SaveBytesToFile( const std::string &pathname, const BYTE *pdata, const uint32_t len, const bool toTail )
 {
@@ -2294,7 +2317,7 @@ bool g_SaveBytesToFile( const std::string &pathname, const BYTE *pdata, const ui
 	return true;
 }
 
-// ´´½¨´æ´¢Ä¿Â¼
+// ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢Ä¿Â¼
 std::string g_iotstore_createdir( const std::string &strsub )
 {
 	/*
@@ -2492,7 +2515,7 @@ INT g_base64_encode2( const BYTE* inputBuffer, INT inputCount, char* outputBuffe
 
 	if( (inputBuffer == NULL) || (inputCount < 0) )
 	{
-		return -1;    // ²ÎÊý´íÎó
+		return -1;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 
 	if( outputBuffer != NULL )
@@ -2500,7 +2523,7 @@ INT g_base64_encode2( const BYTE* inputBuffer, INT inputCount, char* outputBuffe
 		for( i = inputCount; i > 0; i -= 3 )
 		{
 			if( i >= 3 )
-			{    // ½«3×Ö½ÚÊý¾Ý×ª»»³É4¸öASCII×Ö·û
+			{    // ï¿½ï¿½3ï¿½Ö½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ASCIIï¿½Ö·ï¿½
 				b0 = *inputBuffer++;
 				b1 = *inputBuffer++;
 				b2 = *inputBuffer++;
@@ -2522,14 +2545,14 @@ INT g_base64_encode2( const BYTE* inputBuffer, INT inputCount, char* outputBuffe
 			}
 		} // End for i
 
-		*outputBuffer++ = TEXT( '\0' );    // Ìí¼Ó×Ö·û´®½áÊø±ê¼Ç
+		*outputBuffer++ = TEXT( '\0' );    // ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		//*outputBuffer++ = 0;
 	}
 
-	return ((inputCount + 2) / 3) * 4;    // ·µ»ØÓÐÐ§×Ö·û¸öÊý
+	return ((inputCount + 2) / 3) * 4;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½Ö·ï¿½ï¿½ï¿½ï¿½
 }
 
-// Âý
+// ï¿½ï¿½
 bool g_base64_encode3( const BYTE* input, const INT length, std::string& encoded )
 {
 	static const std::string alphabet64( "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" );
@@ -2540,7 +2563,7 @@ bool g_base64_encode3( const BYTE* input, const INT length, std::string& encoded
 
 	if( (input == NULL) || (length < 0) )
 	{
-		return false;    // ²ÎÊý´íÎó
+		return false;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 
 	encoded.reserve( length * 2 );
@@ -2676,7 +2699,7 @@ static bool g_FileToBase64test( const std::string &filename, std::string &base64
 }
 #endif
 
-// ÎÄ¼þÄÚÈÝ×Ö½Ú×ª»»³Ébase64×Ö·û´®
+// ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½×ªï¿½ï¿½ï¿½ï¿½base64ï¿½Ö·ï¿½
 bool g_FileToBase64( const std::string &filename, std::string &base64 )
 {
 	FILE *fd = NULL;
@@ -2699,7 +2722,7 @@ bool g_FileToBase64( const std::string &filename, std::string &base64 )
 		return true;
 	}
 
-	//ÉÏÏÞ
+	//ï¿½ï¿½ï¿½ï¿½
 	if( nFileLen > 1024*1024 )
 	{
 		base64 = "";//file too large!

@@ -14,7 +14,7 @@
 
 using namespace gloox;
 
-// DeviceAddress¶ÔÏóÊôÐÔ
+// DeviceAddressï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 class DeviceAddressAttr
 {
 public:
@@ -24,18 +24,18 @@ public:
 
 	~DeviceAddressAttr( void ){};
 
-	// ÊôÐÔÓÐÐ§Î»Î»ÖÃ
-	// ×¢£ºË³ÐòÓëÅäÖÃ´æ´¢ÓÐ¹Ø£¬°æ±¾È·¶¨ºó£¬Ö»ÄÜÍùºóÔö¼Ó£¬²»ÄÜËæ±ãµ÷ÕûÔ­ÓÐË³Ðò
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§Î»Î»ï¿½ï¿½
+	// ×¢ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´æ´¢ï¿½Ð¹Ø£ï¿½ï¿½æ±¾È·ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ë³ï¿½ï¿½
 	enum defAttr
 	{
 		defAttr_Min_ = 0,
-		defAttr_Enable = 0,				// ÆôÓÃ±êÖ¾
-		defAttr_IsReSwitch,				// Á½Ì¬·­×ªÇÐ»»Ê½¿ª¹Ø
-		defAttr_IsAutoBackSwitch,		// ×Ô·µ»Ø×Ô»Ø¸´¿ª¹Ø
+		defAttr_Enable = 0,				// ï¿½ï¿½ï¿½Ã±ï¿½Ö¾
+		defAttr_IsReSwitch,				// ï¿½ï¿½Ì¬ï¿½ï¿½×ªï¿½Ð»ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+		defAttr_IsAutoBackSwitch,		// ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ô»Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		defAttr_Max_
 	};
 
-	// ÊôÐÔ²Ù×÷
+	// ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½
 	bool get_AdvAttr( const defAttr attr ) const
 	{
 		if( attr<0 || (size_t)attr>=m_Attribute.size() )
@@ -89,7 +89,7 @@ private:
 	IOTDeviceReadType m_readType; 
 	DataType m_dataType;
 
-	std::string m_curValue; // ¿ÉÒÔÖ±½Ó´óÓÚ¡¢Ð¡ÓÚ¡¢µÈÓÚ±È½Ï
+	std::string m_curValue; // ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó´ï¿½ï¿½Ú¡ï¿½Ð¡ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½Ú±È½ï¿½
 	std::string m_curMaxValue;
 	std::string m_curMinValue;
 	time_t m_timecurValue;
@@ -107,14 +107,14 @@ private:
 	gloox::util::Mutex *m_pmutex_addr;
 	uint32_t m_lastSampTime;
 	uint32_t m_lastUpdate;
-	int m_data_abnormal_count;	// Òì³£¼ÆËã
-	int m_data_MultiReadCount;  // Á¬Ðø¶ÁÈ¡´ÎÊý
+	int m_data_abnormal_count;	// ï¿½ì³£ï¿½ï¿½ï¿½ï¿½
+	int m_data_MultiReadCount;  // ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 
-	// ×îºóÒ»´Î´æ´¢Öµ
+	// ï¿½ï¿½ï¿½Ò»ï¿½Î´æ´¢Öµ
 	time_t m_lastSaveTime;
 	std::string m_lastSaveValue;
 
-	// ´°¿Ú»¯Êý¾Ý
+	// ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½
 	uint32_t m_ValueWindow_StartTs;
 	std::string m_ValueWindow_MaxValue;
 	
@@ -235,6 +235,13 @@ public:
 
 		return this->SetCurValue( std::string(buffer), newValTime, annlyse, strlog );
 	}
+	//jyc20170422 add
+	bool SetCurValue_3f(const float val, const time_t newValTime=g_GetUTCTime(), const bool annlyse=false, std::string *strlog=NULL )
+	{
+		char buffer[32] = {0};
+		snprintf(buffer, sizeof(buffer), "%.3f", val);
+		return this->SetCurValue( std::string(buffer), newValTime, annlyse, strlog );
+	}
 
 	void DataAnalyse( const std::string& newValue, const time_t newValTime, bool *doSave, time_t *SaveTime, std::string *SaveValue, defDataFlag_* dataflag, std::string *strlog );
 
@@ -251,7 +258,7 @@ public:
 		this->m_maxValue = val;
 	}
 
-	// ×îºóÒ»´Î´æ´¢Öµ
+	// ï¿½ï¿½ï¿½Ò»ï¿½Î´æ´¢Öµ
 	void SetLastSave( const time_t lastSaveTime, const std::string lastSaveValue );
 	time_t GetLastSaveTime() const;
 	std::string GetLastSaveValue() const;

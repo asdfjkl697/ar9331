@@ -3676,19 +3676,19 @@ std::string GSIOTClient::GetConnectStateStr() const
 {
 	if( !xmppClient )
 	{
-		return std::string("Î´×¢²á·þÎñ");
+		return std::string("Î´×¢ï¿½ï¿½ï¿½ï¿½ï¿½");
 	}
 
 	switch( xmppClient->state() )
 	{
 	case StateDisconnected:
-		return std::string("Á¬½ÓÖÐ¶Ï");
+		return std::string("ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½");
 
 	case StateConnecting:
-		return std::string("Á¬½ÓÖÐ");
+		return std::string("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 	case StateConnected:
-		return std::string("Õý³£");
+		return std::string("ï¿½ï¿½");
 
 	default:
 		break;
@@ -3736,9 +3736,9 @@ void GSIOTClient::Connect()
 	/*push stream timer*/
 	timer = new TimerManager();
 	timer->registerTimer(this,1,30);
-	timer->registerTimer(this,2,2);		// Í¨Öª¼ì²â
-	timer->registerTimer(this,3,15);	// »Ø·Å¼ì²â
-	timer->registerTimer(this,4,60);	// ¼ä¸ô·¢ping
+	timer->registerTimer(this,2,2);		// Í¨Öªï¿½ï¿½ï¿½
+	timer->registerTimer(this,3,15);	// ï¿½Ø·Å¼ï¿½ï¿½
+	timer->registerTimer(this,4,60);	// ï¿½ï¿½ï¿½ï¿½ï¿½ping
 	timer->registerTimer(this,5,300);	// check system
 	
 	JID jid(m_cfg->getJid());
@@ -3843,7 +3843,7 @@ void GSIOTClient::Connect()
 			printf( "xmppClient->recv() return %d, m_xmppReconnect=%s\n", ce, m_xmppReconnect?"true":"false" );
 		}
 #else
-	    xmppClient->connect(); // ×èÈûÊ½Á¬½Ó
+	    xmppClient->connect(); // ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
 #endif
 
 		uint32_t waittime= RUNCODE_Get(defCodeIndex_xmpp_ConnectInterval);
@@ -4939,10 +4939,12 @@ std::string GSIOTClient::GetSimpleInfo( const GSIOTDevice *const iotdevice )
 
 				str = "485 addr:";
 				//str += itoa( ctl->GetDeviceid(), buf, 10 );
-				str += sprintf(buf, "%d", ctl->GetDeviceid());
+				sprintf(buf, "%d", ctl->GetDeviceid());
+				str += buf;
 				str += ", child dev";
 				//str += itoa( enableObjCount, buf, 10 );
-				str += sprintf(buf, "%d", enableObjCount);
+				sprintf(buf, "%d", enableObjCount);
+				str += buf;
 				str += " ; ";
 				str += strobjname;
 			}
@@ -4979,7 +4981,8 @@ std::string GSIOTClient::GetSimpleInfo( const GSIOTDevice *const iotdevice )
 				if( cfgdesc.empty() )
 				{
 					//str += itoa( enableObjCount, buf, 10 );
-					str += sprintf(buf, "%d", enableObjCount);
+					sprintf(buf, "%d", enableObjCount);
+					str += buf;
 					str += " button; ";
 				}
 				else
@@ -4987,7 +4990,8 @@ std::string GSIOTClient::GetSimpleInfo( const GSIOTDevice *const iotdevice )
 					str += cfgdesc;
 					str += "; ";
 					//str += itoa( enableObjCount, buf, 10 );
-					str += sprintf(buf, "%d", enableObjCount);
+					sprintf(buf, "%d", enableObjCount);
+					str += buf;
 					str += " obj; ";
 				}
 
@@ -5056,14 +5060,14 @@ std::string GSIOTClient::GetSimpleInfo_ForSupportAlarm( const GSIOTDevice *const
 				}
 			}
 
-			char buf[64] = {0};
-			if( count_Force>0 )				{ str += sprintf(buf, "%d", count_Force);				str += "always do; "; }
-			if( count_SMS_Event>0 )			{ str += sprintf(buf, "%d", count_SMS_Event);			str += " "; str += GSIOTEvent::GetEventTypeToString(SMS_Event);		str += ", "; }
-			if( count_EMAIL_Event>0 )		{ str += sprintf(buf, "%d", count_EMAIL_Event);			str += " "; str += GSIOTEvent::GetEventTypeToString(EMAIL_Event);		str += ", "; }
-			if( count_NOTICE_Event>0 )		{ str += sprintf(buf, "%d", count_NOTICE_Event);		str += " "; str += GSIOTEvent::GetEventTypeToString(NOTICE_Event);		str += ", "; }
-			if( count_CONTROL_Event>0 )		{ str += sprintf(buf, "%d", count_CONTROL_Event);		str += " "; str += GSIOTEvent::GetEventTypeToString(CONTROL_Event);	str += ", "; }
-			if( count_Eventthing_Event>0 )	{ str += sprintf(buf, "%d", count_Eventthing_Event);	str += " "; str += GSIOTEvent::GetEventTypeToString(Eventthing_Event);	str += ", "; }
-			if( count_CALL_Event>0 )		{ str += sprintf(buf, "%d", count_CALL_Event);			str += " "; str += GSIOTEvent::GetEventTypeToString(CALL_Event);		str += ", "; }
+			char buf[64] = {0}; //jyc20170515 modify sprintf
+			if( count_Force>0 )				{sprintf(buf, "%d", count_Force);				str += buf; str += "always do; "; }
+			if( count_SMS_Event>0 )			{sprintf(buf, "%d", count_SMS_Event);			str += buf; str += " "; str += GSIOTEvent::GetEventTypeToString(SMS_Event);		str += ", "; }
+			if( count_EMAIL_Event>0 )		{sprintf(buf, "%d", count_EMAIL_Event);			str += buf; str += " "; str += GSIOTEvent::GetEventTypeToString(EMAIL_Event);		str += ", "; }
+			if( count_NOTICE_Event>0 )		{sprintf(buf, "%d", count_NOTICE_Event);		str += buf; str += " "; str += GSIOTEvent::GetEventTypeToString(NOTICE_Event);		str += ", "; }
+			if( count_CONTROL_Event>0 )		{sprintf(buf, "%d", count_CONTROL_Event);		str += buf; str += " "; str += GSIOTEvent::GetEventTypeToString(CONTROL_Event);	str += ", "; }
+			if( count_Eventthing_Event>0 )	{sprintf(buf, "%d", count_Eventthing_Event);	str += buf; str += " "; str += GSIOTEvent::GetEventTypeToString(Eventthing_Event);	str += ", "; }
+			if( count_CALL_Event>0 )		{sprintf(buf, "%d", count_CALL_Event);			str += buf; str += " "; str += GSIOTEvent::GetEventTypeToString(CALL_Event);		str += ", "; }
 		}
 		break;
 

@@ -184,7 +184,7 @@ void ObsoleteServer::OnDisconnect(Client *client)
 
 void ObsoleteServer::setfreq(uint8_t module, uint32_t freq)
 {
-    	uint8_t  buffer[20];
+    uint8_t  buffer[20];
 	Packet pkt(8);
 	pkt.WriteByte(0x65);
 	pkt.WriteByte(SYSTEM_SET);
@@ -277,17 +277,17 @@ void ObsoleteServer::transform(serial_packet *pkt)
 	if(pkt->data[1] == RF_Receiver){
 	     //setfreq(RF_Receiver, freq); //20160716
 		setrecmode(RF_Receiver,recmode);		
-	}else if(pkt->data[1] == RF_Transmit && transmit_freq != freq){
-	     setfreq(RF_Transmit, freq);
-
-		 if(prve_packet == NULL){
-		    prve_packet = (serial_packet *)malloc(sizeof(serial_packet));
-		 }
+	}else { //jyc20170524 modify
+		if(pkt->data[1] == RF_Transmit && transmit_freq != freq){
+	 	   setfreq(RF_Transmit, freq);
+			if(prve_packet == NULL){
+				prve_packet = (serial_packet *)malloc(sizeof(serial_packet));
+			}
 		
-		 memcpy(prve_packet, pkt, sizeof(serial_packet));
-		
-		 _task->AddTimer(this, 100);
-	}else{
+			memcpy(prve_packet, pkt, sizeof(serial_packet));
+			_task->AddTimer(this, 100); //jyc20170524 modify 100->500 no use
+		}
+		//else{ //jyc20170524 modify
 		uint8_t buffer[BUFFER_SIZE];
 	    uint8_t *enc;
 		Packet packet(pkt->data, pkt->data_size);

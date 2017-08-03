@@ -1,10 +1,11 @@
 #ifndef TYPEDEF_H
 #define TYPEDEF_H
 
-#define GSIOT_VERSION	"1.7.3"	// update 201602£¬¸ñÊ½£ºn.n.n ×Ö·û´®
-#define GSIOT_DBVER		15060800	// Êý¾Ý¿â°æ±¾
+#define GSIOT_VERSION	"1.7.3"	// update 201602ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½n.n.n ï¿½Ö·ï¿½
+#define GSIOT_DBVER		15060800	// ï¿½ï¿½Ý¿ï¿½æ±¾
 
-#define OS_UBUNTU_FLAG 1
+//#define OS_UBUNTU_FLAG 1
+#define OS_OPENWRT 1
 
 #ifdef OS_UBUNTU_FLAG
 #define ROOTDIR  "/home/chen/"
@@ -46,10 +47,10 @@ const std::string c_DefaultVer = "1.0";
 #define XMPP_SERVER_DOMAIN "gsss.cn"
 #define XMPP_GSIOTUser_Admin "admin@gsss.cn" // È«Ð¡Ð´
 #define XMPP_GSIOTUser_Guest "guest@gsss.cn" // È«Ð¡Ð´
-#define XMPP_GSIOTUser_DefaultDomain "@gsss.cn" // ÓÃ»§ÓòÃûÄ¬ÈÏÖµ
+#define XMPP_GSIOTUser_DefaultDomain "@gsss.cn" // ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµ
 
-#define defRTMFPSession_strjid "RTMFP@local.net/rtmfpthd"	// RTMFP ±¾µØ»á»°Ãû
-#define defAutoPublish_strjid "AutoPublish@local.net/publishthd"	// ±£³Ö·¢²¼/×Ô¶¯·¢²¼
+#define defRTMFPSession_strjid "RTMFP@local.net/rtmfpthd"	// RTMFP ï¿½ï¿½ï¿½Ø»á»°ï¿½ï¿½
+#define defAutoPublish_strjid "AutoPublish@local.net/publishthd"	// ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½/ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
 
 #define defIotStoreDir_Main	"E:\\iotstore"
 #define defIotStoreDir_Data	"data"
@@ -111,99 +112,99 @@ const std::string XMLNS_GSIOT_UPDATE = "http://www.gswww.cn/protocol/update";
 #define defDeviceTypeTag_rfremote		"rfremote"
 
 typedef int defLinkID;
-#define defLinkID_Local		defLinkID(0)		// ±¾µØÖ÷¿ØÄ£¿é Á´Â·ID
-#define defLinkID_Null		defLinkID(-1)		// ÎÞÁ´Â·
-#define defLinkID_All		defLinkID(-9)		// ËùÓÐÁ´Â·
+#define defLinkID_Local		defLinkID(0)		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ ï¿½ï¿½Â·ID
+#define defLinkID_Null		defLinkID(-1)		// ï¿½ï¿½ï¿½ï¿½Â·
+#define defLinkID_All		defLinkID(-9)		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·
 
 #define defDeviceEnable		1
 #define defDeviceDisable	0
 
-#define defAlarmGuardTime_UnAllDay		0 // È«Ìì³··À
-#define defAlarmGuardTime_AllDay		1 // È«Ìì²¼·À
-#define defAlarmGuardTime_SpecT			2 // Ö¸¶¨Ê±¼ä¶Î
+#define defAlarmGuardTime_UnAllDay		0 // È«ï¿½ì³·ï¿½ï¿½
+#define defAlarmGuardTime_AllDay		1 // È«ï¿½ì²¼ï¿½ï¿½
+#define defAlarmGuardTime_SpecT			2 // Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½
 
-#define macAlarmGuardTime_InvaildAG(flag,begintime,endtime) ( !(flag) || (begintime)==(endtime) ) // Ê±¼ä¶ÎÊÇ·ñÎÞÐ§
+#define macAlarmGuardTime_InvaildAG(flag,begintime,endtime) ( !(flag) || (begintime)==(endtime) ) // Ê±ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§
 
-#define defAlarmGuard_AGTimeCount		3 // Ê±¼ä¶ÎÊýÁ¿
+#define defAlarmGuard_AGTimeCount		3 // Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-// ¿ÉÓÃ×´Ì¬
+// ï¿½ï¿½ï¿½ï¿½×´Ì¬
 enum defUseable
 {
-	// Ð¡ÓÚ0 Òì³£
-	defUseable_ErrConfig	= -4,	// Òì³£ - ÅäÖÃ´íÎó
-	defUseable_ErrNoData	= -3,	// Òì³£ - ÄÜÁ¬Í¨ÎÞÊý¾Ý
-	defUseable_ErrNet		= -2,	// Òì³£ - Á¬½ÓÖÐ¶Ï
-	defUseable_Err			= -1,	// Òì³£
+	// Ð¡ï¿½ï¿½0 ï¿½ì³£
+	defUseable_ErrConfig	= -4,	// ï¿½ì³£ - ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
+	defUseable_ErrNoData	= -3,	// ï¿½ì³£ - ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½
+	defUseable_ErrNet		= -2,	// ï¿½ì³£ - ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+	defUseable_Err			= -1,	// ï¿½ì³£
 
-	defUseable_Null			= 0,	// Î´Öª×´Ì¬¡¢³õÊ¼×´Ì¬¡¢Ä¬ÈÏ×´Ì¬
+	defUseable_Null			= 0,	// Î´Öª×´Ì¬ï¿½ï¿½ï¿½ï¿½Ê¼×´Ì¬ï¿½ï¿½Ä¬ï¿½ï¿½×´Ì¬
 
-	// ´óÓÚ0 Õý³£
-	defUseable_OK			= 1,	// Õý³£
+	// ï¿½ï¿½ï¿½ï¿½0 ï¿½ï¿½
+	defUseable_OK			= 1,	// ï¿½ï¿½
 };
 
-// ´«ÊäÄ£Ê½
+// ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 enum defTransMod
 {
-	defTransMod_Transparent		= 0, // Í¸´«
-	defTransMod_GSIOT			= 1, // ¿ØÖÆ°åÐ­Òé
+	defTransMod_Transparent		= 0, // Í¸ï¿½ï¿½
+	defTransMod_GSIOT			= 1, // ï¿½ï¿½ï¿½Æ°ï¿½Ð­ï¿½ï¿½
 };
 
-// Á¬½Ó×´Ì¬
+// ï¿½ï¿½ï¿½ï¿½×´Ì¬
 enum defConnectState
 {
 	defConnectState_Null		= 0,	// Î´Öª
-	defConnectState_Connecting,			// Á¬½ÓÖÐ
-	defConnectState_Connected,			// ÒÑÁ¬½Ó
-	defConnectState_Disconnected,		// Á¬½ÓÖÐ¶Ï
+	defConnectState_Connecting,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defConnectState_Connected,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defConnectState_Disconnected,		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
 };
 
-// ¸æ¾¯×´Ì¬
+// ï¿½æ¾¯×´Ì¬
 enum defAlarmState
 {
-	// Ð¡ÓÚ0 ¸æ¾¯
-	defAlarmState_NormAlarm		= -1,	// ¸æ¾¯
+	// Ð¡ï¿½ï¿½0 ï¿½æ¾¯
+	defAlarmState_NormAlarm		= -1,	// ï¿½æ¾¯
 
-	defAlarmState_UnInit		= 0,	// Î´Öª×´Ì¬¡¢³õÊ¼×´Ì¬¡¢Ä¬ÈÏ×´Ì¬
+	defAlarmState_UnInit		= 0,	// Î´Öª×´Ì¬ï¿½ï¿½ï¿½ï¿½Ê¼×´Ì¬ï¿½ï¿½Ä¬ï¿½ï¿½×´Ì¬
 
-	// ´óÓÚ0 Õý³£
-	defAlarmState_OK			= 1,	// Õý³£
+	// ï¿½ï¿½ï¿½ï¿½0 ï¿½ï¿½
+	defAlarmState_OK			= 1,	// ï¿½ï¿½
 };
 #define macAlarmState_IsAlarm(st) (st<0)
 #define macAlarmState_IsOK(st) (st>0)
 
 enum defGSReturn
 {
-	defGSReturn_SuccExecuted	= 2,		// ÒÑÖ´ÐÐ£¬Ã»ÓÐ½á¹û
-	defGSReturn_Success			= 1,		// ³É¹¦
-	defGSReturn_Null			= 0,		// Ã»ÓÐ·µ»Ø£¬²»ÄÜÈ·¶¨³É¹¦Ê§°ÜµÄÇé¿ö£¬Ã»ÓÐ½á¹û
-	defGSReturn_Err				= -1,		// ´íÎó£¬Ò»°ãÐÔ´íÎóÎÞÃ÷È·´íÎóÔ­ÒòÊ±·µ»Ø´Ë´íÎóÂë
-	defGSReturn_NoExist			= -2,		// Ä¿±ê²»´æÔÚ¶øµ¼ÖÂÊ§°Ü£¬ÀýÈçÉãÏñÍ·²»´æÔÚ
-	defGSReturn_IsExist			= -3,		// Ä¿±êÒÑ´æÔÚ¶øµ¼ÖÂÊ§°Ü£¬ÀýÈçÌí¼ÓÓÃ»§Ê±ÓÃ»§ÒÑ´æÔÚ
-	defGSReturn_IsLock			= -4,		// Ä¿±êÒÑ±»Ëø¡¢ÕýÔÚÊ¹ÓÃ
-	defGSReturn_NoAuth			= -5,		// ÎÞÈ¨ÏÞ
-	defGSReturn_ResLimit		= -6,		// ×ÊÔ´ÒÑÂú¡¢ÒÑ´ïÉÏÏÞ
-	defGSReturn_FunDisable		= -7,		// ¹¦ÄÜÆÁ±Î¡¢¹¦ÄÜ½ûÓÃ¡¢¹¦ÄÜÒÑ¹Ø±ÕµÈ
-	defGSReturn_IsSelf			= -8,		// ²»ÄÜ¶Ô×ÔÉí²Ù×÷
-	defGSReturn_ObjDisable		= -9,		// ¶ÔÏóÆÁ±Î¡¢¶ÔÏó½ûÓÃµÈ£¬
-	defGSReturn_ConnectObjErr	= -10,		// Á¬½Ó¶ÔÏóÊ§°Ü£¬ÀýÈçÁ¬½ÓÉãÏñÍ·Ê§°Ü
-	defGSReturn_ConnectSvrErr	= -11,		// Á¬½Ó·þÎñÆ÷Ê§°Ü£¬ÀýÈçÁ¬½ÓÁ÷Ã½Ìå·þÎñÆ÷Ê§°Ü
-	defGSReturn_CreateObjErr	= -12,		// ´´½¨¶ÔÏóÊ§°Ü£¬ÀýÈç´´½¨Â¼Ïñ»Ø·Å»á»°
-	defGSReturn_NoData			= -13,		// ÎÞÊý¾Ý´íÎó
-	defGSReturn_NotFoundContent	= -14,		// ÕÒ²»µ½ÄÚÈÝ£¬ÀýÈçÕÒ²»µ½·ûºÏÌõ¼þµÄÂ¼Ïñ
-	defGSReturn_TimeOut			= -15,		// ³¬Ê±
-	defGSReturn_UnSupport		= -16,		// ¹¦ÄÜ²»Ö§³Ö
-	defGSReturn_ErrUser			= -17,		// ÓÃ»§Ãû´íÎó
-	defGSReturn_ErrPassword		= -18,		// ÃÜÂë´íÎó
-	defGSReturn_ErrParam		= -19,		// ÊäÈë²ÎÊý´íÎó
-	defGSReturn_ErrConfig		= -20,		// ÅäÖÃÐÅÏ¢Òì³££¬»òÅäÖÃ´íÎó
-	defGSReturn_NameEmpty		= -21,		// Ãû³ÆÎª¿Õ´íÎó
-	defGSReturn_ObjEditDisable	= -22,		// Ä¿±ê¶ÔÏó½ûÖ¹ÐÞ¸Ä
-	defGSReturn_SameName		= -23,		// ÖØÃû£¬Ãû³ÆÒÑ´æÔÚ´íÎó
-	defGSReturn_SaveFailed		= -24,		// ´æ´¢Ê§°Ü
-	defGSReturn_DBNoExist		= -25,		// Ä¿±êÊý¾Ý¿â²»´æÔÚ
-	defGSReturn_DBNoRec			= -26,		// Ä¿±êÊý¾Ý¼ÇÂ¼²»´æÔÚ
-	defGSReturn_OverTimeRange	= -27,		// Ê±¼ä³¬³ö·¶Î§
-	defGSReturn_TimeNotYet		= -28,		// Ê±¼äÎ´µ½
+	defGSReturn_SuccExecuted	= 2,		// ï¿½ï¿½Ö´ï¿½Ð£ï¿½Ã»ï¿½Ð½ï¿½ï¿½
+	defGSReturn_Success			= 1,		// ï¿½É¹ï¿½
+	defGSReturn_Null			= 0,		// Ã»ï¿½Ð·ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½É¹ï¿½Ê§ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½
+	defGSReturn_Err				= -1,		// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ø´Ë´ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_NoExist			= -2,		// Ä¿ï¿½ê²»ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_IsExist			= -3,		// Ä¿ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ê±ï¿½Ã»ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½
+	defGSReturn_IsLock			= -4,		// Ä¿ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+	defGSReturn_NoAuth			= -5,		// ï¿½ï¿½È¨ï¿½ï¿½
+	defGSReturn_ResLimit		= -6,		// ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_FunDisable		= -7,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¡ï¿½ï¿½ï¿½ï¿½Ü½ï¿½ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹Ø±Õµï¿½
+	defGSReturn_IsSelf			= -8,		// ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_ObjDisable		= -9,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÈ£ï¿½
+	defGSReturn_ConnectObjErr	= -10,		// ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·Ê§ï¿½ï¿½
+	defGSReturn_ConnectSvrErr	= -11,		// ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	defGSReturn_CreateObjErr	= -12,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ç´´ï¿½ï¿½Â¼ï¿½ï¿½Ø·Å»á»°
+	defGSReturn_NoData			= -13,		// ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½
+	defGSReturn_NotFoundContent	= -14,		// ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½
+	defGSReturn_TimeOut			= -15,		// ï¿½ï¿½Ê±
+	defGSReturn_UnSupport		= -16,		// ï¿½ï¿½ï¿½Ü²ï¿½Ö§ï¿½ï¿½
+	defGSReturn_ErrUser			= -17,		// ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_ErrPassword		= -18,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_ErrParam		= -19,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_ErrConfig		= -20,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
+	defGSReturn_NameEmpty		= -21,		// ï¿½ï¿½ï¿½Îªï¿½Õ´ï¿½ï¿½ï¿½
+	defGSReturn_ObjEditDisable	= -22,		// Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½Þ¸ï¿½
+	defGSReturn_SameName		= -23,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½Ú´ï¿½ï¿½ï¿½
+	defGSReturn_SaveFailed		= -24,		// ï¿½æ´¢Ê§ï¿½ï¿½
+	defGSReturn_DBNoExist		= -25,		// Ä¿ï¿½ï¿½ï¿½ï¿½Ý¿â²»ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_DBNoRec			= -26,		// Ä¿ï¿½ï¿½ï¿½ï¿½Ý¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defGSReturn_OverTimeRange	= -27,		// Ê±ï¿½ä³¬ï¿½ï¿½ï¿½ï¿½Î§
+	defGSReturn_TimeNotYet		= -28,		// Ê±ï¿½ï¿½Î´ï¿½ï¿½
 };
 #define macGSIsReturnNull(ret) (defGSReturn_Null==(ret))
 #define macGSSucceeded(ret) (ret>0)
@@ -212,8 +213,8 @@ enum defGSReturn
 #define defGSReturnStr_Succeed		"succeed"
 #define defGSReturnStr_Fail			"fail"
 
-#define defDoInterval_MAX				60480000// Ö´ÐÐ¼ä¸ô×î´óÖµ£¬ºÁÃë
-#define defDoInterval_UseSysDefault		0		// ²ÉÓÃÏµÍ³Ä¬ÈÏ
+#define defDoInterval_MAX				60480000// Ö´ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define defDoInterval_UseSysDefault		0		// ï¿½ï¿½ï¿½ï¿½ÏµÍ³Ä¬ï¿½ï¿½
 #define macIsUseSysDefault_DoInterval( DoInterval ) ( DoInterval > defDoInterval_MAX )
 #define macUseDoInterval( DoInterval ) ( DoInterval>defDoInterval_MAX ? defDoInterval_MAX:DoInterval )
 
@@ -221,24 +222,24 @@ enum defGSReturn
 
 enum defDataFlag_
 {
-	defDataFlag_Invalid		= 0,	// ÎÞÐ§
-	defDataFlag_First		= 1,	// Æô¶¯ºóµÚÒ»´Î´æ´¢
-	defDataFlag_Norm		= 2,	// ÆÕÍ¨
-	defDataFlag_TimePoint	= 3,	// Ê±¼äµã´æ´¢
-	defDataFlag_Changed		= 4,	// ·¢Éú±ä»¯´æ´¢
-	defDataFlag_Manual		= 5,	// ÊÖ¶¯´æ´¢
+	defDataFlag_Invalid		= 0,	// ï¿½ï¿½Ð§
+	defDataFlag_First		= 1,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î´æ´¢
+	defDataFlag_Norm		= 2,	// ï¿½ï¿½Í¨
+	defDataFlag_TimePoint	= 3,	// Ê±ï¿½ï¿½ï¿½æ´¢
+	defDataFlag_Changed		= 4,	// ï¿½ï¿½ï¿½ï¿½ä»¯ï¿½æ´¢
+	defDataFlag_Manual		= 5,	// ï¿½Ö¶ï¿½ï¿½æ´¢
 };
 
 enum defCfgOprt_
 {
 	defCfgOprt_Unknown = 0,	// Î´Öª
-	defCfgOprt_Add,			// Ö»½øÐÐÌí¼Ó£¬ÒÑ´æÔÚÔòÊ§°Ü
-	defCfgOprt_Modify,		// Ö»½øÐÐÐÞ¸Ä£¬²»´æÔÚÔòÊ§°Ü
+	defCfgOprt_Add,			// Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	defCfgOprt_Modify,		// Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
 	defCfgOprt_Delete,
-	defCfgOprt_AddModify,	// Ìí¼Ó»òÐÞ¸Ä£¬ÒÑ´æÔÚÐÞ¸Ä£¬²»´æÔÚÌí¼Ó
-	defCfgOprt_BatchModify,	// ÅúÁ¿ÐÞ¸Ä
-	defCfgOprt_GetSelf,		// Ö»»ñÈ¡×ÔÉíÐÅÏ¢£¬±ÈÈç»ñÈ¡ÓÃ»§ÐÅÏ¢Ê±
-	defCfgOprt_GetSimple,	// »ñÈ¡¼ò»¯µÄÐÅÏ¢
+	defCfgOprt_AddModify,	// ï¿½ï¿½Ó»ï¿½ï¿½Þ¸Ä£ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Þ¸Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	defCfgOprt_BatchModify,	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½
+	defCfgOprt_GetSelf,		// Ö»ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½Ï¢Ê±
+	defCfgOprt_GetSimple,	// ï¿½ï¿½È¡ï¿½ò»¯µï¿½ï¿½ï¿½Ï¢
 };
 
 enum defNotify_
@@ -256,24 +257,24 @@ enum defTalkSendCmd_
 	defTalkSendCmd_Close,
 };
 
-//ÃüÁî²Ù×÷
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum defCmd
 {
-	defCmd_Null		= 0,					// ÎÞ
-	defCmd_Default	= 1,					// Ä¬ÈÏ
+	defCmd_Null		= 0,					// ï¿½ï¿½
+	defCmd_Default	= 1,					// Ä¬ï¿½ï¿½
 
 	defCmd_Set_Spec_Begin_		= 100,		//--
-	defCmd_Set_Open				= 101,		// ´ò¿ª£¬Àý£º¿ªµÆ¡¢¿ªÃÅ
-	defCmd_Set_Close			= 102,		// ¹Ø±Õ£¬Àý£º¹ØµÆ¡¢¹ØÃÅ
+	defCmd_Set_Open				= 101,		// ï¿½ò¿ª£ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½ï¿½ï¿½ï¿½
+	defCmd_Set_Close			= 102,		// ï¿½Ø±Õ£ï¿½ï¿½ï¿½ØµÆ¡ï¿½ï¿½ï¿½ï¿½ï¿½
 	defCmd_Set_Spec_End_		= 499,		//--
 
 	defCmd_Get_Spec_Begin_		= 500,		//--
-	defCmd_Get_ObjState			= 501,		// »ñÈ¡¶ÔÏó×´Ì¬£¬Àý£º»ñÈ¡µÆ×´Ì¬¡¢ÃÅ×´Ì¬µÈµÈ
-	defCmd_Get_ConnectState		= 502,		// »ñÈ¡ÍøÂç×´Ì¬
+	defCmd_Get_ObjState			= 501,		// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Èµï¿½
+	defCmd_Get_ConnectState		= 502,		// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´Ì¬
 	defCmd_Get_Spec_End_		= 899,		//--
 
 	defCmd_Sys_Spec_			= 900,		//--
-	defCmd_Sys_Reboot			= 901,		// ÖØÆôÃÅ½ûÖ÷»ú/¿ØÖÆÆ÷
+	defCmd_Sys_Reboot			= 901,		// ï¿½ï¿½ï¿½ï¿½ï¿½Å½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 inline bool g_IsReadOnlyCmd( const defCmd cmd )
 {
@@ -306,68 +307,68 @@ enum GSIOTExtensionType
 
 enum IOTDeviceType
 {
-    IOT_DEVICE_Unknown = 0,	// ´íÎóµÄÉè±¸
-	IOT_DEVICE_Video,		// ÊÓÆµ
-	IOT_DEVICE_Audio,		// ÉùÒô
-	IOT_DEVICE_Switch,		// ¿ª¹Ø
-	IOT_DEVICE_Temperature,	// ÎÂ¶È
-	IOT_DEVICE_Humidity,	// Êª¶È
-	IOT_DEVICE_Trigger,		// ´¥·¢Æ÷
-	IOT_DEVICE_Camera,		// ÉãÏñ»ú
-	IOT_DEVICE_Remote,		// Ò£¿Ø
-	IOT_DEVICE_RFDevice,	// ÎÞÏßÉè±¸
-	IOT_DEVICE_CANDevice,	// CANÉè±¸
-	IOT_DEVICE_Event,		// Çý¶¯ÊÂ¼þ
+    IOT_DEVICE_Unknown = 0,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸
+	IOT_DEVICE_Video,		// ï¿½ï¿½Æµ
+	IOT_DEVICE_Audio,		// ï¿½ï¿½ï¿½ï¿½
+	IOT_DEVICE_Switch,		// ï¿½ï¿½ï¿½ï¿½
+	IOT_DEVICE_Temperature,	// ï¿½Â¶ï¿½
+	IOT_DEVICE_Humidity,	// Êªï¿½ï¿½
+	IOT_DEVICE_Trigger,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	IOT_DEVICE_Camera,		// ï¿½ï¿½ï¿½ï¿½ï¿½
+	IOT_DEVICE_Remote,		// Ò£ï¿½ï¿½
+	IOT_DEVICE_RFDevice,	// ï¿½ï¿½ï¿½ï¿½ï¿½è±¸
+	IOT_DEVICE_CANDevice,	// CANï¿½è±¸
+	IOT_DEVICE_Event,		// ï¿½ï¿½ï¿½Â¼ï¿½
 	IOT_DEVICE_RS485,		// RS485
-	IOT_DEVICE_Wind,		// ·çËÙ
-	IOT_DEVICE_CO2,
-	IOT_DEVICE_HCHO,
+	IOT_DEVICE_Wind,		// ï¿½ï¿½ï¿½ï¿½
+	IOT_DEVICE_CO2=15,         //14
 	IOT_DEVICE_PM25,		//jyc20170304 add
-	IOT_DEVICE_Custom=100,	// ×Ô¶¨Òå
+	IOT_DEVICE_HCHO=19,
+	IOT_DEVICE_Custom=100,	// ï¿½Ô¶ï¿½ï¿½ï¿½
 
-	IOTDevice_ExSpec_Begin_		= 500,	//-- ×ÓÀàÐÍ
-	IOTDevice_AC_Ctl			= 501,	// ÃÅ½ûÖ÷»ú/¿ØÖÆÆ÷
-	IOTDevice_AC_Door			= 502,	// ÃÅ½û - ÃÅ¶ÔÏó
-	IOTDevice_Combo_Ctl			= 503,	// ×éºÏ¿ØÖÆ
-	IOTDevice_ExSpec_End_		= 900,	//-- ×ÓÀàÐÍ
+	IOTDevice_ExSpec_Begin_		= 500,	//-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	IOTDevice_AC_Ctl			= 501,	// ï¿½Å½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	IOTDevice_AC_Door			= 502,	// ï¿½Å½ï¿½ - ï¿½Å¶ï¿½ï¿½ï¿½
+	IOTDevice_Combo_Ctl			= 503,	// ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½
+	IOTDevice_ExSpec_End_		= 900,	//-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	IOT_DEVICE_All=999,		// ËùÓÐÉè±¸
+	IOT_DEVICE_All=999,		// ï¿½ï¿½ï¿½ï¿½ï¿½è±¸
 
-	IOT_Obj_SYS				=7000,	// ¶ÔÏóÀàÐÍ - ÏµÍ³±¾Éí
-	IOT_Obj_User			=7001,	// ¶ÔÏóÀàÐÍ - ÓÃ»§
-	IOT_Obj_CommLink		=7002,	// ¶ÔÏóÀàÐÍ - Á´Â·
+	IOT_Obj_SYS				=7000,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ÏµÍ³ï¿½ï¿½ï¿½ï¿½
+	IOT_Obj_User			=7001,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½Ã»ï¿½
+	IOT_Obj_CommLink		=7002,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½Â·
 
-	IOT_VObj_scene			=8001,	// ÐéÄâ¶ÔÏó - ³¡¾°¡£¿ÉÒÔ½«¶àÖÖ²»Í¬¶ÔÏó¹ØÁªÔÚÒ»¸ö»·¾³ÏÂ£¬¹¹³ÉÒ»¸ö"³¡¾°"¡£
-	IOT_VObj_union			=8002,	// ÐéÄâ¶ÔÏó - ¶ÔÏó¼¯ºÏ¡£¿ÉÒÔ½«¶àÖÖ²»Í¬¶ÔÏó¼¯ºÏµ½Ò»¸öÐéÄâ¶ÔÏóÖÐ£¬¹¹³ÉÒ»¸ö¶ÀÁ¢¿ÉÊ¹ÓÃµÄÐéÄâ¶ÔÏó(ÐéÄâÉè±¸)£¬³ÆÎª"¶ÔÏó¼¯ºÏ"¡£
+	IOT_VObj_scene			=8001,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½
+	IOT_VObj_union			=8002,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ó¼¯ºÏ¡ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½Í¬ï¿½ï¿½ï¿½ó¼¯ºÏµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½è±¸)ï¿½ï¿½ï¿½ï¿½Îª"ï¿½ï¿½ï¿½ó¼¯ºï¿½"ï¿½ï¿½
 	
-	// "³¡¾°"ºÍ"¶ÔÏó¼¯ºÏ"ÔÚÕûÌå¸ÅÄî¶¨Î»ÉÏÓÐºÜ´óÇø±ð£¬"¶ÔÏó¼¯ºÏ"ÊÇÐ¡Ò»µãµÄÐéÄâÉè±¸¸ÅÄî£¬"³¡¾°"ÊÇ¸ü¹ãµÄÐéÄâ»·¾³¸ÅÄî£¬"¶ÔÏó¼¯ºÏ"¿É±»°üº¬ÔÚ"³¡¾°"Àï¡£
-	// * Éè¼ÆÉÏÔ¤Áô"¶ÔÏó¼¯ºÏ"¿ÉÒÔ°üº¬"¶ÔÏó¼¯ºÏ"µÄÄÜÁ¦£¬µ«Ä¿Ç°ÔÝ²»ÊµÏÖºÍÊ¹ÓÃ¡£
+	// "ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½ï¿½ó¼¯ºï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¶¨Î»ï¿½ï¿½ï¿½ÐºÜ´ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ó¼¯ºï¿½"ï¿½ï¿½Ð¡Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½î£¬"ï¿½ï¿½ï¿½ï¿½"ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â»·ï¿½ï¿½ï¿½ï¿½ï¿½î£¬"ï¿½ï¿½ï¿½ó¼¯ºï¿½"ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½ï¡£
+	// * ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½"ï¿½ï¿½ï¿½ó¼¯ºï¿½"ï¿½ï¿½ï¿½Ô°ï¿½"ï¿½ï¿½ï¿½ó¼¯ºï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Ç°ï¿½Ý²ï¿½Êµï¿½Öºï¿½Ê¹ï¿½Ã¡ï¿½
 
-	IOT_Module_Unknown		=90000, // ¹¦ÄÜÄ£¿é¶¨Òå
-	IOT_Module_authority,			// È¨ÏÞ¹ÜÀí
-	IOT_Module_record,				// Â¼Ïñ
-	IOT_Module_system,				// ÏµÍ³ÅäÖÃ
-	IOT_Module_manager,				// Éè±¸¹ÜÀí
-	IOT_Module_event,				// ÊÂ¼þÅäÖÃ
-	IOT_Module_talk,				// Ô¶³ÌÍ¨»°
-	IOT_Module_reboot,				// Ô¶³ÌÖØÆô
-	IOT_Module_acctl,				// ÃÅ½û¿ØÖÆ
-	IOT_Module_all			=90999	// ËùÓÐ¹¦ÄÜÄ£¿é
+	IOT_Module_Unknown		=90000, // ï¿½ï¿½ï¿½ï¿½Ä£ï¿½é¶¨ï¿½ï¿½
+	IOT_Module_authority,			// È¨ï¿½Þ¹ï¿½ï¿½ï¿½
+	IOT_Module_record,				// Â¼ï¿½ï¿½
+	IOT_Module_system,				// ÏµÍ³ï¿½ï¿½ï¿½ï¿½
+	IOT_Module_manager,				// ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
+	IOT_Module_event,				// ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
+	IOT_Module_talk,				// Ô¶ï¿½ï¿½Í¨ï¿½ï¿½
+	IOT_Module_reboot,				// Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	IOT_Module_acctl,				// ï¿½Å½ï¿½ï¿½ï¿½ï¿½
+	IOT_Module_all			=90999	// ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
 };
 
-#define defIOTDeviceAddr_DevSelf	0	// µ±µØÖ·ÓëÉè±¸ÀàÐÍºÍIDÒ»ÆðÊ±£¬´ËÖµ±íÊ¾Éè±¸×ÔÉí
-#define defIOTDeviceAddr_AllAddr	-1	// µ±µØÖ·ÓëÉè±¸ÀàÐÍºÍIDÒ»ÆðÊ±£¬´ËÖµ±íÊ¾Éè±¸ÏÂËùÓÐµØÖ·
-#define defIOTDeviceAddr_Other		-2	// µ±µØÖ·ÓëÉè±¸ÀàÐÍºÍIDÒ»ÆðÊ±£¬´ËÖµ±íÊ¾Éè±¸Ïà¹ØÆäËüÅäÖÃ
+#define defIOTDeviceAddr_DevSelf	0	// ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½Íºï¿½IDÒ»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
+#define defIOTDeviceAddr_AllAddr	-1	// ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½Íºï¿½IDÒ»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ö·
+#define defIOTDeviceAddr_Other		-2	// ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½Íºï¿½IDÒ»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-// Ò»°ãÐÔ·µ»ØresultÐ­Òémodule¶¨Òå
+// Ò»ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½resultÐ­ï¿½ï¿½moduleï¿½ï¿½ï¿½ï¿½
 enum defNormResultMod_
 {
-	defNormResultMod_null						= 0,	// ÎÞ
+	defNormResultMod_null						= 0,	// ï¿½ï¿½
 
-	// ÃüÃû¿Õ¼ä=XMLNS_GSIOT_CONTROL
-	defNormResultMod_control_camplay			= 1,	// ÊÓÆµ²¥·Å
-	defNormResultMod_control_MotionTrack		= 2,	// ´ò¿ª¹Ø±ÕÖÇÄÜ¸ú×Ù²Ù×÷
-	defNormResultMod_control_PTZ_ParkAction		= 3,	// ´ò¿ª¹Ø±ÕÊØÍû²Ù×÷
+	// ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½=XMLNS_GSIOT_CONTROL
+	defNormResultMod_control_camplay			= 1,	// ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½
+	defNormResultMod_control_MotionTrack		= 2,	// ï¿½ò¿ª¹Ø±ï¿½ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½Ù²ï¿½ï¿½ï¿½
+	defNormResultMod_control_PTZ_ParkAction		= 3,	// ï¿½ò¿ª¹Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
 enum defAuthFlag
@@ -375,8 +376,8 @@ enum defAuthFlag
 	defAuthFlag_Empty		= 0x00
 };
 
-// ÓÃ»§È¨ÏÞ
-//0 ÎÞÈ¨ÏÞ,1Ö»¶Á,2Ð´£¬3¶ÁÐ´
+// ï¿½Ã»ï¿½È¨ï¿½ï¿½
+//0 ï¿½ï¿½È¨ï¿½ï¿½,1Ö»ï¿½ï¿½,2Ð´ï¿½ï¿½3ï¿½ï¿½Ð´
 enum defUserAuth
 {
 	defUserAuth_Null = 0,
@@ -385,20 +386,20 @@ enum defUserAuth
 	defUserAuth_RW
 };
 
-// ËùÓÐÈ¨ÏÞµÄÅÐ¶ÏÖµ
+// ï¿½ï¿½ï¿½ï¿½È¨ï¿½Þµï¿½ï¿½Ð¶ï¿½Öµ
 #define defAllAuth_DeviceType		IOT_DEVICE_All
 #define defAllAuth_DeviceID			0
 #define defAllAuth_DeviceAuth		defUserAuth_RW
 #define defAllAuth_DeviceAuth_Null	defUserAuth_Null
-#define defAllAuth_DeviceShowName	"ËùÓÐÉè±¸"
+#define defAllAuth_DeviceShowName	"ï¿½ï¿½ï¿½ï¿½ï¿½è±¸"
 
-// ËùÓÐÈ¨ÏÞµÄÅÐ¶ÏÖµ
+// ï¿½ï¿½ï¿½ï¿½È¨ï¿½Þµï¿½ï¿½Ð¶ï¿½Öµ
 #define defAllAuth_ModuleType		IOT_Module_all
 #define defAllAuth_ModuleID			0
 #define defAllAuth_ModuleAuth		defUserAuth_RW
 #define defAllAuth_ModuleAuth_Null	defUserAuth_Null
 
-// ¹¦ÄÜÄ£¿éµÄIDÄ¬ÈÏÖµ
+// ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½IDÄ¬ï¿½ï¿½Öµ
 #define defAuth_ModuleDefaultID		0
 
 enum IOTDeviceReadType
@@ -426,12 +427,12 @@ enum SerialPortModule
 	Read_IOT_Ver		= 0x0B,
 
 	// V2
-	MOD_IR_RX_original	= 0x30,	// ºìÍâ½ÓÊÕ	Ö»¶Á
-	MOD_IR_RX_code		= 0x31,	// ºìÍâ½ÓÊÕ±àÂë	Ö»¶Á
-	MOD_IR_TX_original	= 0x3A,	// ºìÍâ·¢Éä	Ö»Ð´
-	MOD_IR_TX_code		= 0x3B,	// ºìÍâ·¢Éä±àÂë	Ö»Ð´
-	MOD_SYS_set			= 0xE0, // ÏµÍ³ÉèÖÃ
-	MOD_SYS_get			= 0xEA, // ÏµÍ³ÉèÖÃ·µ»Ø
+	MOD_IR_RX_original	= 0x30,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	Ö»ï¿½ï¿½
+	MOD_IR_RX_code		= 0x31,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ±ï¿½ï¿½ï¿½	Ö»ï¿½ï¿½
+	MOD_IR_TX_original	= 0x3A,	// ï¿½ï¿½ï¿½â·¢ï¿½ï¿½	Ö»Ð´
+	MOD_IR_TX_code		= 0x3B,	// ï¿½ï¿½ï¿½â·¢ï¿½ï¿½ï¿½ï¿½ï¿½	Ö»Ð´
+	MOD_SYS_set			= 0xE0, // ÏµÍ³ï¿½ï¿½ï¿½ï¿½
+	MOD_SYS_get			= 0xEA, // ÏµÍ³ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½
 };
 
 enum DataType
@@ -459,51 +460,51 @@ enum EventType
 	CALL_Event
 };
 
-// Æ·ÅÆ³§¼Ò
+// Æ·ï¿½Æ³ï¿½ï¿½ï¿½
 enum defFactory
 {
-	defFactory_Unknown = 0,	// ÎÞ
+	defFactory_Unknown = 0,	// ï¿½ï¿½
 	CameraType_Unkown = defFactory_Unknown,
 	
 	SSD1935			= 1,
 	TI368			= 2,
-	CameraType_hik	= 3,		// º£¿µ
-	CameraType_dh	= 4,		// ´ó»ª
+	CameraType_hik	= 3,		// ï¿½ï¿½ï¿½ï¿½
+	CameraType_dh	= 4,		// ï¿½ï¿½
 	
-	defFactory_ZK	= 5,			// ÖÐ¿Ø£¨ÃÅ½û£©
+	defFactory_ZK	= 5,			// ï¿½Ð¿Ø£ï¿½ï¿½Å½ï¿½
 
-	defFactory_HIK	=CameraType_hik,	// °´³§¼ÒÈ¡ÀàÐÍÃû º£¿µ
-	defFactory_DH	=CameraType_dh,		// °´³§¼ÒÈ¡ÀàÐÍÃû ´ó»ª
+	defFactory_HIK	=CameraType_hik,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	defFactory_DH	=CameraType_dh,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 };
 typedef defFactory IPCameraType;
 
 
 enum defRecMod
 {
-	defRecMod_NoRec = 0,	// ÎÞÂ¼Ïñ
-	defRecMod_OnCamera,		// ÔÚÉãÏñ»úÉè±¸ÉÏ
-	defRecMod_OnReordSvr	// ÔÚÂ¼Ïñ·þÎñÆ÷ÉÏ
+	defRecMod_NoRec = 0,	// ï¿½ï¿½Â¼ï¿½ï¿½
+	defRecMod_OnCamera,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½
+	defRecMod_OnReordSvr	// ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
-// ÔÆÌ¨¹¦ÄÜ±êÖ¾
+// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½Ü±ï¿½Ö¾
 enum GSPtzFlag
 {
-	GSPtzFlag_Null = 0,					// ÎÞ
-	GSPtzFlag_forward_direction = 1,	// Õý³£·½Ïò
-	GSPtzFlag_negative_direction		// ·½Ïòµ¹ÖÃ
+	GSPtzFlag_Null = 0,					// ï¿½ï¿½
+	GSPtzFlag_forward_direction = 1,	// ï¿½ï¿½ï¿½ï¿½
+	GSPtzFlag_negative_direction		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
-// µ÷½¹¹¦ÄÜ±êÖ¾
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü±ï¿½Ö¾
 enum GSFocalFlag
 {
-	GSFocalFlag_Null = 0,				// ÎÞ
-	GSFocalFlag_Enable = 1				// ÆôÓÃ
+	GSFocalFlag_Null = 0,				// ï¿½ï¿½
+	GSFocalFlag_Enable = 1				// ï¿½ï¿½ï¿½ï¿½
 };
 
-// Ô¤ÖÃµãË÷Òý 33ÒÔÉÏ¡¢100³öÍ·ÕâÐ©ÓÐÐ©ÌØÊâÒâÒåµÄÖµ¡£
-// ¶ø1-8±¾ÉíÎÞÌØÊâÒâÒå£¬µ«ÔÚ¾ßÌåÊ¹ÓÃÊ±ÔÚÉè¶¨ÉÏ×÷ÎªÌØÊâÓÃÍ¾£¬±ÈÈçÓÃÓÚ¶¨Ê±¡¢ÊØÍû¡£
-#define defGSPresetIndex_Min 201		// Ô¤ÖÃµãË÷Òý×îÐ¡Öµ
-#define defGSPresetIndex_Max 232		// Ô¤ÖÃµãË÷Òý×î´óÖµ
+// Ô¤ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ 33ï¿½ï¿½ï¿½Ï¡ï¿½100ï¿½ï¿½Í·ï¿½ï¿½Ð©ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
+// ï¿½ï¿½1-8ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ê±ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define defGSPresetIndex_Min 201		// Ô¤ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ
+#define defGSPresetIndex_Max 232		// Ô¤ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 
 #define GSPTZ_STOP_OFFSET		100
 #define GSPTZ_FUNCTION_OFFSET	200
@@ -511,67 +512,67 @@ enum GSFocalFlag
 enum GSPTZ_CtrlCmd
 {
 	GSPTZ_Null	  = -1,		// 
-	GSPTZ_STOPAll = 0,		// ÔÆÌ¨Í£Ö¹£¬Í¨ÓÃÍ£Ö¹
-	GSPTZ_UP,				// ÔÆÌ¨ÏòÉÏ
-	GSPTZ_DOWN,				// ÔÆÌ¨ÏòÏÂ
-	GSPTZ_RIGHT,			// ÔÆÌ¨ÏòÓÒ
-	GSPTZ_RIGHT_UP,			// ÔÆÌ¨ÓÒÉÏ
-	GSPTZ_RIGHT_DOWN,		// ÔÆÌ¨ÓÒÏÂ
-	GSPTZ_LEFT,				// ÔÆÌ¨Ïò×ó
-	GSPTZ_LEFT_UP,			// ÔÆÌ¨×óÉÏ
-	GSPTZ_LEFT_DOWN,		// ÔÆÌ¨×óÏÂ
-	GSPTZ_AUTO,				// ÔÆÌ¨×Ô¶¯
+	GSPTZ_STOPAll = 0,		// ï¿½ï¿½Ì¨Í£Ö¹ï¿½ï¿½Í¨ï¿½ï¿½Í£Ö¹
+	GSPTZ_UP,				// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_DOWN,				// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_RIGHT,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_RIGHT_UP,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_RIGHT_DOWN,		// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_LEFT,				// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_LEFT_UP,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_LEFT_DOWN,		// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_AUTO,				// ï¿½ï¿½Ì¨ï¿½Ô¶ï¿½
 
-	GSPTZ_ZOOM_IN =11,		// ½¹¾à±ä´ó(±¶ÂÊ±ä´ó) 
-	GSPTZ_ZOOM_OUT,			// ½¹¾à±äÐ¡(±¶ÂÊ±äÐ¡) 
-	GSPTZ_FOCUS_NEAR,		// ½¹µãÇ°µ÷
-	GSPTZ_FOCUS_FAR,		// ½¹µãºóµ÷
-	GSPTZ_IRIS_OPEN,		// ¹âÈ¦À©´ó
-	GSPTZ_IRIS_CLOSE,		// ¹âÈ¦ËõÐ¡
-
-	//----------------------------------------
-	// ÃüÁî¶ÔÓ¦Í£Ö¹
-	GSPTZ_STOP_UP = GSPTZ_STOP_OFFSET+1,		// ÔÆÌ¨ÏòÉÏ
-	GSPTZ_STOP_DOWN,			// ÔÆÌ¨ÏòÏÂ
-	GSPTZ_STOP_RIGHT,			// ÔÆÌ¨ÏòÓÒ
-	GSPTZ_STOP_RIGHT_UP,		// ÔÆÌ¨ÓÒÉÏ
-	GSPTZ_STOP_RIGHT_DOWN,		// ÔÆÌ¨ÓÒÏÂ
-	GSPTZ_STOP_LEFT,			// ÔÆÌ¨Ïò×ó
-	GSPTZ_STOP_LEFT_UP,			// ÔÆÌ¨×óÉÏ
-	GSPTZ_STOP_LEFT_DOWN,		// ÔÆÌ¨×óÏÂ
-	GSPTZ_STOP_AUTO,			// ÔÆÌ¨×Ô¶¯
-
-	GSPTZ_STOP_ZOOM_IN = GSPTZ_STOP_OFFSET+11,	// ½¹¾à±ä´ó(±¶ÂÊ±ä´ó) 
-	GSPTZ_STOP_ZOOM_OUT,		// ½¹¾à±äÐ¡(±¶ÂÊ±äÐ¡) 
-	GSPTZ_STOP_FOCUS_NEAR,		// ½¹µãÇ°µ÷
-	GSPTZ_STOP_FOCUS_FAR,		// ½¹µãºóµ÷
-	GSPTZ_STOP_IRIS_OPEN,		// ¹âÈ¦À©´ó
-	GSPTZ_STOP_IRIS_CLOSE,		// ¹âÈ¦ËõÐ¡
+	GSPTZ_ZOOM_IN =11,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ê±ï¿½ï¿½) 
+	GSPTZ_ZOOM_OUT,			// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡(ï¿½ï¿½ï¿½Ê±ï¿½Ð¡) 
+	GSPTZ_FOCUS_NEAR,		// ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½
+	GSPTZ_FOCUS_FAR,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_IRIS_OPEN,		// ï¿½ï¿½È¦ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_IRIS_CLOSE,		// ï¿½ï¿½È¦ï¿½ï¿½Ð¡
 
 	//----------------------------------------
-	// Ô¤ÖÃµã
-	GSPTZ_Add_Preset = GSPTZ_STOP_OFFSET+21,		// Ìí¼ÓÔ¤ÖÃµã
-	GSPTZ_Del_Preset,								// É¾³ýÔ¤ÖÃµã
-	GSPTZ_Goto_Preset,								// ×ªµ½Ô¤ÖÃµã
-	GSPTZ_Rename_Preset,							// ÐÞ¸ÄÔ¤ÖÃµãÃû³Æ
-	GSPTZ_SetNew_Preset,							// ¸üÐÂÔ¤ÖÃµã£¬ÉèÖÃÐÂµÄÎ»ÖÃµ½Ò»¸öÒÑ´æÔÚµÄÔ¤ÖÃµã
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦Í£Ö¹
+	GSPTZ_STOP_UP = GSPTZ_STOP_OFFSET+1,		// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_DOWN,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_RIGHT,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_RIGHT_UP,		// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_RIGHT_DOWN,		// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_LEFT,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_LEFT_UP,			// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_LEFT_DOWN,		// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_AUTO,			// ï¿½ï¿½Ì¨ï¿½Ô¶ï¿½
+
+	GSPTZ_STOP_ZOOM_IN = GSPTZ_STOP_OFFSET+11,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ê±ï¿½ï¿½) 
+	GSPTZ_STOP_ZOOM_OUT,		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡(ï¿½ï¿½ï¿½Ê±ï¿½Ð¡) 
+	GSPTZ_STOP_FOCUS_NEAR,		// ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½
+	GSPTZ_STOP_FOCUS_FAR,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_IRIS_OPEN,		// ï¿½ï¿½È¦ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_STOP_IRIS_CLOSE,		// ï¿½ï¿½È¦ï¿½ï¿½Ð¡
 
 	//----------------------------------------
-	// ¸ü¶à¹¦ÄÜÃüÁî
-	GSPTZ_MOTION_TRACK_Enable = GSPTZ_FUNCTION_OFFSET+1,	// ÖÇÄÜ¸ú×Ù¹¦ÄÜ ´ò¿ª
-	GSPTZ_MOTION_TRACK_Disable,								// ÖÇÄÜ¸ú×Ù¹¦ÄÜ ¹Ø±Õ
-	GSPTZ_MANUALTRACE,										// ÊÖ¶¯¸ú×Ù¿ØÖÆ
-	GSPTZ_MANUALPTZSel,										// ÊÖ¶¯¶¨Î»
-	GSPTZ_MANUALZoomRng,									// ÊÖ¶¯ÇøÓòÑ¡Ôñ·Å´óËõÐ¡
-
-	GSPTZ_PTZ_ParkAction_Enable,							// ÊØÍû¹¦ÄÜ ´ò¿ª
-	GSPTZ_PTZ_ParkAction_Disable,							// ÊØÍû¹¦ÄÜ ¹Ø±Õ
-
-	GSPTZ_DoPrePic,									// Éú³ÉÔ¤ÀÀÍ¼
+	// Ô¤ï¿½Ãµï¿½
+	GSPTZ_Add_Preset = GSPTZ_STOP_OFFSET+21,		// ï¿½ï¿½ï¿½Ô¤ï¿½Ãµï¿½
+	GSPTZ_Del_Preset,								// É¾ï¿½ï¿½Ô¤ï¿½Ãµï¿½
+	GSPTZ_Goto_Preset,								// ×ªï¿½ï¿½Ô¤ï¿½Ãµï¿½
+	GSPTZ_Rename_Preset,							// ï¿½Þ¸ï¿½Ô¤ï¿½Ãµï¿½ï¿½ï¿½ï¿½
+	GSPTZ_SetNew_Preset,							// ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½Ãµã£¬ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Î»ï¿½Ãµï¿½Ò»ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½Úµï¿½Ô¤ï¿½Ãµï¿½
 
 	//----------------------------------------
-	// ÏµÍ³¼¶ÃüÁî
-	GSPTZ_CameraReboot = GSPTZ_SYSCMD_OFFSET+1,		// ÖØÆôÉãÏñ»ú
+	// ï¿½ï¿½à¹¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_MOTION_TRACK_Enable = GSPTZ_FUNCTION_OFFSET+1,	// ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½Ù¹ï¿½ï¿½ï¿½ ï¿½ï¿½
+	GSPTZ_MOTION_TRACK_Disable,								// ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½Ù¹ï¿½ï¿½ï¿½ ï¿½Ø±ï¿½
+	GSPTZ_MANUALTRACE,										// ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½Ù¿ï¿½ï¿½ï¿½
+	GSPTZ_MANUALPTZSel,										// ï¿½Ö¶ï¿½ï¿½ï¿½Î»
+	GSPTZ_MANUALZoomRng,									// ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Å´ï¿½ï¿½ï¿½Ð¡
+
+	GSPTZ_PTZ_ParkAction_Enable,							// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+	GSPTZ_PTZ_ParkAction_Disable,							// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø±ï¿½
+
+	GSPTZ_DoPrePic,									// ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½Í¼
+
+	//----------------------------------------
+	// ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GSPTZ_CameraReboot = GSPTZ_SYSCMD_OFFSET+1,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
 enum RFCommand
@@ -617,24 +618,24 @@ enum GSIOTObjType
 	GSIOTObjType_PresetObj,
 };
 
-// »Ø·Å¿ØÖÆÂë
+// ï¿½Ø·Å¿ï¿½ï¿½ï¿½ï¿½ï¿½
 enum GSPlayBackCode_
 {
 	GSPlayBackCode_Stop			= -1,
 	GSPlayBackCode_NULL			= 0,
 	GSPlayBackCode_GetState		= 1,
 
-	GSPlayBackCode_PLAYPAUSE	= 11,	// ÔÝÍ£²¥·Å
-	GSPlayBackCode_PLAYRESTART,			// »Ö¸´²¥·Å£¬Ö»ÄÜ´ÓÔÝÍ£Ê±µÄ×´Ì¬»Ö¸´¼ÌÐø²¥·Å£¬µ±Ç°×´Ì¬²»ÊÇÔÝÍ£Ê±²Ù×÷ÎÞÐ§
-	GSPlayBackCode_PLAYNORMAL,			// Õý³£ËÙ¶È£¬ÈÎºÎ×´Ì¬»Ö¸´µ½Õý³£²¥·ÅÄ£Ê½
-	GSPlayBackCode_PLAYFAST,			// ¿ì·Å£¬²¥·ÅËÙ¶ÈÉý¼¶1¼¶£¬ËÙ¶È¼¶±ð£ºÂý2-Âý1-Õý³£ËÙ-¿ì1-¿ì2£¬²»»á³¬¹ýÏÂÏÞºÍÉÏÏÞ
-	GSPlayBackCode_PLAYSLOW,			// Âý·Å£¬²¥·ÅËÙ¶È½µ¼¶1¼¶
+	GSPlayBackCode_PLAYPAUSE	= 11,	// ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½
+	GSPlayBackCode_PLAYRESTART,			// ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Å£ï¿½Ö»ï¿½Ü´ï¿½ï¿½ï¿½Í£Ê±ï¿½ï¿½×´Ì¬ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Ç°×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
+	GSPlayBackCode_PLAYNORMAL,			// ï¿½ï¿½ï¿½Ù¶È£ï¿½ï¿½Îºï¿½×´Ì¬ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½
+	GSPlayBackCode_PLAYFAST,			// ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È¼ï¿½ï¿½ï¿½ï¿½ï¿½2-ï¿½ï¿½1-ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½1-ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½á³¬ï¿½ï¿½ï¿½ï¿½ï¿½Þºï¿½ï¿½ï¿½ï¿½ï¿½
+	GSPlayBackCode_PLAYSLOW,			// ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È½ï¿½ï¿½ï¿½1ï¿½ï¿½
 
-	GSPlayBackCode_PLAYGETPOS	= 21,	// ²¥·Å½ø¶È°Ù·Ö±È
-	GSPlayBackCode_PLAYSETPOS,			// Ìø×ªµ½²¥·Å½ø¶È°Ù·Ö±ÈÎ»ÖÃ¼ÌÐø²¥·Å
-	GSPlayBackCode_SETSPEED,			// ÉèÖÃÂëÁ÷ËÙ¶È£¬ËÙ¶Èµ¥Î»£ºkbps£¬×îÐ¡Îª256kbps
-	GSPlayBackCode_PlaySetTime,			// ²¥·ÅÊ±¼ä¶¨Î»
-	GSPlayBackCode_SkipTime,			// ÏòÇ°¿ìÌønÃë£¬¿ìÌønÃëºó»Ö¸´³ÉÕý³£ËÙ¶È²¥·Å
+	GSPlayBackCode_PLAYGETPOS	= 21,	// ï¿½ï¿½ï¿½Å½ï¿½È°Ù·Ö±ï¿½
+	GSPlayBackCode_PLAYSETPOS,			// ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Å½ï¿½È°Ù·Ö±ï¿½Î»ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½
+	GSPlayBackCode_SETSPEED,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È£ï¿½ï¿½Ù¶Èµï¿½Î»ï¿½ï¿½kbpsï¿½ï¿½ï¿½ï¿½Ð¡Îª256kbps
+	GSPlayBackCode_PlaySetTime,			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä¶¨Î»
+	GSPlayBackCode_SkipTime,			// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½nï¿½ë£¬ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È²ï¿½ï¿½ï¿½
 };
 
 enum GSDevViewMod_
@@ -645,14 +646,14 @@ enum GSDevViewMod_
 };
 
 
-// ÏµÍ³ÕûÌå×ÛºÏËùÓÐ²¼·ÀÏà¹ØÉèÖÃÌõ¼þ£¬Ä¿Ç°ÊÇ·ñ´¦ÓÚ²¼·ÀÉúÐ§×´Ì¬
+// ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½Ûºï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Ç°ï¿½Ç·ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½Ð§×´Ì¬
 // AlarmGuardCurState
 enum GSAGCurState_
 {
-	GSAGCurState_UnArmed		= 0,  // ³··À
-	GSAGCurState_AllArmed		= 1,  // È«²¿²¼·À²¢ÉúÐ§£»
-	GSAGCurState_PartOfArmed	= 2,  // ²¿·Ö´¥·¢Æ÷²¼·À²¢ÉúÐ§£»
-	GSAGCurState_WaitTimeArmed	= 3,  // ÔÝÊ±Î´ÉúÐ§µÈ´ýÌõ¼þ´ïµ½ºó×Ô¶¯ÉúÐ§¡£
+	GSAGCurState_UnArmed		= 0,  // ï¿½ï¿½ï¿½ï¿½
+	GSAGCurState_AllArmed		= 1,  // È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
+	GSAGCurState_PartOfArmed	= 2,  // ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
+	GSAGCurState_WaitTimeArmed	= 3,  // ï¿½ï¿½Ê±Î´ï¿½ï¿½Ð§ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ïµ½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
 };
 
 struct struGSTime
@@ -837,10 +838,10 @@ struct x264_nal_t
 	}
 };
 
-// tagÊ±µÄ²ÎÊýÐÅÏ¢
+// tagÊ±ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 struct struTagParam 
 {
-	bool isValid; // ²ÎÊýÎÞÐ§Ê±²ÉÓÃÄ¬ÈÏtag£¬²ÎÊýÓÐÐ§Ê±°´²ÎÊýÐÅÏ¢tag
+	bool isValid; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§Ê±ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½tagï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢tag
 	bool isResult;
 	int fmt;
 	defUserAuth Auth;

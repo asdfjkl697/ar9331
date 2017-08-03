@@ -42,6 +42,7 @@ using namespace std;  //jyc20170309 add
 #include <string>
 
 #ifndef OS_UBUNTU
+
 static void getNetworkValue(char *szBuf, uint8_t *value)
 {
     int i,j;

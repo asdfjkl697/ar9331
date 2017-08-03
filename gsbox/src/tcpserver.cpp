@@ -72,7 +72,7 @@ void TcpServer::OnDisconnect(Client *client)
 }
 
 void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
-{	
+{
 	if(!client->IsLogin() && pkt->GetCommand() != CMD_LOGIN){
 		pkt->ResetToSend();
 		pkt->EncodeBoolean(false);
@@ -84,7 +84,6 @@ void TcpServer::onPacketRead(Client *client, NetPacket *pkt)
 		client->Send(pkt->getBuffer(), pkt->getLength());
 		return;
 	}
-	
 	switch(pkt->GetCommand())
 	{
 		case CMD_SERIAL:

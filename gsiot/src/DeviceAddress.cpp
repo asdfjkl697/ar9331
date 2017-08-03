@@ -2,6 +2,7 @@
 #include "common.h"
 //#include <windows.h> //20160603
 #include <time.h>
+#include <math.h> //jyc20170424 add for fabs
 
 
 DeviceAddress::DeviceAddress(uint32_t address)
@@ -110,7 +111,7 @@ bool DeviceAddress::doEditAttrFromAttrMgr( const EditAttrMgr &attrMgr, defCfgOpr
 
 void DeviceAddress::InitNewMutex()
 {
-	// Ö»ÓÐÔÚÐÂ½¨ÊµÀýÊ±²Å»áµ÷ÓÃ£¬ËùÒÔÕâÀïÊÇ²»ÅÐ¶ÏÊÇ·ñÒÑ·ÖÅä£¬×ÜÊÇÇ¿ÖÆ·ÖÅä
+	// Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½Êµï¿½ï¿½Ê±ï¿½Å»ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ñ·ï¿½ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½Æ·ï¿½ï¿½ï¿½
 	m_pmutex_addr = new gloox::util::Mutex();
 }
 
@@ -224,7 +225,7 @@ int DeviceAddress::GetMultiReadCount()
 	return m_data_MultiReadCount;
 }
 
-// ÊÇ·ñÁ¬½Ó¶ÁÈ¡²¢µÝ¼õ´ÎÊý
+// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½È¡ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ï¿½ï¿½
 int DeviceAddress::PopMultiReadCount()
 {
 	gloox::util::MutexGuard( this->m_pmutex_addr );
@@ -260,7 +261,7 @@ std::string DeviceAddress::GetCurValue( bool *isOld, uint32_t *noUpdateTime, con
 {
 	gloox::util::MutexGuard( this->m_pmutex_addr );
 
-	// ÊÇ·ñ³¤Ê±¼äÃ»ÓÐ¸üÐÂ
+	// ï¿½Ç·ï¿½Ê±ï¿½ï¿½Ã»ï¿½Ð¸ï¿½ï¿½ï¿½
 	uint32_t tick = timeGetTime()-m_lastUpdate;
 	if( isOld )
 	{
@@ -282,7 +283,7 @@ std::string DeviceAddress::GetCurValue( bool *isOld, uint32_t *noUpdateTime, con
 				const int DataSamp_LowSampTime = RUNCODE_Get( defCodeIndex_SYS_DataSamp_LowSampTime, curisTimePoint ? defRunCodeValIndex_2:defRunCodeValIndex_1 );
 				if( timeGetTime()-m_lastSampTime<(DataSamp_LowSampTime*1000) )
 				{
-					// Ì«³¤Ê±¼äÎ´»ñÈ¡Êý¾ÝÔò½øÈëµÍÆµÂÊ²É¼¯
+					// Ì«ï¿½ï¿½Ê±ï¿½ï¿½Î´ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Ê²É¼ï¿½
 					*isOld = false;
 				}
 				else
@@ -327,7 +328,7 @@ bool DeviceAddress::SetCurValue( const std::string& newValue, const time_t newVa
 	const float newCurValueF = atof(newValue.c_str());
 	if( annlyse )
 	{
-		// ¸³³õÖµ£¬Ö»¸³Öµ£¬²»×öÈÎºÎ×´Ì¬¸üÐÂ
+		// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ö»ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
 		if( 0 == m_lastUpdate )
 		{
 			this->m_curValue = newValue;
@@ -337,17 +338,17 @@ bool DeviceAddress::SetCurValue( const std::string& newValue, const time_t newVa
 
 		if( abs( newCurValueF-atof(m_curValue.c_str()) ) > 5.0f )
 		{
-			m_data_MultiReadCount = 5; // ´ó·ù¶È±ä»¯ÊÇÁ¬Ðø¶ÁÈ¡Öµ
+			m_data_MultiReadCount = 5; // ï¿½ï¿½ï¿½È±ä»¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Öµ
 
-			// Êý¾ÝÒì³£±ä»¯
+			// ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ä»¯
 			if( m_data_abnormal_count>1 )
 			{
-				// ÉÏ´ÎÒÑ¾­³öÏÖ¹ý£¬ÈÏÎªÊÇÕý³£±ä»¯ÁË´ó·ù¶ÈÊýÖµ
+				// ï¿½Ï´ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ä»¯ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 				m_data_abnormal_count = 0;
 			}
 			else
 			{
-				// ²»¸üÐÂÊýÖµ£¬ÐèÖØÐÂ²É¼¯
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â²É¼ï¿½
 				m_data_abnormal_count++;
 
 				if( strlog )
@@ -392,11 +393,11 @@ bool DeviceAddress::SetCurValue( const std::string& newValue, const time_t newVa
 	return true;
 }
 
-// Êý¾Ý·ÖÎö
-// Êý¾Ý´æ´¢·½Ê½£º ¼ûdefDataFlag_¡£
-// ÎÂÊª¶ÈµÈ³£¹æ¼à²âÁ¿ÊÇ·¢Éú±ä»¯´æ´¢£¬ÅÐ¶ÏÃÅÏÞ²Î¿¼SYS_VChgRng_***¡£
-// ·çËÙÕâÖÖ°´ÕÕ´°¿Ú»¯´¦ÀíºóÅÐ¶Ï±ä»¯´æ´¢£¬ÃÅÏÞ²Î¿¼SYS_WinTime_Wind£¬²¢¶ÔÐ¡Öµ×öºÏ²¢´¦Àí²Î¿¼SYS_MergeWindLevel/g_WindSpeedLevel()µÈ¡£
-// ´æ´¢Ê±¼äµãµÄÅÐ¶Ï£¬ÔÚÊ±¼äµãÖ®Ç°2·ÖÖÓÒÔÄÚÒÑ¾­´æ´¢µÄ£¬ÈÏÎªÕâ¸ö´æ´¢ÒÑ¾­½Ó½üÊ±¼äµã£¬Ëã×÷Ê±¼äµã´æ´¢£¬ËãÍê³ÉÁËÊ±¼äµã´æ´¢¡£´ÓÊ±¼äµãÕûµã¿ªÊ¼¼Ç£¬Ò»¸öÊ±¼ä·¶Î§ÄÚ¶¼Ëã×÷Ê±¼äµã´æ´¢¡£Ïà¹Ø²Î¿¼g_isTimePoint¡¢g_TransToTimePointµÈ¡£
+// ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
+// ï¿½ï¿½Ý´æ´¢ï¿½ï¿½Ê½ï¿½ï¿½ ï¿½ï¿½defDataFlag_ï¿½ï¿½
+// ï¿½ï¿½Êªï¿½ÈµÈ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ä»¯ï¿½æ´¢ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Þ²Î¿ï¿½SYS_VChgRng_***ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ï¿½Õ´ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï±ä»¯ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½Þ²Î¿ï¿½SYS_WinTime_Windï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½SYS_MergeWindLevel/g_WindSpeedLevel()ï¿½È¡ï¿½
+// ï¿½æ´¢Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ö®Ç°2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½æ´¢ï¿½Ä£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½æ´¢ï¿½Ñ¾ï¿½ï¿½Ó½ï¿½Ê±ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ã¿ªÊ¼ï¿½Ç£ï¿½Ò»ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½Ø²Î¿ï¿½g_isTimePointï¿½ï¿½g_TransToTimePointï¿½È¡ï¿½
 void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newValTime, bool *doSave, 
                                 time_t *SaveTime, std::string *SaveValue, defDataFlag_* dataflag, 
                                 std::string *strlog )
@@ -424,8 +425,7 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 				
 		case IOT_DEVICE_CO2:
 		case IOT_DEVICE_HCHO:
-		//case IOT_DEVICE_PM25:
-			//break;
+		case IOT_DEVICE_PM25:
 
 		case IOT_DEVICE_Temperature:
 		case IOT_DEVICE_Humidity:
@@ -439,15 +439,15 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 		{
 			if( m_lastSaveTime )
 			{
-				// ÏÈ½øÐÐ´æ´¢Ê±¼äµãÏà¹ØµÄÅÐ¶Ï
-				// µ±Ç°Ê±¼äËùÔÚÊ±¼äµãºÍÉÏ´Î´æ´¢µÄÊ±¼äËùÔÚÊ±¼äµã²»Í¬¡£¼´£¬µ±Ç°´æ´¢Ê±¼äµã»¹Î´´æ´¢¹ýÖµ¡£
+				// ï¿½È½ï¿½ï¿½Ð´æ´¢Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½Ð¶ï¿½
+				// ï¿½ï¿½Ç°Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Î´æ´¢ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ã²»Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½æ´¢Ê±ï¿½ï¿½ã»¹Î´ï¿½æ´¢ï¿½ï¿½Öµï¿½ï¿½
 				time_t newtimepointf = g_TransToTimePoint(newValTime, m_type, false);
 				time_t lasttimepoint = g_TransToTimePoint(m_lastSaveTime, m_type, true); //jyc20170228 modify
 				if( newtimepointf != lasttimepoint ) //jyc20170228 debug 5s one time
 				{
 					*doSave = true;
 
-					// Èç¹ûµ±Ç°Ê±¼äÔÚÊ±¼äµãÔò±êÖ¾Î»Ê±¼äµã´æ´¢£¬·ñÔòÎªÆÕÍ¨´æ´¢
+					// ï¿½ï¿½ï¿½Ç°Ê±ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»Ê±ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í¨ï¿½æ´¢
 					if( g_isTimePoint(newValTime,m_type) )
 					{
 						*dataflag = defDataFlag_TimePoint;
@@ -471,7 +471,7 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 					{
 					case IOT_DEVICE_Wind:
 						{
-							// ·çËÙ¼¶±ð·¢Éú±ä»¯
+							// ï¿½ï¿½ï¿½Ù¼ï¿½ï¿½ï¿½ï¿½ï¿½ä»¯
 							*doSave = ( g_WindSpeedLevel( oldSaveValueF, true ) != g_WindSpeedLevel( newFinishValueF, true ) );
 							*dataflag = defDataFlag_Changed;
 
@@ -486,6 +486,7 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 
 					case IOT_DEVICE_CO2:
 					case IOT_DEVICE_HCHO:
+					case IOT_DEVICE_PM25:
 
 					case IOT_DEVICE_Temperature:
 					case IOT_DEVICE_Humidity:
@@ -493,9 +494,12 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 						{
 							const float VChgRng = g_SYS_VChgRng(m_type);
 
-							// ÆÕÍ¨±ä»¯·¶Î§±È½Ï
-							*doSave = ( abs( oldSaveValueF - newFinishValueF ) >= VChgRng );
+							// ï¿½ï¿½Í¨ï¿½ä»¯ï¿½ï¿½Î§ï¿½È½ï¿½
+							*doSave = ( fabs( oldSaveValueF - newFinishValueF ) >= VChgRng ); //jyc20170424 modify abs->fabs
 							*dataflag = defDataFlag_Changed;
+							//jyc20170424 debug
+							//printf("\nm_type=%d rng=%f oldSaveValueF=%f newFinishValueF=%f dosave=%d\n",
+							//		m_type,VChgRng,oldSaveValueF,newFinishValueF,*doSave); //jyc20170424 debug
 
 							if( strlog && (*doSave) )
 							{
@@ -534,7 +538,7 @@ void DeviceAddress::DataAnalyse( const std::string& newValue, const time_t newVa
 	}
 }
 
-// ×îºóÒ»´Î´æ´¢Öµ
+// ï¿½ï¿½ï¿½Ò»ï¿½Î´æ´¢Öµ
 void DeviceAddress::SetLastSave( const time_t lastSaveTime, const std::string lastSaveValue )
 {
 	gloox::util::MutexGuard( this->m_pmutex_addr );

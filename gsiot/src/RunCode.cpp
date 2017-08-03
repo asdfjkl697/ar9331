@@ -15,193 +15,193 @@ enum defUseValType
 	defUseValType_Max,
 };
 
-// ÎÞÌØÊâËµÃ÷¶¼ÊÇ value1=defRunCodeVal_Enable ¿ªÆô¹¦ÄÜ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ value1=defRunCodeVal_Enable ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 static struRunCode s_RunCode[defCodeIndex_MAX_+1] = 
 {
 	{ 0, 0, 0, 0, 0, 0,0,0,0, "Unknown", StrNull, StrNull },						// 
 
-	{ 100, 0, 1, 1024, 768, 0,0,0,0, "SYS_IOTWndMod", StrNull, StrNull },			// ½çÃæÏÔÊ¾·½Ê½£¬Ä¬ÈÏÈ«ÆÁ
-	{ 101, 1, 2, 0, 0, 0,0,0,0, "SYS_ShowLogWnd", StrNull, StrNull },				// Æô¶¯ºó×Ô¶¯ÏÔÊ¾ÈÕÖ¾´°¿Ú, val2:SW_SHOWMINIMIZEDµÈµÈ, val3:½ÏÔç¾ÍÏÔÊ¾
-	{ 102, 0, 0, 0, 0, 0,0,0,0, "SYS_ListRunCode", StrNull, StrNull },				// ´òÓ¡ ÔËÐÐÂëÁÐ±í
-	{ 103, 0, 0, 0, 0, 0,0,0,0, "SYS_ShowDebugUI", StrNull, StrNull },				// ´òÓ¡ ÏÔÊ¾µ÷ÊÔ½çÃæ
-	{ 104, 0, 0, 0, 0, 0,0,0,0, "SYS_PlayBackSound", "Â¼Ïñ»Ø·ÅÉùÒô", "0:»Ø·ÅÊ±¹ýÂËÉùÒô, 1:»Ø·ÅÊ±²¥·ÅÉùÒô" },		// ´òÓ¡ »Ø·ÅÊ±ÊÇ·ñ¹ýÂËÉùÒô
-	{ 105, 57600, 0, 0, 0, 0,0,0,0, "SYS_COM_baudrate", StrNull, StrNull },			// com baudrate // 115200/57600/19200/9600µÈµÈ...
-	{ 106, 0, 0, 0, 0, 0,0,0,0, "SYS_Talk", "Ô¶³ÌÍ¨»°¹¦ÄÜ", "0:½ûÓÃ, 1:ÆôÓÃ" },		// Í¨»°¹¦ÄÜ
-	{ 107, 0, 0, 0, 0, 0,0,0,0, "SYS_GSM", "GSM¶ÌÐÅÍ¨Öª¹¦ÄÜ", "0:½ûÓÃ, 1:ÆôÓÃ" },	// GSM¹¦ÄÜ
-	{ 108, 64, 0, 0, 0, 0,0,0,0, "SYS_PlayBack_timefix_a", StrNull, StrNull },		// »Ø·Å ÒôÆµÔ­Ê¼Ê±¼äÐÞÕýÖµ£¬64
-	{ 109, 9, 0, 0, 0, 0,0,0,0, "SYS_PlayBack_spanfix", StrNull, StrNull },			// »Ø·Å °ü·¢ËÍÊ±¼äÐÞÕý²ÎÊý£¬¿ÉÎª¸ºÊý£¬ÒÑ²âÊÔ1/5/9µÈµÈ...
-	{ 110, 1, 0, 0, 0, 0,0,0,0, "SYS_PTZ_TRACE2PTZSel", "¸ú×Ù¹Ø±ÕÊ±×Ô¶¯¸ÄÓÃ¶¨Î»", StrNull },	// ¶¨Î» ¸ú×Ù¹Ø±ÕÊ±×ªÎª¶¨Î»
-	{ 111, 1, 0, 0, 0, 0,0,0,0, "SYS_CheckSystem", StrNull, StrNull },				// ÊÇ·ñ¼ì²âÏµÍ³×´Ì¬£¬¼ì²âµ±Ç°ÏµÍ³ÄÚ´æ
-	{ 112, 800, 0, 0, 0, 0,0,0,0, "SYS_CurPsMemOver", StrNull, StrNull },			// µ±Ç°½ø³ÌÄÚ´æÕ¼ÓÃÉÏÏÞ£¬µ¥Î»MB
-	{ 113, 1, 0, 0, 0, 0,0,0,0, "SYS_UseUrlDifCnt", StrNull, StrNull },				// urlÊ¹ÓÃ²îÒì´¦Àí iosÎ´¸üÐÂÇ°ÖÃ0£¬ios¸üÐÂºóÖÃ1
-	{ 114, 0, 0, 0, 0, 0,0,0,0, "SYS_CamReEnc", StrNull, StrNull },					// ÉãÏñÍ·ÒôÆµ×ªÂë¹¦ÄÜÖ§³Ö
-	{ 115, 1, 0, 0, 0, 0,0,0,0, "SYS_CamTalk", StrNull, StrNull },					// Ö§³ÖÉãÏñ»ú¶Ô½²¹¦ÄÜ
-	{ 116, 1, 0, 0, 0, 0,0,0,0, "SYS_AutotLockForRun", StrNull, StrNull },			// Æô¶¯ºó×Ô¶¯Ëø¶¨
-	{ 117, 1, 0, 0, 0, 0,0,0,0, "SYS_CheckIOTPs", StrNull, StrNull },				// ÊÇ·ñ¼ì²â½ø³Ì×ÔÉí×´Ì¬£¬¼ì²âµ±Ç°½ø³ÌÄÚ´æ
-	{ 118, 92, 0, 0, 0, 0,0,0,0, "SYS_CurSysMemOver", StrNull, StrNull },			// µ±Ç°ÏµÍ³ÄÚ´æÕ¼ÓÃÉÏÏÞ£¬°Ù·Ö±È
-	{ 119, 87, 0, 0, 0, 0,0,0,0, "SYS_CurSysMemOverLow", StrNull, StrNull },		// µ±Ç°ÏµÍ³ÄÚ´æÕ¼ÓÃ¿ÕÏÐÊ±¶ÎÉÏÏÞ£¬°Ù·Ö±È
-	{ 120, 0, 0, 0, 0, 0,0,0,0, "SYS_CamAutoConnect", "ÉãÏñ»úÁ¬½Ó·½Ê½", "0:È«²¿°´ÕÕÅäÖÃÁ¬½Ó, 1:È«²¿×ÜÊÇ×Ô¶¯Á¬½Ó, 2:È«²¿×ÜÊÇ°´ÐèÁ¬½Ó" },	// ËùÓÐÉãÏñ»úÊÇ·ñ±£³Ö×Ô¶¯Á¬½Ó£¬val1: 0°´¸÷¸öÅäÖÃ£¬1ËùÓÐ×ÜÊÇ×Ô¶¯Á¬½Ó£¬2ËùÓÐ×ÜÊÇ°´ÐèÁ¬½Ó; val4:ÊÇ·ñÏÔÊ¾ÔÚÅäÖÃ½çÃæ
-	{ 121, 1, 0, 0, 0, 0,0,0,0, "SYS_MotionTrack2ParkAction", StrNull, StrNull },	// Ä£Ê½, ÖÇÄÜ¸ú×ÙÁ¬´øÓëÊØÍû»¥³â
-	{ 122, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW7", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜÈÕ, val1:²¼·ÀÊ±¼ä±êÖ¾, 0È«ÌìÎÞÐ§(³··À)£¬1È«ÌìÉúÐ§(²¼·À), 2Ö¸¶¨Ê±¼ä¶Î; val2/val3/val4:²¼·ÀÊ±¼ä¶ÎÖµ£¬Öµ¸ñÊ½: ÊÇ·ñÓÐÐ§±êÖ¾*100000000+Ê±¼ä¶Î¿ªÊ¼Ê±¼ä*10000+Ê±¼ä¶Î½áÊøÊ±¼ä£¬Ê±¼äÀý£ºÓÐÐ§:08:30-17:00=108301700
-	{ 123, 1, 0, 0, 0, 0,0,0,0, "SYS_AutoCheckNetUseable", StrNull, StrNull },		// ×Ô¶¯¼ì²âÉãÏñ»úÍøÂçÊÇ·ñ³©Í¨
-	{ 124, 9, 0, 0, 0, 0,0,0,0, "SYS_RTMPUrlNumMax", StrNull, StrNull },			// CreateRTMPInstance RTMP urlÊýÁ¿ÉÏÏÞ
-	{ 125, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardGlobalFlag", StrNull, StrNull },		// ²¼·À³··À×Ü¿ª¹Ø
-	{ 131, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW1", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜÒ»£¬¸ñÊ½Í¬SYS_AlarmGuardTimeÖÜÈÕ
-	{ 132, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW2", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜ¶þ£¬¸ñÊ½Í¬SYS_AlarmGuardTimeÖÜÈÕ
-	{ 133, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW3", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜÈý£¬¸ñÊ½Í¬SYS_AlarmGuardTimeÖÜÈÕ
-	{ 134, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW4", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜËÄ£¬¸ñÊ½Í¬SYS_AlarmGuardTimeÖÜÈÕ
-	{ 135, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW5", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜÎå£¬¸ñÊ½Í¬SYS_AlarmGuardTimeÖÜÈÕ
-	{ 136, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW6", StrNull, StrNull },			// ²¼·ÀÊ±¼ä:ÖÜÁù£¬¸ñÊ½Í¬SYS_AlarmGuardTimeÖÜÈÕ
-	{ 141, 1, 0, 0, 0, 0,0,0,0, "SYS_ShowTaskBtnMod", StrNull, StrNull },			// Ö÷Ò³ÃæÈÎÎñÀ¸°´Å¥ÏÔÊ¾Ä£Ê½£¬0¶¯Ì¬ÏÔÊ¾£¬1×ÜÊÇÏÔÊ¾
-	{ 142, 1, 0, 0, 0, 0,0,0,0, "SYS_RS485ReadRollMod", StrNull, StrNull },			// RS485±éÀú¶ÁÈ¡²âÊÔÄ£Ê½ ¹¦ÄÜÆôÓÃ
-	{ 143, 0, 1000, 0, 0, 0,0,0,0, "SYS_BitRateBaseK", StrNull, StrNull },			// ÖØ¶¨ÒåCAudioCfg::BitRate2Bytes K»ù×¼Öµ£¬Ò»°ãÎª 1000 or 1024
-	{ 144, 0, 0, 0, 0, 0,0,0,0, "SYS_AutoNotiContAddIOTName", "×Ô¶¯Éú³ÉµÄÍ¨ÖªÄÚÈÝ´øÉÏÖ÷¿ØÃû", "0:½ûÓÃ, 1:ÆôÓÃ" },		// ×Ô¶¯Éú³ÉµÄÍ¨ÖªÄÚÈÝÊÇ·ñ´øÉÏÃû³Æ
-	{ 145, 1, 0, 0, 0, 0,0,0,0, "SYS_AutoNotiContAddTime", "×Ô¶¯Éú³ÉµÄÍ¨ÖªÄÚÈÝ´øÉÏÊ±¼ä", "0:½ûÓÃ, 1:ÆôÓÃ" },		// ×Ô¶¯Éú³ÉµÄÍ¨ÖªÄÚÈÝÊÇ·ñ´øÉÏÊ±¼ä
-	{ 146, 0, 0, 0, 0, 0,0,0,0, "SYS_PlayBackSetSpeed", StrNull, StrNull },			// ÊÇ·ñ »Ø·ÅÊ±ÉèÖÃÁ÷Á¿¿ØÖÆ
-	{ 147, 16, 0, 0, 0, 0,0,0,0, "SYS_PlaybackChannelLimit", StrNull, StrNull },	// ÊÇ·ñ »Ø·Å»á»°ÉÏÏÞ
-	{ 148, 1, 0, 0, 0, 0,0,0,0, "SYS_UIAutoGetAllModSysSet", StrNull, StrNull },	// ´ò¿ª½çÃæÊ±ÊÇ·ñ×Ô¶¯»ñÈ¡ºìÍâÉèÖÃÐÅÏ¢µÈ
-	{ 149, 6*3600, 0, 0, 0, 0,0,0,0, "SYS_PlaybackSessionOvertime", StrNull, StrNull },	// »Ø·Å»á»°×î³¤Ê±¼ä£¬Ãë
-	{ 150, 1, 1, 2, 0, 0,0,0,0, "SYS_CheckDevTimeCfg", "×Ô¶¯Ð£Ê±¹¦ÄÜ", StrNull },	// Éè±¸Ð£Ê±ÉèÖÃ£¬val1: ÆôÓÃ½ûÓÃ; ÔÚ val2ÖÁval3 Ê±¼ä·¶Î§ÄÚÖ´ÐÐ£¬´ËÊ±¼äÍâ²»Ö´ÐÐ
-	{ 151, 0, 0, 0, 0, 0,0,0,0, "SYS_CheckDevTimeSave", StrNull, StrNull },			// Éè±¸Ð£Ê±¼ÇÂ¼£¬val1: ÉÏ´ÎÐ£Ê±ÈÕ
-	{ 152, 0, 0, 0, 0, 0,0,0,0, "SYS_AutoPublishEnable", StrNull, StrNull },		// ±£³Ö·¢²¼/×Ô¶¯·¢²¼¹¦ÄÜÆôÓÃ/½ûÓÃ
+	{ 100, 0, 1, 1024, 768, 0,0,0,0, "SYS_IOTWndMod", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ê½ï¿½ï¿½Ä¬ï¿½ï¿½È«ï¿½ï¿½
+	{ 101, 1, 2, 0, 0, 0,0,0,0, "SYS_ShowLogWnd", StrNull, StrNull },				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½, val2:SW_SHOWMINIMIZEDï¿½Èµï¿½, val3:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+	{ 102, 0, 0, 0, 0, 0,0,0,0, "SYS_ListRunCode", StrNull, StrNull },				// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
+	{ 103, 0, 0, 0, 0, 0,0,0,0, "SYS_ShowDebugUI", StrNull, StrNull },				// ï¿½ï¿½Ó¡ ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½
+	{ 104, 0, 0, 0, 0, 0,0,0,0, "SYS_PlayBackSound", "Â¼ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½", "0:ï¿½Ø·ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1:ï¿½Ø·ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" },		// ï¿½ï¿½Ó¡ ï¿½Ø·ï¿½Ê±ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 105, 57600, 0, 0, 0, 0,0,0,0, "SYS_COM_baudrate", StrNull, StrNull },			// com baudrate // 115200/57600/19200/9600ï¿½Èµï¿½...
+	{ 106, 0, 0, 0, 0, 0,0,0,0, "SYS_Talk", "Ô¶ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½" },		// Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 107, 0, 0, 0, 0, 0,0,0,0, "SYS_GSM", "GSMï¿½ï¿½ï¿½ï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½", "0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½" },	// GSMï¿½ï¿½ï¿½ï¿½
+	{ 108, 64, 0, 0, 0, 0,0,0,0, "SYS_PlayBack_timefix_a", StrNull, StrNull },		// ï¿½Ø·ï¿½ ï¿½ï¿½ÆµÔ­Ê¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½64
+	{ 109, 9, 0, 0, 0, 0,0,0,0, "SYS_PlayBack_spanfix", StrNull, StrNull },			// ï¿½Ø·ï¿½ ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ñ²ï¿½ï¿½ï¿½1/5/9ï¿½Èµï¿½...
+	{ 110, 1, 0, 0, 0, 0,0,0,0, "SYS_PTZ_TRACE2PTZSel", "ï¿½ï¿½ï¿½Ù¹Ø±ï¿½Ê±ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½Î»", StrNull },	// ï¿½ï¿½Î» ï¿½ï¿½ï¿½Ù¹Ø±ï¿½Ê±×ªÎªï¿½ï¿½Î»
+	{ 111, 1, 0, 0, 0, 0,0,0,0, "SYS_CheckSystem", StrNull, StrNull },				// ï¿½Ç·ï¿½ï¿½ï¿½ÏµÍ³×´Ì¬ï¿½ï¿½ï¿½ï¿½âµ±Ç°ÏµÍ³ï¿½Ú´ï¿½
+	{ 112, 800, 0, 0, 0, 0,0,0,0, "SYS_CurPsMemOver", StrNull, StrNull },			// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ú´ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½ï¿½Î»MB
+	{ 113, 1, 0, 0, 0, 0,0,0,0, "SYS_UseUrlDifCnt", StrNull, StrNull },				// urlÊ¹ï¿½Ã²ï¿½ï¿½ì´¦ï¿½ï¿½ iosÎ´ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½0ï¿½ï¿½iosï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½1
+	{ 114, 0, 0, 0, 0, 0,0,0,0, "SYS_CamReEnc", StrNull, StrNull },					// ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½Æµ×ªï¿½ë¹¦ï¿½ï¿½Ö§ï¿½ï¿½
+	{ 115, 1, 0, 0, 0, 0,0,0,0, "SYS_CamTalk", StrNull, StrNull },					// Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 116, 1, 0, 0, 0, 0,0,0,0, "SYS_AutotLockForRun", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½
+	{ 117, 1, 0, 0, 0, 0,0,0,0, "SYS_CheckIOTPs", StrNull, StrNull },				// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½âµ±Ç°ï¿½ï¿½ï¿½ï¿½Ú´ï¿½
+	{ 118, 92, 0, 0, 0, 0,0,0,0, "SYS_CurSysMemOver", StrNull, StrNull },			// ï¿½ï¿½Ç°ÏµÍ³ï¿½Ú´ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½Ù·Ö±ï¿½
+	{ 119, 87, 0, 0, 0, 0,0,0,0, "SYS_CurSysMemOverLow", StrNull, StrNull },		// ï¿½ï¿½Ç°ÏµÍ³ï¿½Ú´ï¿½Õ¼ï¿½Ã¿ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½Ù·Ö±ï¿½
+	{ 120, 0, 0, 0, 0, 0,0,0,0, "SYS_CamAutoConnect", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½Ê½", "0:È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1:È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½, 2:È«ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" },	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ñ±£³ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ó£ï¿½val1: 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ó£ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½; val4:ï¿½Ç·ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½
+	{ 121, 1, 0, 0, 0, 0,0,0,0, "SYS_MotionTrack2ParkAction", StrNull, StrNull },	// Ä£Ê½, ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 122, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW7", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½, val1:ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ö¾, 0È«ï¿½ï¿½ï¿½ï¿½Ð§(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½1È«ï¿½ï¿½ï¿½ï¿½Ð§(ï¿½ï¿½ï¿½ï¿½), 2Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½; val2/val3/val4:ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Öµï¿½ï¿½Öµï¿½ï¿½Ê½: ï¿½Ç·ï¿½ï¿½ï¿½Ð§ï¿½ï¿½Ö¾*100000000+Ê±ï¿½ï¿½Î¿ï¿½Ê¼Ê±ï¿½ï¿½*10000+Ê±ï¿½ï¿½Î½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§:08:30-17:00=108301700
+	{ 123, 1, 0, 0, 0, 0,0,0,0, "SYS_AutoCheckNetUseable", StrNull, StrNull },		// ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Í¨
+	{ 124, 9, 0, 0, 0, 0,0,0,0, "SYS_RTMPUrlNumMax", StrNull, StrNull },			// CreateRTMPInstance RTMP urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 125, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardGlobalFlag", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½
+	{ 131, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW1", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ê½Í¬SYS_AlarmGuardTimeï¿½ï¿½ï¿½ï¿½
+	{ 132, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW2", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½Ü¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Í¬SYS_AlarmGuardTimeï¿½ï¿½ï¿½ï¿½
+	{ 133, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW3", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Í¬SYS_AlarmGuardTimeï¿½ï¿½ï¿½ï¿½
+	{ 134, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW4", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ê½Í¬SYS_AlarmGuardTimeï¿½ï¿½ï¿½ï¿½
+	{ 135, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW5", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½ï¿½ï¿½å£¬ï¿½ï¿½Ê½Í¬SYS_AlarmGuardTimeï¿½ï¿½ï¿½ï¿½
+	{ 136, 1, 0, 0, 0, 0,0,0,0, "SYS_AlarmGuardTimeW6", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Í¬SYS_AlarmGuardTimeï¿½ï¿½ï¿½ï¿½
+	{ 141, 1, 0, 0, 0, 0,0,0,0, "SYS_ShowTaskBtnMod", StrNull, StrNull },			// ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½Ê¾Ä£Ê½ï¿½ï¿½0ï¿½ï¿½Ì¬ï¿½ï¿½Ê¾ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+	{ 142, 1, 0, 0, 0, 0,0,0,0, "SYS_RS485ReadRollMod", StrNull, StrNull },			// RS485ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ä£Ê½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 143, 0, 1000, 0, 0, 0,0,0,0, "SYS_BitRateBaseK", StrNull, StrNull },			// ï¿½Ø¶ï¿½ï¿½ï¿½CAudioCfg::BitRate2Bytes Kï¿½ï¿½×¼Öµï¿½ï¿½Ò»ï¿½ï¿½Îª 1000 or 1024
+	{ 144, 0, 0, 0, 0, 0,0,0,0, "SYS_AutoNotiContAddIOTName", "ï¿½Ô¶ï¿½ï¿½ï¿½Éµï¿½Í¨Öªï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½" },		// ï¿½Ô¶ï¿½ï¿½ï¿½Éµï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 145, 1, 0, 0, 0, 0,0,0,0, "SYS_AutoNotiContAddTime", "ï¿½Ô¶ï¿½ï¿½ï¿½Éµï¿½Í¨Öªï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½Ê±ï¿½ï¿½", "0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½" },		// ï¿½Ô¶ï¿½ï¿½ï¿½Éµï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	{ 146, 0, 0, 0, 0, 0,0,0,0, "SYS_PlayBackSetSpeed", StrNull, StrNull },			// ï¿½Ç·ï¿½ ï¿½Ø·ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 147, 16, 0, 0, 0, 0,0,0,0, "SYS_PlaybackChannelLimit", StrNull, StrNull },	// ï¿½Ç·ï¿½ ï¿½Ø·Å»á»°ï¿½ï¿½ï¿½ï¿½
+	{ 148, 1, 0, 0, 0, 0,0,0,0, "SYS_UIAutoGetAllModSysSet", StrNull, StrNull },	// ï¿½ò¿ª½ï¿½ï¿½ï¿½Ê±ï¿½Ç·ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½
+	{ 149, 6*3600, 0, 0, 0, 0,0,0,0, "SYS_PlaybackSessionOvertime", StrNull, StrNull },	// ï¿½Ø·Å»á»°ï¿½î³¤Ê±ï¿½ä£¬ï¿½ï¿½
+	{ 150, 1, 1, 2, 0, 0,0,0,0, "SYS_CheckDevTimeCfg", "ï¿½Ô¶ï¿½Ð£Ê±ï¿½ï¿½ï¿½ï¿½", StrNull },	// ï¿½è±¸Ð£Ê±ï¿½ï¿½ï¿½Ã£ï¿½val1: ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½; ï¿½ï¿½ val2ï¿½ï¿½val3 Ê±ï¿½ä·¶Î§ï¿½ï¿½Ö´ï¿½Ð£ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½â²»Ö´ï¿½ï¿½
+	{ 151, 0, 0, 0, 0, 0,0,0,0, "SYS_CheckDevTimeSave", StrNull, StrNull },			// ï¿½è±¸Ð£Ê±ï¿½ï¿½Â¼ï¿½ï¿½val1: ï¿½Ï´ï¿½Ð£Ê±ï¿½ï¿½
+	{ 152, 0, 0, 0, 0, 0,0,0,0, "SYS_AutoPublishEnable", StrNull, StrNull },		// ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½/ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½
 	
-	{ 157, defLinkID_Local, 0, 0, 0, 0,0,0,0, "SYS_GSM_LinkID", "GSMÄ£¿éËùÔÚÁ´Â·", "Á´Â·ID" },	// GSMÄ£¿éËùÔÚÁ´Â·
+	{ 157, defLinkID_Local, 0, 0, 0, 0,0,0,0, "SYS_GSM_LinkID", "GSMÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·", "ï¿½ï¿½Â·ID" },	// GSMÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·
 
-	{ 10100, 1, 0, 0, 0, 0,0,0,0, "PrintRecv_MainPort", StrNull, StrNull },			// ´òÓ¡ ½ÓÊÕ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ Ö÷¶Ë¿Ú
-	{ 10101, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_RF", StrNull, StrNull },				// ´òÓ¡ ½ÓÊÕ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ Ä£¿é RXB8_315 & RXB8_433
-	{ 10107, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_RS485", StrNull, StrNull },			// ´òÓ¡ ½ÓÊÕ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ RS485Ä£¿é
-	{ 10108, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_RF_original", StrNull, StrNull },		// ´òÓ¡ ½ÓÊÕ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ Ä£¿é RXB8_315_original & RXB8_433_original
-	{ 10109, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_IR_code", StrNull, StrNull },			// ´òÓ¡ ½ÓÊÕ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ Ä£¿é MOD_IR_RX_code
-	{ 10110, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_IR_original", StrNull, StrNull },		// ´òÓ¡ ½ÓÊÕ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ Ä£¿é MOD_IR_RX_original
+	{ 10100, 1, 0, 0, 0, 0,0,0,0, "PrintRecv_MainPort", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ ï¿½ï¿½ï¿½Ë¿ï¿½
+	{ 10101, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_RF", StrNull, StrNull },				// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ Ä£ï¿½ï¿½ RXB8_315 & RXB8_433
+	{ 10107, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_RS485", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ RS485Ä£ï¿½ï¿½
+	{ 10108, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_RF_original", StrNull, StrNull },		// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ Ä£ï¿½ï¿½ RXB8_315_original & RXB8_433_original
+	{ 10109, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_IR_code", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ Ä£ï¿½ï¿½ MOD_IR_RX_code
+	{ 10110, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_IR_original", StrNull, StrNull },		// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ Ä£ï¿½ï¿½ MOD_IR_RX_original
 						 
-	{ 10200, 1, 0, 0, 0, 0,0,0,0, "PrintSend_MainPort", StrNull, StrNull },			// ´òÓ¡ ·¢ËÍ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ Ö÷¶Ë¿Ú
-	{ 10203, 0, 0, 0, 0, 0,0,0,0, "PrintSend_RF_TX", StrNull, StrNull },			// ´òÓ¡ ·¢ËÍ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ RS485Ä£¿é
-	{ 10207, 0, 0, 0, 0, 0,0,0,0, "PrintSend_RS485", StrNull, StrNull },			// ´òÓ¡ ·¢ËÍ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ RS485Ä£¿é
-	{ 10208, 0, 0, 0, 0, 0,0,0,0, "PrintSend_RF_original", StrNull, StrNull },		// ´òÓ¡ ·¢ËÍ×Ö½ÚÁ÷ÏêÏ¸ÐÅÏ¢ RS485Ä£¿é
+	{ 10200, 1, 0, 0, 0, 0,0,0,0, "PrintSend_MainPort", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ ï¿½ï¿½ï¿½Ë¿ï¿½
+	{ 10203, 0, 0, 0, 0, 0,0,0,0, "PrintSend_RF_TX", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ RS485Ä£ï¿½ï¿½
+	{ 10207, 0, 0, 0, 0, 0,0,0,0, "PrintSend_RS485", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ RS485Ä£ï¿½ï¿½
+	{ 10208, 0, 0, 0, 0, 0,0,0,0, "PrintSend_RF_original", StrNull, StrNull },		// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ RS485Ä£ï¿½ï¿½
 						 
-	{ 10301, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_val_RF", StrNull, StrNull },			// ´òÓ¡ ½ÓÊÕ½âÎöºóµÄÖµÐÅÏ¢ Ä£¿é RXB8_315 & RXB8_433
-	{ 10307, 1, 0, 0, 0, 0,0,0,0, "PrintRecv_val_RS485", StrNull, StrNull },		// ´òÓ¡ ½ÓÊÕ½âÎöºóµÄÖµÐÅÏ¢ RS485Ä£¿é
-	{ 10308, 1, 0, 0, 0, 0,0,0,0, "PrintRecv_val_IR", StrNull, StrNull },			// ´òÓ¡ ½ÓÊÕ½âÎöºóµÄÖµÐÅÏ¢ Ä£¿é MOD_IR_RX_code & MOD_IR_RX_original
+	{ 10301, 0, 0, 0, 0, 0,0,0,0, "PrintRecv_val_RF", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ï¢ Ä£ï¿½ï¿½ RXB8_315 & RXB8_433
+	{ 10307, 1, 0, 0, 0, 0,0,0,0, "PrintRecv_val_RS485", StrNull, StrNull },		// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ï¢ RS485Ä£ï¿½ï¿½
+	{ 10308, 1, 0, 0, 0, 0,0,0,0, "PrintRecv_val_IR", StrNull, StrNull },			// ï¿½ï¿½Ó¡ ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ï¢ Ä£ï¿½ï¿½ MOD_IR_RX_code & MOD_IR_RX_original
 
-	{ 11001, 1, 300000, 0, 1, 0,0,0,0, "Cam_PrintFrame", StrNull, StrNull },		// ´òÓ¡ Cam ´òÓ¡PushµÄÖ¡, value2¼ä¸ôÊ±¼äms, value3:IÖ¡×ÜÊÇ´òÓ¡, value4:ÒôÆµÖ¡´òÓ¡
-	{ 11002, 0, 0, 0, 0, 0,0,0,0, "Cam_PrintFrameSize", StrNull, StrNull },			// ´òÓ¡ Cam ´òÓ¡PushµÄÖ¡, value2×Ö½Ú´óÐ¡³¬¹ý´ËÃÅÏÞ´òÓ¡
-	{ 11003, 3000, 0, 0, 0, 0,0,0,0, "Cam_PtzAutoMax", StrNull, StrNull },			// Cam ×Ô¶¯¿ØÖÆ×î´óÊ±¼äms
-	{ 11004, 255, 400, 0, 0, 0,0,0,0, "Cam_PtzAutoNorm", StrNull, StrNull },		// Cam ×Ô¶¯¿ØÖÆÆÕÍ¨Ä£Ê½Ê±¼äms£¬value1·½Ïò, value2µ÷½¹
-	{ 11005, 1200, 1600, 0, 0, 0,0,0,0, "Cam_PtzAutoFast", StrNull, StrNull },		// Cam ×Ô¶¯¿ØÖÆ¿ìËÙÄ£Ê½Ê±¼äms£¬value1·½Ïò, value2µ÷½¹
-	{ 11006, 700, 0, 0, 0, 0,0,0,0, "Cam_MakeKeyFrameInterval", StrNull, StrNull },	// Cam MakeKeyFrame×îÐ¡¼ä¸ôms
-	{ 11007, 2048*1024, 0, 0, 0, 0,0,0,0, "Cam_VideoBitrateLimit", StrNull, StrNull },	// Cam ÊÓÆµÂëÂÊ×î´óÖµ£¬³¬³öÔòÅäÖÃ´íÎó
+	{ 11001, 1, 300000, 0, 1, 0,0,0,0, "Cam_PrintFrame", StrNull, StrNull },		// ï¿½ï¿½Ó¡ Cam ï¿½ï¿½Ó¡Pushï¿½ï¿½Ö¡, value2ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ms, value3:IÖ¡ï¿½ï¿½ï¿½Ç´ï¿½Ó¡, value4:ï¿½ï¿½ÆµÖ¡ï¿½ï¿½Ó¡
+	{ 11002, 0, 0, 0, 0, 0,0,0,0, "Cam_PrintFrameSize", StrNull, StrNull },			// ï¿½ï¿½Ó¡ Cam ï¿½ï¿½Ó¡Pushï¿½ï¿½Ö¡, value2ï¿½Ö½Ú´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ´ï¿½Ó¡
+	{ 11003, 3000, 0, 0, 0, 0,0,0,0, "Cam_PtzAutoMax", StrNull, StrNull },			// Cam ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ms
+	{ 11004, 255, 400, 0, 0, 0,0,0,0, "Cam_PtzAutoNorm", StrNull, StrNull },		// Cam ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨Ä£Ê½Ê±ï¿½ï¿½msï¿½ï¿½value1ï¿½ï¿½ï¿½ï¿½, value2ï¿½ï¿½ï¿½ï¿½
+	{ 11005, 1200, 1600, 0, 0, 0,0,0,0, "Cam_PtzAutoFast", StrNull, StrNull },		// Cam ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½Ä£Ê½Ê±ï¿½ï¿½msï¿½ï¿½value1ï¿½ï¿½ï¿½ï¿½, value2ï¿½ï¿½ï¿½ï¿½
+	{ 11006, 700, 0, 0, 0, 0,0,0,0, "Cam_MakeKeyFrameInterval", StrNull, StrNull },	// Cam MakeKeyFrameï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ms
+	{ 11007, 2048*1024, 0, 0, 0, 0,0,0,0, "Cam_VideoBitrateLimit", StrNull, StrNull },	// Cam ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
 
-	{ 12001, 1, 300000, 0, 0, 0,0,0,0, "RTMPSend_PrintFrame", StrNull, StrNull },	// ´òÓ¡ RTMPSend ´òÓ¡PushµÄÖ¡, value2¼ä¸ôÊ±¼äms, value3:IÖ¡×ÜÊÇ´òÓ¡
-	{ 12002, 220, 0, 0, 0, 0,0,0,0, "RTMPSend_NetSend_WarnTime", StrNull, StrNull },// ´òÓ¡ RTMPSend£¬µ±ÍøÂç·¢ËÍºÄÊ±¹ý³¤Ê±´òÓ¡, value1:ºÄÊ±ÃÅÏÞÊ±¼äms
+	{ 12001, 1, 300000, 0, 0, 0,0,0,0, "RTMPSend_PrintFrame", StrNull, StrNull },	// ï¿½ï¿½Ó¡ RTMPSend ï¿½ï¿½Ó¡Pushï¿½ï¿½Ö¡, value2ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ms, value3:IÖ¡ï¿½ï¿½ï¿½Ç´ï¿½Ó¡
+	{ 12002, 220, 0, 0, 0, 0,0,0,0, "RTMPSend_NetSend_WarnTime", StrNull, StrNull },// ï¿½ï¿½Ó¡ RTMPSendï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç·¢ï¿½Íºï¿½Ê±ï¿½ï¿½Ê±ï¿½ï¿½Ó¡, value1:ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ms
 	{ 12003, 32*1024, 0, 0, 0, 0,0,0,0, "RTMPSend_SetChunkSize", StrNull, StrNull },// RTMPSend.RTMP_SetChunkSize 32*1024, 4096
-	{ 12004, 8000, 0, 0, 0, 0,0,0,0, "RTMFP_WaitConnTimeout", StrNull, StrNull },	// RTMFPµÈ´ýÁ¬½Ó³¬Ê±Ê±¼äms
-	{ 12005, 1, 0, 0, 0, 0,0,0,0, "RTMFP_UrlAddStreamID", StrNull, StrNull },		// RTMFP Url½áÎ²Ìí¼ÓStreamID
-	{ 12006, 0, 0, 0, 0, 0,0,0,0, "RTMFP_UseSpecStreamID", StrNull, StrNull, "test_sender" },		// RTMFP Ê¹ÓÃÖ¸¶¨µÄ¹Ì¶¨StreamID
-	{ 12007, 4, 0, 0, 0, 0,0,0,0, "RTMFP_SessionLimit", StrNull, StrNull },			// RTMFP µã¶ÔµãÁ¬½ÓÊýÁ¿ÉÏÏÞ£¬´ïµ½ÉÏÏÞÓÖÓÐÇëÇóÊ±½øÐÐRTMPÁ¬½Ó
-	{ 12008, 0, 0, 0, 0, 0,0,0,0, "SYS_Enable_RTMFP", StrNull, StrNull },			// RTMFP¹¦ÄÜÆôÓÃ/½ûÓÃ£¬value1ÊµÊ±²¥·Å, value2Â¼Ïñ»Ø·Å
-	{ 12009, 1, 0, 0, 0, 0,0,0,0, "RTMFP_DelFromUrlStreamID", StrNull, StrNull },	// ½øÐÐÅÐ¶Ï²¢È¥µôRTMFP URL½áÎ²µÄStreamID
+	{ 12004, 8000, 0, 0, 0, 0,0,0,0, "RTMFP_WaitConnTimeout", StrNull, StrNull },	// RTMFPï¿½È´ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Ê±Ê±ï¿½ï¿½ms
+	{ 12005, 1, 0, 0, 0, 0,0,0,0, "RTMFP_UrlAddStreamID", StrNull, StrNull },		// RTMFP Urlï¿½ï¿½Î²ï¿½ï¿½ï¿½StreamID
+	{ 12006, 0, 0, 0, 0, 0,0,0,0, "RTMFP_UseSpecStreamID", StrNull, StrNull, "test_sender" },		// RTMFP Ê¹ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ä¹Ì¶ï¿½StreamID
+	{ 12007, 4, 0, 0, 0, 0,0,0,0, "RTMFP_SessionLimit", StrNull, StrNull },			// RTMFP ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½ïµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½RTMPï¿½ï¿½ï¿½ï¿½
+	{ 12008, 0, 0, 0, 0, 0,0,0,0, "SYS_Enable_RTMFP", StrNull, StrNull },			// RTMFPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½Ã£ï¿½value1ÊµÊ±ï¿½ï¿½ï¿½ï¿½, value2Â¼ï¿½ï¿½Ø·ï¿½
+	{ 12009, 1, 0, 0, 0, 0,0,0,0, "RTMFP_DelFromUrlStreamID", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï²ï¿½È¥ï¿½ï¿½RTMFP URLï¿½ï¿½Î²ï¿½ï¿½StreamID
 
-	{ 13001, 10000, 0, 0, 0, 0,0,0,0, "xmpp_ConnectInterval", StrNull, StrNull },	// xmppÖØÁ¬¼ä¸ôÊ±¼ä
-	{ 13002, 1, 0, 0, 0, 0,0,0,0, "RF_Send_CountMin", StrNull, StrNull },			// ÎÞÏßÒ£¿Ø·¢ËÍ´ÎÊý ×îÐ¡Öµ
-	{ 13003, 6, 0, 0, 0, 0,0,0,0, "RF_Send_CountDefault", StrNull, StrNull },		// ÎÞÏßÒ£¿Ø·¢ËÍ´ÎÊý Ä¬ÈÏÖµ
-	{ 13004, 1000, 0, 0, 0, 0,0,0,0, "RF_Send_FixAddTime", StrNull, StrNull },		// ÎÞÏßÒ£¿Ø·¢ËÍÐèÊ±µÄ¸½´øÔö¼ÓÊ±¼ä£¬µ¥Î»ms
-	{ 13005, 1, 0, 0, 0, 0,0,0,0, "COM_SendInterval", StrNull, StrNull },			// ÊÇ·ñÆôÓÃ·¢ËÍ¼ä¸ô¿ØÖÆ
+	{ 13001, 10000, 0, 0, 0, 0,0,0,0, "xmpp_ConnectInterval", StrNull, StrNull },	// xmppï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	{ 13002, 1, 0, 0, 0, 0,0,0,0, "RF_Send_CountMin", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ò£ï¿½Ø·ï¿½ï¿½Í´ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¡Öµ
+	{ 13003, 6, 0, 0, 0, 0,0,0,0, "RF_Send_CountDefault", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½Ò£ï¿½Ø·ï¿½ï¿½Í´ï¿½ï¿½ï¿½ Ä¬ï¿½ï¿½Öµ
+	{ 13004, 1000, 0, 0, 0, 0,0,0,0, "RF_Send_FixAddTime", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½Ò£ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»ms
+	{ 13005, 1, 0, 0, 0, 0,0,0,0, "COM_SendInterval", StrNull, StrNull },			// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	{ 14001, 1, 1024*1, 0, 0, 0,0,0,0, "APlay_ProbeSize", StrNull, StrNull },		// APlayer ProbeSize²ÎÊý£¬value1Ê¹ÓÃ²ÎÊý, value2²ÎÊýÖµ, Ó°ÏìÑÓÊ±
+	{ 14001, 1, 1024*1, 0, 0, 0,0,0,0, "APlay_ProbeSize", StrNull, StrNull },		// APlayer ProbeSizeï¿½ï¿½ï¿½ï¿½value1Ê¹ï¿½Ã²ï¿½ï¿½ï¿½, value2ï¿½ï¿½ï¿½ï¿½Öµ, Ó°ï¿½ï¿½ï¿½ï¿½Ê±
 
-	{ 15001, 0, 0, 0, 0, 0,0,0,0, "SYS_CamAlarmDebugLog", StrNull, StrNull },		// ÉãÏñ»ú¸æ¾¯µ÷ÊÔÈÕÖ¾´òÓ¡
-	{ 15002, 5*60, 0, 0, 0, 0,0,0,0, "SYS_CamAlarmResumeTime", StrNull, StrNull },	// ÉãÏñ»ú¸æ¾¯»Ö¸´Ê±¼ä£¬µ¥Î»Ãë
-	{ 15003, 2*60, 0, 0, 0, 0,0,0,0, "SYS_TriggerAlarmInterval", StrNull, StrNull },// ´¥·¢Æ÷±¨¾¯¼ä¸ô£¬µ¥Î»Ãë
+	{ 15001, 0, 0, 0, 0, 0,0,0,0, "SYS_CamAlarmDebugLog", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½ï¿½æ¾¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Ó¡
+	{ 15002, 5*60, 0, 0, 0, 0,0,0,0, "SYS_CamAlarmResumeTime", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½ï¿½æ¾¯ï¿½Ö¸ï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»ï¿½ï¿½
+	{ 15003, 2*60, 0, 0, 0, 0,0,0,0, "SYS_TriggerAlarmInterval", StrNull, StrNull },// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
-	{ 16001, 16, 5, 0, 0, 0,0,0,0, "CommLinkThreadMax", StrNull, StrNull },			// Á´Â·Ïß³Ì×î´óÊýÁ¿£¬value1×î´óÊý, value2ÔÊÐí½øÐÐÁ¬½ÓµÄÊýÁ¿
-	{ 16002, 20, 0, 0, 0, 0,0,0,0, "CommLinkConnectInterval", StrNull, StrNull },	// Á´Â·ÖØÁ¬¼ä¸ô£¬µ¥Î»Ãë
-	{ 16003, 30, 0, 0, 0, 0,0,0,0, "CommLinkHb_SendInterval", StrNull, StrNull },	// ÐÄÌø·¢ËÍ¼ä¸ô£¬µ¥Î»Ãë
-	{ 16004, 150, 0, 0, 0, 0,0,0,0, "CommLinkHb_RecvTimeover", StrNull, StrNull },	// ÐÄÌø³¬Ê±£¬µ¥Î»Ãë
+	{ 16001, 16, 5, 0, 0, 0,0,0,0, "CommLinkThreadMax", StrNull, StrNull },			// ï¿½ï¿½Â·ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½value1ï¿½ï¿½ï¿½ï¿½ï¿½, value2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 16002, 20, 0, 0, 0, 0,0,0,0, "CommLinkConnectInterval", StrNull, StrNull },	// ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	{ 16003, 30, 0, 0, 0, 0,0,0,0, "CommLinkHb_SendInterval", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	{ 16004, 150, 0, 0, 0, 0,0,0,0, "CommLinkHb_RecvTimeover", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
-	{ 17001, 9, 3, 0, 0, 0,0,0,0, "Dev_RecvFailedCount", StrNull, StrNull },		// Éè±¸½ÓÊÕÊ§°Ü´ÎÊý£¬value1Ê§°Ü´ÎÊý³¬¹ý´ËÖµÖ±½ÓÈÏÎªÒì³£, value2Ê§°Ü´ÎÊý³¬¹ý´ËÖµ²¢ÇÒÊ§°ÜÊ±¼ä³ÖÐø´ïnÃëÈÏÎªÒì³£
-	{ 17002, 10, 50, 0, 0, 0,0,0,0, "Dev_RecvFailedTime", StrNull, StrNull },		// Ê§°ÜÊ±¼ä³ÖÐø´ïnÃë£¬µ¥Î»Ãë
+	{ 17001, 9, 3, 0, 0, 0,0,0,0, "Dev_RecvFailedCount", StrNull, StrNull },		// ï¿½è±¸ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü´ï¿½ï¿½ï¿½value1Ê§ï¿½Ü´ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÖ±ï¿½ï¿½ï¿½ï¿½Îªï¿½ì³£, value2Ê§ï¿½Ü´ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½Îªï¿½ì³£
+	{ 17002, 10, 50, 0, 0, 0,0,0,0, "Dev_RecvFailedTime", StrNull, StrNull },		// Ê§ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½ë£¬ï¿½ï¿½Î»ï¿½ï¿½
 
-	{ 18001, 0, 0, 0, 0, 0,0,0,0, "SYS_Change_Global", StrNull, StrNull },			// ÅäÖÃ±ä»¯×ÜÌå±êÖ¾£¬value1±ä»¯¼ÆÊý, value2±ä»¯Ê±¼ä´Á£¬Ä¿Ç°Ö»ÔÚÄÚ´æÖÐ´æ´¢²»±£´æÊý¾Ý¿â
+	{ 18001, 0, 0, 0, 0, 0,0,0,0, "SYS_Change_Global", StrNull, StrNull },			// ï¿½ï¿½ï¿½Ã±ä»¯ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½value1ï¿½ä»¯ï¿½ï¿½ï¿½ï¿½, value2ï¿½ä»¯Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Ç°Ö»ï¿½ï¿½ï¿½Ú´ï¿½ï¿½Ð´æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 
-	{ 19001, 1000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Default", StrNull, StrNull },		// ´æ´¢±ä»¯Á¿Éè¶¨Öµ£¬Ä¬ÈÏÅÐ¶Ï±ä»¯£¬1000±¶ÉèÖÃ
-	{ 19002, 490, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Temperature", StrNull, StrNull },	// ´æ´¢±ä»¯Á¿Éè¶¨Öµ£¬ÎÂ¶È±ä»¯£¬1000±¶ÉèÖÃ //860
-	{ 19003, 1900, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Humidity", StrNull, StrNull },	// ´æ´¢±ä»¯Á¿Éè¶¨Öµ£¬Êª¶È±ä»¯£¬1000±¶ÉèÖÃ //3000
-	{ 19004, 240, 100, 0, 0, 0,0,0,0, "SYS_WinTime_Wind", StrNull, StrNull },		// ·çËÙ´°¿Ú»¯Ê±¼ä£¬value1³£¹æÖµ, value2Ê±¼äµãÊ±µÄ×îÐ¡Öµ£¬µ¥Î»Ãë
+	{ 19001, 1000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Default", StrNull, StrNull },		// ï¿½æ´¢ï¿½ä»¯ï¿½ï¿½ï¿½è¶¨Öµï¿½ï¿½Ä¬ï¿½ï¿½ï¿½Ð¶Ï±ä»¯ï¿½ï¿½1000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 19002, 2000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Temperature", StrNull, StrNull },	// ï¿½æ´¢ï¿½ä»¯ï¿½ï¿½ï¿½è¶¨Öµï¿½ï¿½ï¿½Â¶È±ä»¯ï¿½ï¿½1000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ //860
+	{ 19003, 4000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_Humidity", StrNull, StrNull },	// ï¿½æ´¢ï¿½ä»¯ï¿½ï¿½ï¿½è¶¨Öµï¿½ï¿½Êªï¿½È±ä»¯ï¿½ï¿½1000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ //3000
+	{ 19004, 240, 100, 0, 0, 0,0,0,0, "SYS_WinTime_Wind", StrNull, StrNull },		// ï¿½ï¿½ï¿½Ù´ï¿½ï¿½Ú»ï¿½Ê±ï¿½ä£¬value1ï¿½ï¿½ï¿½ï¿½Öµ, value2Ê±ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
 	{ 19005, 20000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_CO2", StrNull, StrNull },	
-	{ 19006, 100, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_HCHO", StrNull, StrNull },	
-	//{ 19007, 10000, 0, 0, 0, 0,0,0,0, "SYS_WinTime_PM25", StrNull, StrNull },		
+	{ 19006, 50, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_HCHO", StrNull, StrNull },
+	{ 19007, 10000, 0, 0, 0, 0,0,0,0, "SYS_VChgRng_PM25", StrNull, StrNull },
 	
-	{ 19101, 0, 0, 0, 0, 0,0,0,0, "SYS_MergeWindLevel", StrNull, StrNull },			// ºÏ²¢·çËÙ¼¶±ð£¬1¼¶ºÍ2¼¶ºÏ²¢
-	{ 19102, 1, 0, 0, 0, 0,0,0,0, "SYS_DataSamp_DoBatch", StrNull, StrNull },		// DataSample²É¼¯Ê±²ÉÓÃÅúÁ¿¶ÁÈ¡Öµ·½Ê½£¬·ñÔò£¬µ¥¸öÖµ·Ö±ð¶ÁÈ¡
-	{ 19103, 5*60, 0, 0, 0, 0,0,0,0, "SYS_DataSamp_LongTimeNoData", StrNull, StrNull },	// DataSample²É¼¯Ê±Ì«³¤Ê±¼äÎ´»ñÈ¡Êý¾Ý£¬µ¥Î»Ãë
-	{ 19104, 2*60, 30, 0, 0, 0,0,0,0, "SYS_DataSamp_LowSampTime", StrNull, StrNull },	// DataSample²É¼¯Ê±Ì«³¤Ê±¼äÎ´»ñÈ¡Êý¾ÝÔò½øÈëµÍÆµÂÊ²É¼¯£¬µ¥Î»Ãë
-	{ 19105, 2000, 0, 0, 0, 0,0,0,0, "SYS_QueryLstMax", StrNull, StrNull },			// ²éÑ¯Êý¾Ý¼ÇÂ¼µÄ×î´óÊýÁ¿
-	{ 19106, 36, 0, 0, 0, 0,0,0,0, "SYS_DBDataFileMax", StrNull, StrNull },			// Êý¾Ý¿â´æ´¢ÎÄ¼þ×î´óÊýÁ¿ÖÁÉÙ=2
+	{ 19101, 0, 0, 0, 0, 0,0,0,0, "SYS_MergeWindLevel", StrNull, StrNull },			// ï¿½Ï²ï¿½ï¿½ï¿½ï¿½Ù¼ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½Ï²ï¿½
+	{ 19102, 1, 0, 0, 0, 0,0,0,0, "SYS_DataSamp_DoBatch", StrNull, StrNull },		// DataSampleï¿½É¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Öµï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ò£¬µï¿½ï¿½ï¿½Öµï¿½Ö±ï¿½ï¿½È¡
+	{ 19103, 5*60, 0, 0, 0, 0,0,0,0, "SYS_DataSamp_LongTimeNoData", StrNull, StrNull },	// DataSampleï¿½É¼ï¿½Ê±Ì«ï¿½ï¿½Ê±ï¿½ï¿½Î´ï¿½ï¿½È¡ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	{ 19104, 2*60, 30, 0, 0, 0,0,0,0, "SYS_DataSamp_LowSampTime", StrNull, StrNull },	// DataSampleï¿½É¼ï¿½Ê±Ì«ï¿½ï¿½Ê±ï¿½ï¿½Î´ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Ê²É¼ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	{ 19105, 2000, 0, 0, 0, 0,0,0,0, "SYS_QueryLstMax", StrNull, StrNull },			// ï¿½ï¿½Ñ¯ï¿½ï¿½Ý¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 19106, 36, 0, 0, 0, 0,0,0,0, "SYS_DBDataFileMax", StrNull, StrNull },			// ï¿½ï¿½Ý¿ï¿½æ´¢ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½=2
 
-	{ 20001, 0, 0, 0, 0, 0,0,0,0, "SYS_ReportDef_spanrate", StrNull, StrNull },		// ²éÑ¯±¨±í²ÎÊýÄ¬ÈÏÖµ£¬±ä»¯ÂÊ£¬Ç§±¶Öµ£¬1=0.001
-	{ 20002, 1, 0, 0, 0, 0,0,0,0, "SYS_ReportDef_ratefortype", StrNull, StrNull },	// ²éÑ¯±¨±í²ÎÊýÄ¬ÈÏÖµ£¬°´ÕÕÀàÐÍ·ÖÎöÊý¾Ý±ä»¯ 0/1
-	{ 20003, 0, 0, 0, 0, 0,0,0,0, "SYS_ReportDef_getfortype", StrNull, StrNull },	// ²éÑ¯±¨±í²ÎÊýÄ¬ÈÏÖµ£¬°´ÕÕÀàÐÍ×ª»»Öµ·µ»Ø 0/1
+	{ 20001, 0, 0, 0, 0, 0,0,0,0, "SYS_ReportDef_spanrate", StrNull, StrNull },		// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½ï¿½ï¿½ä»¯ï¿½Ê£ï¿½Ç§ï¿½ï¿½Öµï¿½ï¿½1=0.001
+	{ 20002, 1, 0, 0, 0, 0,0,0,0, "SYS_ReportDef_ratefortype", StrNull, StrNull },	// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ä»¯ 0/1
+	{ 20003, 0, 0, 0, 0, 0,0,0,0, "SYS_ReportDef_getfortype", StrNull, StrNull },	// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ 0/1
 	
-	{ 21001, 0, 0, 0, 0, 0,0,0,0, "LED_Config", "LEDÏÔÊ¾", StrNull },					// LED - ¹¦ÄÜÅäÖÃ£¬value1ÆôÓÃ±êÖ¾£¬value2Ä£Ê½0×Ô¶¯
-	{ 21002, 30000, 0, 0, 0, 0,0,0,0, "LED_DevParam", StrNull, StrNull, "192.168.1.3" },	// LED - Éè±¸²ÎÊý£¬value1¶Ë¿Ú£¬strÉè±¸IP
-	{ 21003, 30, 10, 0, 0, 0,0,0,0, "LED_ShowInterval", StrNull, StrNull },			// LED - ÏÔÊ¾¼ä¸ô£¬Ãë; value1×î³¤¼ä¸ô£¬ÖÁÉÙË¢ÐÂÒ»´Î; value2×î¶Ì¼ä¸ô£¬²»ÄÜ¿ìÓÚ´ËÖµ
-	{ 21004, 10*60, 1, 0, 0, 0,0,0,0, "LED_ValueOvertime", StrNull, StrNull, "Î´Á¬½Ó" },	// LED - Öµ¹ýÆÚÒì³£Ïà¹ØÅäÖÃ£¬value1¶à³¤Ê±¼äÎ´Ë¢ÐÂÖµÎªÒì³££¬Ãë; value2Òì³£ÊÇ·ñÈÔÏÔÊ¾; strÒì³£ÏÔÊ¾ÄÚÈÝ
-	{ 21005, 0, 0, 192, 128, 0,0,0,0, "LED_Rect", StrNull, StrNull },				// LED - ÏÔÊ¾Î»ÖÃ; value1 x; value2 y; value3 ¿í; value4 ¸ß
-	{ 21006, 0, 0, 0, 0, 0,0,0,0, "LED_Title", StrNull, StrNull, "" },				// LED - ÏÔÊ¾±êÌâ; str±êÌâ£¬¿ÕÎª²»ÏÔÊ¾
-	{ 21007, 0, 1, 0, 0, 0,0,0,0, "LED_Format", StrNull, StrNull },					// LED - ÏÔÊ¾¸ñÊ½; value1ÎÄ±¾¸ñÊ½Âë(²Î¼ûSDK); value2¿ÕÐÐ0/1;
+	{ 21001, 0, 0, 0, 0, 0,0,0,0, "LED_Config", "LEDï¿½ï¿½Ê¾", StrNull },					// LED - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½value1ï¿½ï¿½ï¿½Ã±ï¿½Ö¾ï¿½ï¿½value2Ä£Ê½0ï¿½Ô¶ï¿½
+	{ 21002, 30000, 0, 0, 0, 0,0,0,0, "LED_DevParam", StrNull, StrNull, "192.168.1.3" },	// LED - ï¿½è±¸ï¿½ï¿½ï¿½ï¿½value1ï¿½Ë¿Ú£ï¿½strï¿½è±¸IP
+	{ 21003, 30, 10, 0, 0, 0,0,0,0, "LED_ShowInterval", StrNull, StrNull },			// LED - ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½; value1ï¿½î³¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½Ò»ï¿½ï¿½; value2ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½Ú´ï¿½Öµ
+	{ 21004, 10*60, 1, 0, 0, 0,0,0,0, "LED_ValueOvertime", StrNull, StrNull, "Î´ï¿½ï¿½ï¿½ï¿½" },	// LED - Öµï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½value1ï¿½à³¤Ê±ï¿½ï¿½Î´Ë¢ï¿½ï¿½ÖµÎªï¿½ì³£ï¿½ï¿½ï¿½ï¿½; value2ï¿½ì³£ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾; strï¿½ì³£ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+	{ 21005, 0, 0, 192, 128, 0,0,0,0, "LED_Rect", StrNull, StrNull },				// LED - ï¿½ï¿½Ê¾Î»ï¿½ï¿½; value1 x; value2 y; value3 ï¿½ï¿½; value4 ï¿½ï¿½
+	{ 21006, 0, 0, 0, 0, 0,0,0,0, "LED_Title", StrNull, StrNull, "" },				// LED - ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½; strï¿½ï¿½ï¿½â£¬ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ê¾
+	{ 21007, 0, 1, 0, 0, 0,0,0,0, "LED_Format", StrNull, StrNull },					// LED - ï¿½ï¿½Ê¾ï¿½ï¿½Ê½; value1ï¿½Ä±ï¿½ï¿½ï¿½Ê½ï¿½ï¿½(ï¿½Î¼ï¿½SDK); value2ï¿½ï¿½ï¿½ï¿½0/1;
 
-	{ 22001, 16, 0, 0, 0, 0,0,0,0, "AC_CtlMAX", StrNull, StrNull },					// ÃÅ½û - ×î´óÊýÁ¿
-	{ 22002, 1, 0, 0, 0, 0,0,0,0, "AC_CheckACMod", StrNull, StrNull },				// ÃÅ½û - ¼ì²âÃÅ½ûÄ£¿é
+	{ 22001, 16, 0, 0, 0, 0,0,0,0, "AC_CtlMAX", StrNull, StrNull },					// ï¿½Å½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 22002, 1, 0, 0, 0, 0,0,0,0, "AC_CheckACMod", StrNull, StrNull },				// ï¿½Å½ï¿½ - ï¿½ï¿½ï¿½ï¿½Å½ï¿½Ä£ï¿½ï¿½
 	
-	{ 23001, 800, 0, 0, 0, 0,0,0,0, "PrePic_Size_NM", StrNull, StrNull },			// Ô¤ÀÀÍ¼ - NM
-	{ 23002, 400, 0, 0, 0, 0,0,0,0, "PrePic_Size_NS", StrNull, StrNull },			// Ô¤ÀÀÍ¼ - NS
-	{ 23003, 128, 0, 0, 0, 0,0,0,0, "PrePic_Size_S", StrNull, StrNull },			// Ô¤ÀÀÍ¼ - S
+	{ 23001, 800, 0, 0, 0, 0,0,0,0, "PrePic_Size_NM", StrNull, StrNull },			// Ô¤ï¿½ï¿½Í¼ - NM
+	{ 23002, 400, 0, 0, 0, 0,0,0,0, "PrePic_Size_NS", StrNull, StrNull },			// Ô¤ï¿½ï¿½Í¼ - NS
+	{ 23003, 128, 0, 0, 0, 0,0,0,0, "PrePic_Size_S", StrNull, StrNull },			// Ô¤ï¿½ï¿½Í¼ - S
 
 
-	{ 80001, 0, 0, 0, 0, 0,0,0,0, "SYS_IOT_NAME", "Éè±¸Ãû³Æ", StrNull, "GSIOT" },	// ¿ØÖÆÆ÷Éè±¸Ãû³Æ
+	{ 80001, 0, 0, 0, 0, 0,0,0,0, "SYS_IOT_NAME", "ï¿½è±¸ï¿½ï¿½ï¿½", StrNull, "GSIOT" },	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½
 
 	//--------------------------------------------------
-	{ 0, 0, 0, 0, 0, 0,0,0,0, "_TEST__Spec__", StrNull, StrNull },					// ÌØÊâ¹¦ÄÜ·Ö½çÏß
+	{ 0, 0, 0, 0, 0, 0,0,0,0, "_TEST__Spec__", StrNull, StrNull },					// ï¿½ï¿½ï¿½â¹¦ï¿½Ü·Ö½ï¿½ï¿½ï¿½
 
-	{ 90001, 0, 0, 0, 0, 0,0,0,0, "TEST_ModbusMod", StrNull, StrNull },				// ²âÊÔÄ£Ê½, modbusÍ¸´«²âÊÔÄ£Ê½
-	{ 90002, 0, 0, 0, 0, 0,0,0,0, "Debug_DisableAuth", StrNull, StrNull },			// µ÷ÊÔÄ£Ê½, ÆÁ±ÎÈ¨ÏÞ
-	{ 90004, 0, 0, 0, 0, 0,0,0,0, "TEST_OpenRFOriginal", StrNull, StrNull },		// Ò»Ö±´ò¿ªRFÄ£ÄâÉÏ±¨Í¨µÀ
-	//{ 90005, 0, 0, 0, 0, 0,0,0,0, "TEST_Disable_GSM", StrNull, StrNull },			// ÒÑ¸ÄÓÃSYS_GSM
-	{ 90006, 0, 0, 0, 0, 0,0,0,0, "TEST_TelReplaceSMS", StrNull, StrNull },			// ÓÃ²¦´òµç»°´úÌæ¶ÌÐÅ²âÊÔ
-	{ 90007, 0, 0, 0, 0, 0,0,0,0, "TEST_DoEvent_NoInterval", StrNull, StrNull },	// ²»ÅÐ¶ÏÖ´ÐÐ¼ä¸ô£¬Ö±½ÓÖ´ÐÐÊÂ¼þ¶¯×÷
-	{ 90010, 0, 0, 0, 0, 0,0,0,0, "TEST_RTMP_TestMod", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ²ÉÓÃrtmp²âÊÔÄ£Ê½, value2¹Ì¶¨Ê¹ÓÃÉè±¸Ãû£¬·ñÔòÊ¹ÓÃÃüÁî´«¹ýÀ´µÄÊµÀýÃû
-	{ 90011, 0, 0, 0, 0, 0,0,0,0, "TEST_PlayBack_timefix_pnt", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ´òÓ¡»Ø·Å Ô­Ê¼Ê±¼äÐÞÕýÈÕÖ¾£¬ÈÕÖ¾Á¿ºÜ´ó
-	{ 90012, 0, 0, 0, 0, 0,0,0,0, "TEST_StreamServer", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ²âÊÔÖ¸¶¨Á÷·þÎñÆ÷IP, val1:ÆôÓÃ±êÖ¾£¬val2(ip¶Î1*1000+ip¶Î2), val3(ip¶Î3*1000+ip¶Î4)£¬Àý£º192168, 000150
-	{ 90013, 0, 0, 0, 0, 0,0,0,0, "TEST_DisableHeartbeatMon", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ÊÇ·ñ½ûÓÃÐÄÌø¼à²â
-	{ 90014, 0, 0, 0, 0, 0,0,0,0, "TEST_DisableAlarmGuard", StrNull, StrNull },		// ²âÊÔÄ£Ê½, ÊÇ·ñ½ûÓÃ²¼·ÀÊ±¼ä¹¦ÄÜ
-	{ 90015, 0, 0, 0, 0, 0,0,0,0, "TEST_DeCheckFilePlayback", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ÊÇ·ñ½ûÓÃ»Ø·ÅÇ°¼ì²éÎÄ¼þ
-	{ 90016, 0, 0, 0, 0, 0,0,0,0, "TEST_UseSpecRTMPUrlList", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ÊÇ·ñÊ¹ÓÃÖ¸¶¨ÐòºÅÎ»ÖÃµÄurl×÷ÎªÓÅÏÈurl, val1:ÆôÓÃ±êÖ¾£¬val2:ÄÄ¸öÐòºÅµÄ×÷ÎªÓÅÏÈ,ÏÂ±ê0¿ªÊ¼¡£
-	{ 90017, 0, 0, 0, 0, 0,0,0,0, "Dis_CommLinkTransparent", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ½ûÓÃÁ´Â·Í¸´«
-	{ 90018, 123456, 0, 0, 0, 0,0,0,0, "Dis_ChangeSaveDB", StrNull, StrNull },		// ÊÇ·ñ½ûÓÃ ÅäÖÃ±ä»¯±£´æÊý¾Ý¿â
-	{ 90020, 0, 0, 0, 0, 0,0,0,0, "Dis_RunDataProc", StrNull, StrNull },			// ²âÊÔÄ£Ê½ Êý¾Ý²É¼¯·ÖÎöµÈµÄ²âÊÔ¹¦ÄÜ
-	{ 90021, 0, 0, 0, 0, 0,0,0,0, "TEST_ForceDataSave", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ×ÜÊÇ±£´æÊý¾Ý
-	{ 90022, 0, 0, 0, 0, 0,0,0,0, "TEST_DlgQueryMain", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ¸ü¶à²éÑ¯Ñ¡Ïî
+	{ 90001, 0, 0, 0, 0, 0,0,0,0, "TEST_ModbusMod", StrNull, StrNull },				// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, modbusÍ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½
+	{ 90002, 0, 0, 0, 0, 0,0,0,0, "Debug_DisableAuth", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
+	{ 90004, 0, 0, 0, 0, 0,0,0,0, "TEST_OpenRFOriginal", StrNull, StrNull },		// Ò»Ö±ï¿½ï¿½RFÄ£ï¿½ï¿½ï¿½Ï±ï¿½Í¨ï¿½ï¿½
+	//{ 90005, 0, 0, 0, 0, 0,0,0,0, "TEST_Disable_GSM", StrNull, StrNull },			// ï¿½Ñ¸ï¿½ï¿½ï¿½SYS_GSM
+	{ 90006, 0, 0, 0, 0, 0,0,0,0, "TEST_TelReplaceSMS", StrNull, StrNull },			// ï¿½Ã²ï¿½ï¿½ï¿½ç»°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½ï¿½
+	{ 90007, 0, 0, 0, 0, 0,0,0,0, "TEST_DoEvent_NoInterval", StrNull, StrNull },	// ï¿½ï¿½ï¿½Ð¶ï¿½Ö´ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 90010, 0, 0, 0, 0, 0,0,0,0, "TEST_RTMP_TestMod", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½ï¿½rtmpï¿½ï¿½ï¿½ï¿½Ä£Ê½, value2ï¿½Ì¶ï¿½Ê¹ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½î´«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
+	{ 90011, 0, 0, 0, 0, 0,0,0,0, "TEST_PlayBack_timefix_pnt", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½Ó¡ï¿½Ø·ï¿½ Ô­Ê¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½Ü´ï¿½
+	{ 90012, 0, 0, 0, 0, 0,0,0,0, "TEST_StreamServer", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IP, val1:ï¿½ï¿½ï¿½Ã±ï¿½Ö¾ï¿½ï¿½val2(ipï¿½ï¿½1*1000+ipï¿½ï¿½2), val3(ipï¿½ï¿½3*1000+ipï¿½ï¿½4)ï¿½ï¿½ï¿½ï¿½192168, 000150
+	{ 90013, 0, 0, 0, 0, 0,0,0,0, "TEST_DisableHeartbeatMon", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 90014, 0, 0, 0, 0, 0,0,0,0, "TEST_DisableAlarmGuard", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½Ç·ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Ê±ï¿½ä¹¦ï¿½ï¿½
+	{ 90015, 0, 0, 0, 0, 0,0,0,0, "TEST_DeCheckFilePlayback", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½Ç·ï¿½ï¿½ï¿½Ã»Ø·ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+	{ 90016, 0, 0, 0, 0, 0,0,0,0, "TEST_UseSpecRTMPUrlList", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½Ç·ï¿½Ê¹ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ãµï¿½urlï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½url, val1:ï¿½ï¿½ï¿½Ã±ï¿½Ö¾ï¿½ï¿½val2:ï¿½Ä¸ï¿½ï¿½ï¿½Åµï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½,ï¿½Â±ï¿½0ï¿½ï¿½Ê¼ï¿½ï¿½
+	{ 90017, 0, 0, 0, 0, 0,0,0,0, "Dis_CommLinkTransparent", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·Í¸ï¿½ï¿½
+	{ 90018, 123456, 0, 0, 0, 0,0,0,0, "Dis_ChangeSaveDB", StrNull, StrNull },		// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã±ä»¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
+	{ 90020, 0, 0, 0, 0, 0,0,0,0, "Dis_RunDataProc", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½ ï¿½ï¿½Ý²É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÈµÄ²ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½
+	{ 90021, 0, 0, 0, 0, 0,0,0,0, "TEST_ForceDataSave", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 90022, 0, 0, 0, 0, 0,0,0,0, "TEST_DlgQueryMain", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½ï¿½Ñ¯Ñ¡ï¿½ï¿½
 
-	{ 90101, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_RF", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£º(RXB8_315 & RXB8_433)´®¿Ú½ÓÊÕ½âÂë
-	{ 90107, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_RS485", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£ºRS485´®¿Ú½ÓÊÕ½âÂë
-	{ 90108, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_RF_original", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£º(RXB8_315_original & RXB8_433_original)´®¿Ú½ÓÊÕ½âÂë
-	{ 90110, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_GSM", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£ºModule_GSM´®¿Ú½ÓÊÕ
-	{ 90111, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_IR_code", StrNull, StrNull },		// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£ºMOD_IR_RX_code´®¿Ú½ÓÊÕ
-	{ 90112, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_IR_original", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£ºMOD_IR_RX_original´®¿Ú½ÓÊÕ
+	{ 90101, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_RF", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½(RXB8_315 & RXB8_433)ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½
+	{ 90107, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_RS485", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½RS485ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½
+	{ 90108, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_RF_original", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½(RXB8_315_original & RXB8_433_original)ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½
+	{ 90110, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_GSM", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½Module_GSMï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
+	{ 90111, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_IR_code", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½MOD_IR_RX_codeï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
+	{ 90112, 0, 0, 0, 0, 0,0,0,0, "Disable_Recv_IR_original", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½MOD_IR_RX_originalï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
 
-	{ 90203, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_RF_TX", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£º(RXB8_315_TX & RXB8_433_TX)´®¿Ú·¢ËÍ
-	{ 90207, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_RS485", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£ºRS485´®¿Ú·¢ËÍ
-	{ 90208, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_RF_original", StrNull, StrNull },	// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£º(RXB8_315_original & RXB8_433_original)´®¿Ú·¢ËÍ
-	{ 90210, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_GSM", StrNull, StrNull },			// ²âÊÔÄ£Ê½, ÆÁ±Î¹¦ÄÜ£ºModule_GSM´®¿Ú·¢ËÍ
+	{ 90203, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_RF_TX", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½(RXB8_315_TX & RXB8_433_TX)ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½
+	{ 90207, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_RS485", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½RS485ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½
+	{ 90208, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_RF_original", StrNull, StrNull },	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½(RXB8_315_original & RXB8_433_original)ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½
+	{ 90210, 0, 0, 0, 0, 0,0,0,0, "Disable_Send_GSM", StrNull, StrNull },			// ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Î¹ï¿½ï¿½Ü£ï¿½Module_GSMï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½
 
-	{ 90901, 0, 0, 0, 0, 0,0,0,0, "TEST_Develop_NewFunc", StrNull, StrNull },		// ¿ª·¢²âÊÔÄ£Ê½, ÕýÔÚ¿ª·¢ÖÐµÄÐÂ¹¦ÄÜ²âÊÔÊÇ·ñÆôÓÃ
-	{ 90911, 0, 0, 0, 0, 0,0,0,0, "TEST_Debug_TempCode", StrNull, StrNull },		// ¿ª·¢²âÊÔÄ£Ê½, ÁÙÊ±µ÷ÊÔ´úÂëÊÇ·ñÆôÓÃ
+	{ 90901, 0, 0, 0, 0, 0,0,0,0, "TEST_Develop_NewFunc", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Â¹ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
+	{ 90911, 0, 0, 0, 0, 0,0,0,0, "TEST_Debug_TempCode", StrNull, StrNull },		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½, ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	{ 0, 0, 0, 0, 0, 0,0,0,0, "CODEEND", StrNull, StrNull }							// ½áÎ²
+	{ 0, 0, 0, 0, 0, 0,0,0,0, "CODEEND", StrNull, StrNull }							// ï¿½ï¿½Î²
 };
 
-// Í¨¹ýcode»òcodestr»ñÈ¡runcode»º´æË÷ÒýºÅ
+// Í¨ï¿½ï¿½codeï¿½ï¿½codestrï¿½ï¿½È¡runcodeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 defCodeIndex_ s_GetRunCodeIndex( int code, const char *codestr )
 {
 	defCodeIndex_ index = defCodeIndex_Unknown;
@@ -239,7 +239,7 @@ defCodeIndex_ s_GetRunCodeIndex( int code, const char *codestr )
 	}
 	else
 	{
-		// Ð£ÑécodeºÍcodestrÊÇ·ñÒ»ÖÂ
+		// Ð£ï¿½ï¿½codeï¿½ï¿½codestrï¿½Ç·ï¿½Ò»ï¿½ï¿½
 		bool isErrorCode = false;
 		if( 0 != code )
 		{
@@ -267,7 +267,7 @@ defCodeIndex_ s_GetRunCodeIndex( int code, const char *codestr )
 	return index;
 }
 
-// ÓÐ·¶Î§ÏÞÖÆµÄ½øÐÐÐÞÕýÖµ
+// ï¿½Ð·ï¿½Î§ï¿½ï¿½ï¿½ÆµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 static void s_FixRunCodeValue( defCodeIndex_ codeindex, int valueindex, int newval )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -288,30 +288,36 @@ static void s_FixRunCodeValue( defCodeIndex_ codeindex, int valueindex, int newv
 			oldval = s_RunCode[codeindex].value1;
 			s_RunCode[codeindex].value1 = newval;
 		}
+		break;
 
 	case defRunCodeValIndex_2: 
 		{
 			oldval = s_RunCode[codeindex].value2;
 			s_RunCode[codeindex].value2 = newval;
 		}
+		break;
 
 	case defRunCodeValIndex_3: 
 		{
 			oldval = s_RunCode[codeindex].value3;
 			s_RunCode[codeindex].value3 = newval;
 		}
+		break;
 
 	case defRunCodeValIndex_4: 
 		{
 			oldval = s_RunCode[codeindex].value4;
 			s_RunCode[codeindex].value4 = newval;
 		}
+		break;
+	default:  //jyc20170510 add break and default
+		break;
 	}
 
 	LOGMSG( ">>>>> s_FixRunCodeValue(%s) oldval=%d, newval=%d\r\n", s_RunCode[codeindex].codestr, oldval, newval );
 }
 
-// ÓÐ·¶Î§ÏÞÖÆµÄ½øÐÐÐÞÕýÖµ
+// ï¿½Ð·ï¿½Î§ï¿½ï¿½ï¿½ÆµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 static bool s_FixRunCodeValue_range( defCodeIndex_ codeindex, int valueindex, bool havemin=false, int minval=-1, bool havemax=false, int maxval=-1, defUseValType UseValType=defUseValType_Default )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -349,7 +355,7 @@ static bool s_FixRunCodeValue_range( defCodeIndex_ codeindex, int valueindex, bo
 	return false;
 }
 
-// Í¨¹ýindexÉèÖÃruncodeµÄÖµ
+// Í¨ï¿½ï¿½indexï¿½ï¿½ï¿½ï¿½runcodeï¿½ï¿½Öµ
 bool s_SetRunCodeValue( defCodeIndex_ index, int val1, int val2, int val3, int val4, bool do1, bool do2, bool do3, bool do4 )
 {
 	if( index<=defCodeIndex_Unknown || index>=defCodeIndex_MAX_ )
@@ -363,7 +369,7 @@ bool s_SetRunCodeValue( defCodeIndex_ index, int val1, int val2, int val3, int v
 	if( do3 ) s_RunCode[index].value3 = val3;
 	if( do4 ) s_RunCode[index].value4 = val4;
 	
-	bool isWarnSet = false; // »áÓ°Ïì³ÌÐòÔËÐÐ»úÖÆ£¬ÐèÒª¸ø³ö¾¯¸æÈÕÖ¾
+	bool isWarnSet = false; // ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½Æ£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾
 	switch(index)
 	{
 	case defCodeIndex_TEST_ModbusMod:
@@ -380,7 +386,7 @@ bool s_SetRunCodeValue( defCodeIndex_ index, int val1, int val2, int val3, int v
 		break;
 	}
 
-	// Öµ·¶Î§ÐÞÕý
+	// Öµï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½
 	switch(index)
 	{
 	case defCodeIndex_xmpp_ConnectInterval:
@@ -405,7 +411,7 @@ bool s_SetRunCodeValue( defCodeIndex_ index, int val1, int val2, int val3, int v
 	return true;
 }
 
-// Í¨¹ýcodeindex»ñÈ¡runcodeµÄÖµ
+// Í¨ï¿½ï¿½codeindexï¿½ï¿½È¡runcodeï¿½ï¿½Öµ
 int s_GetRunCodeValue( defCodeIndex_ codeindex, int valueindex )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -431,7 +437,7 @@ int s_GetRunCodeValue( defCodeIndex_ codeindex, int valueindex )
 	return defRunCodeVal_Disable;
 }
 
-// Í¨¹ýcodeindex»ñÈ¡runcodeµÄÖµ
+// Í¨ï¿½ï¿½codeindexï¿½ï¿½È¡runcodeï¿½ï¿½Öµ
 const std::string& s_GetRunCodeStrVal( defCodeIndex_ codeindex )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -442,7 +448,7 @@ const std::string& s_GetRunCodeStrVal( defCodeIndex_ codeindex )
 	return s_RunCode[codeindex].str_val;
 }
 
-// Í¨¹ýcodeindex»ñÈ¡Ä¬ÈÏÖµ
+// Í¨ï¿½ï¿½codeindexï¿½ï¿½È¡Ä¬ï¿½ï¿½Öµ
 int s_GetRunCodeValue_Default( defCodeIndex_ codeindex, int valueindex )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -468,7 +474,7 @@ int s_GetRunCodeValue_Default( defCodeIndex_ codeindex, int valueindex )
 	return defRunCodeVal_Disable;
 }
 
-// Í¨¹ýcodeindex»ñÈ¡Ä¬ÈÏÖµ
+// Í¨ï¿½ï¿½codeindexï¿½ï¿½È¡Ä¬ï¿½ï¿½Öµ
 const std::string& s_GetRunCodeStrVal_Default( defCodeIndex_ codeindex )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -479,7 +485,7 @@ const std::string& s_GetRunCodeStrVal_Default( defCodeIndex_ codeindex )
 	return s_RunCode[codeindex].default_str_val;
 }
 
-// Í¨¹ýcodeindex»ñÈ¡runcodeµÄÖµ£¬ÖµÎÞÐ§Ê±²ÉÓÃÄ¬ÈÏÖµ
+// Í¨ï¿½ï¿½codeindexï¿½ï¿½È¡runcodeï¿½ï¿½Öµï¿½ï¿½Öµï¿½ï¿½Ð§Ê±ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµ
 int s_GetRunCodeValue_UseDefWhenNul( defCodeIndex_ codeindex, int valueindex, int nulval )
 {
 	if( codeindex<defCodeIndex_Unknown || codeindex>=defCodeIndex_MAX_ )
@@ -505,7 +511,7 @@ int s_GetRunCodeValue_UseDefWhenNul( defCodeIndex_ codeindex, int valueindex, in
 	return defRunCodeVal_Disable;
 }
 
-// ÅÐ¶ÏÔËÐÐÂë¶ÔÓ¦¹¦ÄÜÊÇ·ñ¿ªÆô
+// ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½
 bool s_IsRunCodeEnable( defCodeIndex_ codeindex )
 {
 	int val1 = s_GetRunCodeValue( codeindex, defRunCodeValIndex_1 );
@@ -670,7 +676,7 @@ void s_InitRunCode(void)
 	macCheckRunCode(SYS_WinTime_Wind);
 	macCheckRunCode(SYS_VChgRng_CO2);
 	macCheckRunCode(SYS_VChgRng_HCHO);
-	//macCheckRunCode(SYS_VChgRng_PM25);
+	macCheckRunCode(SYS_VChgRng_PM25); //jyc20170424 add for PM2.5
 	macCheckRunCode(SYS_MergeWindLevel);
 	macCheckRunCode(SYS_DataSamp_DoBatch);
 	macCheckRunCode(SYS_DataSamp_LongTimeNoData);
@@ -744,7 +750,7 @@ void s_InitRunCode(void)
 		{
 			if( defRunCode_CheckOK != s_RunCode[i].CheckFlag )
 			{
-				// Ã¿¸öcode¶¼±ØÐëÔö¼ÓmacCheckRunCode½øÐÐÐ£Ñé
+				// Ã¿ï¿½ï¿½codeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½macCheckRunCodeï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½
 				//LOGMSGEX( defLOGNAME, defLOG_ERROR, "s_InitRunCode: code=%d, codestr=%s check error!!!\r\n\r\n", s_RunCode[i].code, s_RunCode[i].codestr );
 				assert(false);
 			}
@@ -864,11 +870,8 @@ void CRunCodeMgr::LoadDB_code()
 		int val3 = query.getColumn(col++).getInt();
 		int val4 = query.getColumn(col++).getInt();
 
-		//jyc20160825 can not run have trouble
-		std::string str_val = query.getColumn(col++);
-		//std::string str_val = "jyc20160825";
-		
-		s_RunCode[RUNCODE_Index(code, codestr.c_str())].str_val = str_val;
+		//std::string str_val = query.getColumn(col++);  //jyc20170510 trouble notice have trouble
+		s_RunCode[RUNCODE_Index(code, codestr.c_str())].str_val = "";//str_val; //jyc20170510 modify
 		RUNCODE_Set( RUNCODE_Index(code, codestr.c_str()), val1, val2, val3, val4, true, true, true, true );
 	}
 }

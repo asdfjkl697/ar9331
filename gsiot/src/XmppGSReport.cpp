@@ -110,7 +110,9 @@ static void g_tagStat( Tag *t, const struStat &Stat, const IOTDeviceType type, c
 	t->addAttribute( "min_t", (int)Stat.stat_v1k_min_dt);
 	t->addAttribute( "min", g_V1kToStrUseValueForType(type,Stat.stat_v1k_min,getfortype,false) );
 	
-	t->addAttribute( "avg", g_V1kToStrUseValueForType(type,Stat.stat_v1k_avg,getfortype,false,2) );
+	//t->addAttribute( "avg", g_V1kToStrUseValueForType(type,Stat.stat_v1k_avg,getfortype,false,
+	//		g_GetPrecisionForType(type)) );
+	t->addAttribute( "avg", g_V1kToStrUseValueForType(type,Stat.stat_v1k_avg,getfortype,false) );
 	t->addAttribute( "avg_n", Stat.stat_v1k_avg_num );
 }
 

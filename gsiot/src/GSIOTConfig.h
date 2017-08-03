@@ -8,7 +8,7 @@
 
 using namespace gloox;
 
-// ¹ØÁª Ö÷Éè±¸ĞÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ï¢
 struct struRelationMainDev
 {
 	IOTDeviceType device_type;
@@ -21,12 +21,12 @@ struct struRelationMainDev
 	}
 };
 
-// ¹ØÁª ×ÓÉè±¸ĞÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ï¢
 struct struRelationChild
 {
-	IOTDeviceType child_dev_type;	// ¹ØÁªÉè±¸ÀàĞÍ
-	int child_dev_id;				// ¹ØÁªÉè±¸ID
-	int child_dev_subid;			// ¹ØÁª×Ó¶ÔÏóID  0 ±íÊ¾ËùÓĞ×Ó¶ÔÏó
+	IOTDeviceType child_dev_type;	// ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
+	int child_dev_id;				// ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ID
+	int child_dev_subid;			// ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ID  0 ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½
 
 	struRelationChild( IOTDeviceType in_child_dev_type, int in_child_dev_id, int in_child_dev_subid=0 )
 		:child_dev_type(in_child_dev_type), child_dev_id(in_child_dev_id), child_dev_subid(in_child_dev_subid)
@@ -46,6 +46,7 @@ public:
 	~GSIOTConfig(void);
 	
 	bool doDBUpdate();
+	void LoadDB_cfg();
 	bool PreInit( const std::string &RunParam );
 	
 	GSIOTUserMgr m_UserMgr;
@@ -54,8 +55,8 @@ public:
 	{
 		return GSIOTUser::GetKeyJid_spec(this->m_noticejid);
 	}
-	bool isOwner( const std::string &UserJID ); // Éè±¸ËùÊôÕÊºÅ£¬ÓµÓĞÕâÌ¨Éè±¸µÄÕÊºÅ
-	bool isOwnerForKeyJid( const std::string &OwnerKeyJid, const std::string &UserKeyJid ) // Éè±¸ËùÊôÕÊºÅ£¬ÓµÓĞÕâÌ¨Éè±¸µÄÕÊºÅ
+	bool isOwner( const std::string &UserJID ); // ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÅ£ï¿½Óµï¿½ï¿½ï¿½ï¿½Ì¨ï¿½è±¸ï¿½ï¿½ï¿½Êºï¿½
+	bool isOwnerForKeyJid( const std::string &OwnerKeyJid, const std::string &UserKeyJid ) // ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÅ£ï¿½Óµï¿½ï¿½ï¿½ï¿½Ì¨ï¿½è±¸ï¿½ï¿½ï¿½Êºï¿½
 	{
 		return ( !OwnerKeyJid.empty() && OwnerKeyJid == UserKeyJid );
 	}
@@ -193,11 +194,11 @@ private:
 	std::string m_smtppassword;
 	std::string m_noticejid;
 	std::string m_phone;
-	uint32_t m_DoInterval_ForSMS; // Ö´ĞĞ¼ä¸ô£¬µ¥Î»Ãë
+	uint32_t m_DoInterval_ForSMS; // Ö´ï¿½Ğ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
 private:
-	defmapRelation m_mapRelation; // Éè±¸¹ØÁª
-	defmapVObjConfig m_mapVObj;		// ĞéÄâ¶ÔÏó
+	defmapRelation m_mapRelation; // ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
+	defmapVObjConfig m_mapVObj;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	std::list<INotifyHandler_UserMgr*> m_NotifyHandlerList;
 

@@ -4,11 +4,11 @@
 #include "SQLiteHelper.h"
 
 /*
-ÔËÐÐÂëÔö¼ÓÒ»¸öÐÂ±àÂë:
-s_RunCode ºÍ defCodeIndex_ ºÍ s_InitRunCode  ¸÷Ôö¼ÓÒ»Ïî£¬²¢ÇÒÃ¶¾ÙÃûºó×ºÃû±£³ÖÒ»ÖÂ¡£
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½:
+s_RunCode ï¿½ï¿½ defCodeIndex_ ï¿½ï¿½ s_InitRunCode  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½î£¬ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½×ºï¿½ï¿½ï¿½Ò»ï¿½Â¡ï¿½
 
-Ê¹ÓÃIsRUNCODEEnable()ÅÐ¶Ï¹¦ÄÜÊÇ·ñ¿ªÆô
-Ê¹ÓÃRUNCODE_Get()»ñÈ¡ÔËÐÐÂëÖµ
+Ê¹ï¿½ï¿½IsRUNCODEEnable()ï¿½Ð¶Ï¹ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½
+Ê¹ï¿½ï¿½RUNCODE_Get()ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 */
 
 struct struRunCode
@@ -30,12 +30,12 @@ struct struRunCode
 	int CheckFlag;
 };
 
-// ÔËÐÐÂë³ÌÐò´æ´¢Î»ÖÃË÷ÒýºÅ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum defCodeIndex_
 {
 	defCodeIndex_Unknown = 0,
 	
-	// *** Ò»°ã¹¦ÄÜ ***
+	// *** Ò»ï¿½ã¹¦ï¿½ï¿½ ***
 	defCodeIndex_SYS_IOTWndMod,
 	defCodeIndex_SYS_ShowLogWnd,
 	defCodeIndex_SYS_ListRunCode,
@@ -144,7 +144,7 @@ enum defCodeIndex_
 	defCodeIndex_SYS_WinTime_Wind,
 	defCodeIndex_SYS_VChgRng_CO2,  //jyc201703034 add notice
 	defCodeIndex_SYS_VChgRng_HCHO,
-	//defCodeIndex_SYS_VChgRng_PM25,
+	defCodeIndex_SYS_VChgRng_PM25,  //jyc20170424 add for debug 1min cap and save
 	defCodeIndex_SYS_MergeWindLevel,
 	defCodeIndex_SYS_DataSamp_DoBatch,
 	defCodeIndex_SYS_DataSamp_LongTimeNoData,
@@ -172,12 +172,12 @@ enum defCodeIndex_
 	defCodeIndex_PrePic_Size_S,
 
 
-	// *** ×Ö·û´®²ÎÊý ***
+	// *** ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ ***
 	defCodeIndex_SYS_IOT_NAME,
 
 
-	// *** ÌØÊâ¹¦ÄÜ ***
-	defCodeIndex_TEST__Spec__, // ÌØÊâ¹¦ÄÜ·Ö½çÏß
+	// *** ï¿½ï¿½ï¿½â¹¦ï¿½ï¿½ ***
+	defCodeIndex_TEST__Spec__, // ï¿½ï¿½ï¿½â¹¦ï¿½Ü·Ö½ï¿½ï¿½ï¿½
 
 	defCodeIndex_TEST_ModbusMod,
 	defCodeIndex_Debug_DisableAuth,
@@ -216,32 +216,32 @@ enum defCodeIndex_
 	defCodeIndex_MAX_
 };
 
-#define defRunCodeVal_Disable		0		// Ò»°ã¹¦ÄÜ¿ªÆôµÄvalueÖµ
-#define defRunCodeVal_Enable		1		// Ò»°ã¹¦ÄÜ¿ªÆôµÄvalueÖµ
-#define defRunCodeVal_Spec_Enable	123456	// ÌØÊâ¹¦ÄÜ¿ªÆôµÄvalueÖµ
+#define defRunCodeVal_Disable		0		// Ò»ï¿½ã¹¦ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½valueÖµ
+#define defRunCodeVal_Enable		1		// Ò»ï¿½ã¹¦ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½valueÖµ
+#define defRunCodeVal_Spec_Enable	123456	// ï¿½ï¿½ï¿½â¹¦ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½valueÖµ
 
-// ÔËÐÐÂëÖµË÷ÒýºÅ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½
 #define defRunCodeValIndex_1	1
 #define defRunCodeValIndex_2	2
 #define defRunCodeValIndex_3	3
 #define defRunCodeValIndex_4	4
 
-// ³õÊ¼»¯ÔËÐÐÂë
+// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define RUNCODE_Init s_InitRunCode
 
-// ÅÐ¶ÏÔËÐÐÂë¶ÔÓ¦¹¦ÄÜÊÇ·ñ¿ªÆô
+// ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½
 #define IsRUNCODEEnable s_IsRunCodeEnable
 
 #define RUNCODE_Index s_GetRunCodeIndex
 
-// »ñÈ¡ÔËÐÐÂëÖµ
+// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 #define RUNCODE_Get s_GetRunCodeValue
 #define RUNCODE_GetStr s_GetRunCodeStrVal
 #define RUNCODE_GetDefault s_GetRunCodeValue_Default
 #define RUNCODE_GetStrDefault s_GetRunCodeStrVal_Default
 #define RUNCODE_GetUseDefWhenNul s_GetRunCodeValue_UseDefWhenNul
 
-// ÐÞ¸ÄÔËÐÐÂëÖµ
+// ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 #define RUNCODE_Set s_SetRunCodeValue
 
 #define RUNCODE_List s_ListRunCode

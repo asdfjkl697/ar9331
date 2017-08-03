@@ -20,7 +20,7 @@ include $(TOPDIR)/rules.mk
 
 # Name and release number of this package
 PKG_NAME:=gsbox
-PKG_VERSION:=2017-03-21
+PKG_VERSION:=2017-08-02
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 

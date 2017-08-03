@@ -10,7 +10,7 @@
 //#define __stdcall  //20160607
 //#define LPVOID void *
 
-#define defTEST_ModbusMod // modbusÍ¸´«²âÊÔÄ£Ê½
+#define defTEST_ModbusMod // modbusÍ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 
 uint8_t *CommandToByte(uint8_t *buf,uint16_t val)
 {
@@ -103,7 +103,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 	const uint32_t CommLinkThreadMax = RUNCODE_Get(defCodeIndex_CommLinkThreadMax,defRunCodeValIndex_1);
 	const uint32_t CommLinkThreadMaxAllow = RUNCODE_Get(defCodeIndex_CommLinkThreadMax,defRunCodeValIndex_2);
 
-	const bool allowConnect = ( CommLinkThread_allowConnectNum<CommLinkThreadMaxAllow || CommLinkThread_allowConnectNum<1 ) && this_CommLinkThread_No%2; // ÖÁÉÙÒ»¸ö£»ÆæÊýÔÊÐí£¬Å¼Êý²»ÔÊÐí£¬±ÜÃâÈ«²¿ÔÊÐíµÄÇé¿ö£»
+	const bool allowConnect = ( CommLinkThread_allowConnectNum<CommLinkThreadMaxAllow || CommLinkThread_allowConnectNum<1 ) && this_CommLinkThread_No%2; // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?Å¼ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if( allowConnect )
 	{
 		CommLinkThread_allowConnectNum = device->New_CommLinkThread_allowConnectNum();
@@ -251,7 +251,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 
 		macHeartbeatGuard_step(1600);
 
-		// ÊÇ·ñÐèÒª·¢ËÍÐÄÌø
+		// ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if( pCommLink->IsOpen() )
 		{
 			const uint32_t CommLinkHb_SendInterval = RUNCODE_Get(defCodeIndex_CommLinkHb_SendInterval);
@@ -275,7 +275,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 						pCommLink->set_lastSendHeartbeat();
 
 						const IOTDeviceType hb_deviceType = pCommLink->get_cfg().heartbeat_param.hb_deviceType;
-						if( IOT_DEVICE_RS485 != hb_deviceType )// Ä¿Ç°Ö§³ÖÓÃ×÷ÐÄÌøÉè±¸µÄÀàÐÍ
+						if( IOT_DEVICE_RS485 != hb_deviceType )// Ä¿Ç°Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 						{
 							break;
 						}
@@ -283,7 +283,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 						const uint32_t hb_deviceId = pCommLink->get_cfg().heartbeat_param.hb_deviceId;
 						const uint32_t hb_address = pCommLink->get_cfg().heartbeat_param.hb_address;
 						
-						// »ñÈ¡Ö®Ç°µÄÐÄÌøÉè±¸²¢ÅÐ¶ÏÊÇ·ñÓëÅäÖÃÒ»ÖÂ£¬ÊÇ·ñÐèÒªÖØ½¨ÐÄÌøÉè±¸
+						// ï¿½ï¿½È¡Ö®Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Â£ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ø½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸
 						GSIOTDevice *hb_device = pCommLink->get_hb_device();
 
 						bool doCreate_hb_device = !hb_device;
@@ -292,9 +292,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 							doCreate_hb_device = !hb_device->isDevSelfAndIncludeAddr( hb_deviceType, hb_deviceId, hb_address );
 						}
 
-						
-
-						// »ñÈ¡ÒÑ´´½¨µÄÐÄÌøÉè±¸
+						// ï¿½ï¿½È¡ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸
 						hb_device = pCommLink->get_hb_device();
 
 						if( !hb_device )
@@ -303,7 +301,7 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 							break;
 						}
 
-						// ÐÄÌøÉè±¸ËùÔÚÁ´Â·Óëµ±Ç°Á´Â·²»Ò»ÖÂÊ±£¬ÊôÓÚÅäÖÃÒì³£
+						// ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ëµ±Ç°ï¿½ï¿½Â·ï¿½ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£
 						if( hb_device->GetLinkID() != pCommLink->get_cfg().id )
 						{
 							LOGMSG( "Link%d(%s) do Heartbeat, Hb'LinkID Cfg Err -ThId%d\r\n", pCommLink->get_cfg().id, pCommLink->get_cfg().name.c_str(), thisThreadId );
@@ -326,12 +324,12 @@ void *CommLink_Thread(LPVOID lpPara) //jyc20160826 test
 								DeviceAddress *address = NULL;
 								if( 0==hb_address )
 								{
-									// ÈÎÒâµØÖ·
+									// ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
 									address = rsCtl->GetFristAddress();
 								}
 								else
 								{
-									// Ö¸¶¨µØÖ·
+									// Ö¸ï¿½ï¿½ï¿½ï¿½Ö·
 									address = rsCtl->GetAddress( hb_address );
 								}
 
@@ -421,18 +419,18 @@ DeviceConnection::~DeviceConnection(void)
 	}
 	//delete(devXml);
 	delete(devManager);
-	//delete(m_serial_msg);//...testFinalDelete ³ÌÐò½«ÍË³ö£¬²»ÊÍ·Å
-	//m_CommLinkMgr.UnInit();//...testFinalDelete ³ÌÐò½«ÍË³ö£¬²»ÊÍ·Å
+	//delete(m_serial_msg);//...testFinalDelete ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½
+	//m_CommLinkMgr.UnInit();//...testFinalDelete ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½
 
 	CCommLinkRun::Module_UnInit();
 	LOGMSG("~DeviceConnection end\r\n");
 }
 
-// »ñÈ¡×ÛºÏÍ¨Ñ¶×´Ì¬£º
-//   ±¾µØÖ÷¿ØÁ´Â·Í¨Ñ¶×´Ì¬
-//   Ô¶³ÌÁ´Â·Í¨Ñ¶×´Ì¬
+// ï¿½ï¿½È¡ï¿½Ûºï¿½Í¨Ñ¶×´Ì¬ï¿½ï¿½
+//   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·Í¨Ñ¶×´Ì¬
+//   Ô¶ï¿½ï¿½ï¿½ï¿½Â·Í¨Ñ¶×´Ì¬
 
-// return >0Õý³£, 0Òì³£, <0ÎÞ
+// return >0ï¿½ï¿½, 0ï¿½ì³£, <0ï¿½ï¿½
 int DeviceConnection::GetAllCommunicationState( const bool getCommLink )
 {
 	int enableCount = 0;
@@ -583,21 +581,21 @@ bool DeviceConnection::SetRFMod( defLinkID LinkID, defFreq freq, uint8_t enable_
 bool DeviceConnection::SetRFMod_EncodeSend( defLinkID LinkID, defFreq freq, uint8_t enable_pass, uint8_t check_count, uint8_t enable_timecheck )
 {
 
-	// Ð­Òé×Ü¸ñÊ½²¿·Ö
+	// Ð­ï¿½ï¿½ï¿½Ü¸ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
 	uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0};
 	uint8_t *sendBuf_end = sendBuf + sizeof(sendBuf);
 
 	sendBuf[0] = 0xBC;
 	sendBuf[1] = 0xAC;
-	uint8_t *pPacketLen = sendBuf+2;		// °ü³¤¶È Î»ÖÃ
-	uint8_t *pPacketVer = pPacketLen+1;		// °ü°æ±¾ Î»ÖÃ
-	uint8_t *pModuleIndex = pPacketVer+1;	// Ä£¿éË÷Òý Î»ÖÃ
-	uint8_t *enc = pModuleIndex+1;			// Êý¾Ý¶Î±àÂëÇø
-	uint8_t *pPacketEnd = NULL;				// ½áÊøÈ·ÈÏÎ» Î»ÖÃ
+	uint8_t *pPacketLen = sendBuf+2;		// ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
+	uint8_t *pPacketVer = pPacketLen+1;		// ï¿½ï¿½æ±¾ Î»ï¿½ï¿½
+	uint8_t *pModuleIndex = pPacketVer+1;	// Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
+	uint8_t *enc = pModuleIndex+1;			// ï¿½ï¿½Ý¶Î±ï¿½ï¿½ï¿½ï¿½ï¿½
+	uint8_t *pPacketEnd = NULL;				// ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Î» Î»ï¿½ï¿½
 
 	*pPacketVer = 0x65;
 
-	// Êý¾Ý¶Î
+	// ï¿½ï¿½Ý¶ï¿½
 	*enc = enable_pass;
 	enc++;
 
@@ -654,35 +652,35 @@ bool DeviceConnection::SendMOD_set_EncodeSend( const defMODSysSet cmd, const def
 {
 	switch( cmd )
 	{
-	case defMODSysSet_IR_TXCtl_Query:		// IR ÊÕ·¢¿ØÖÆ - ²éÑ¯
+	case defMODSysSet_IR_TXCtl_Query:		// IR ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½Ñ¯
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = { 0xBC, 0xAC, 0x04, 0x65, MOD_SYS_set, 0x30, 0x0A, 0xAC };
 			m_serial_msg->doMessage( LinkID, sendBuf, 8, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
 		}
 		break;
 
-	case defMODSysSet_IR_TXCtl_RX:			// IR ÊÕ·¢¿ØÖÆ - ÉèÎªÊÕ
+	case defMODSysSet_IR_TXCtl_RX:			// IR ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½Îªï¿½ï¿½
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x05, 0x65, MOD_SYS_set, 0x30, 0x1A, 0x00, 0xAC};
 			m_serial_msg->doMessage( LinkID, sendBuf, 9, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
 		}
 		break;
 
-	case defMODSysSet_IR_TXCtl_TX:			// IR ÊÕ·¢¿ØÖÆ - ÉèÎª·¢
+	case defMODSysSet_IR_TXCtl_TX:			// IR ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½Îªï¿½ï¿½
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x05, 0x65, MOD_SYS_set, 0x30, 0x1A, 0x01, 0xAC};
 			m_serial_msg->doMessage( LinkID, sendBuf, 9, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
 		}
 		break;
 
-	case defMODSysSet_IR_RXMod_Query:		// IR ÊÕÄ£Ê½²éÑ¯
+	case defMODSysSet_IR_RXMod_Query:		// IR ï¿½ï¿½Ä£Ê½ï¿½ï¿½Ñ¯
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x04, 0x65, MOD_SYS_set, 0x30, 0x0D, 0xAC};
 			m_serial_msg->doMessage( LinkID, sendBuf, 8, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
 		}
 		break;
 
-	case defMODSysSet_IR_RXMod_original:	// IR ÊÕÔ­Ê¼Êý¾Ý
+	case defMODSysSet_IR_RXMod_original:	// IR ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½
 		{
 			//uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x0B, 0x65, MOD_SYS_set, 0x30, 0x1D, 0x01, 0x00, 0x00, 0x70, 0x94, 0x00, 0x00, 0xAC};
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x0B, 0x65, MOD_SYS_set, 0x30, 0x1D, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xAC};
@@ -690,7 +688,7 @@ bool DeviceConnection::SendMOD_set_EncodeSend( const defMODSysSet cmd, const def
 		}
 		break;
 
-	case defMODSysSet_IR_RXMod_code:		// IR ÊÕ±àÂëÊý¾Ý
+	case defMODSysSet_IR_RXMod_code:		// IR ï¿½Õ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			//uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x0B, 0x65, MOD_SYS_set, 0x30, 0x1D, 0x00, 0x00, 0x00, 0x70, 0x94, 0x00, 0x00, 0xAC};
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x0B, 0x65, MOD_SYS_set, 0x30, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xAC};
@@ -698,21 +696,21 @@ bool DeviceConnection::SendMOD_set_EncodeSend( const defMODSysSet cmd, const def
 		}
 		break;
 		
-	case defMODSysSet_RF_RX_freq_Query:		// RF ÆµÂÊÉèÖÃ²éÑ¯
+	case defMODSysSet_RF_RX_freq_Query:		// RF Æµï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½Ñ¯
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x04, 0x65, MOD_SYS_set, 0x10, 0x0D, 0xAC};
 			m_serial_msg->doMessage( LinkID, sendBuf, 8, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
 		}
 		break;
 
-	case defMODSysSet_RF_RX_freq_315:		// RF ÆµÂÊÉèÖÃ315
+	case defMODSysSet_RF_RX_freq_315:		// RF Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½315
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x08, 0x65, MOD_SYS_set, 0x10, 0x1D, 0xC0, 0x84, 0xC6, 0x12, 0xAC};
 			m_serial_msg->doMessage( LinkID, sendBuf, 15, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
 		}
 		break;
 
-	case defMODSysSet_RF_RX_freq_433:		// RF ÆµÂÊÉèÖÃ433
+	case defMODSysSet_RF_RX_freq_433:		// RF Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½433
 		{
 			uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0xBC, 0xAC, 0x08, 0x65, MOD_SYS_set, 0x10, 0x1D, 0x00, 0x18, 0xDD, 0x19, 0xAC};
 			m_serial_msg->doMessage( LinkID, sendBuf, 15, IOT_DEVICE_Unknown, 0, NULL, NULL, defNormSendCtlOvertime, QueueOverTime );
@@ -745,65 +743,65 @@ bool DeviceConnection::Encode_RFRemote_code( const RFSignal &signal, uint8_t *bu
 {
 	uint8_t *enc = buf;
 
-	// Ö¸ÁîÍ·Î²¶¨Òå
+	// Ö¸ï¿½ï¿½Í·Î²ï¿½ï¿½ï¿½ï¿½
 	*enc = 0;
 	if( signal.headlen )
 	{
-		*enc |= 0x01; // ÊÇ·ñÓÐÒýµ¼Âë
+		*enc |= 0x01; // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		uint8_t headlen = signal.headlen;
 		headlen &= 0x0E;
 		headlen <<= 1;
-		*enc |= headlen; // Òýµ¼Âë³¤¶È
+		*enc |= headlen; // ï¿½ï¿½ï¿½ë³¤ï¿½ï¿½
 	}
 
 	if( signal.taillen )
 	{
-		*enc |= 0x10; // ÊÇ·ñÓÐÒýµ¼Âë
+		*enc |= 0x10; // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		uint8_t taillen = signal.taillen;
 		taillen &= 0xE0;
 		taillen <<= 5;
-		*enc |= taillen; // Òýµ¼Âë³¤¶È
+		*enc |= taillen; // ï¿½ï¿½ï¿½ë³¤ï¿½ï¿½
 	}
 	enc++;
 
-	// Ö¸Áî³¤¶È
+	// Ö¸ï¿½î³¤ï¿½ï¿½
 	*enc = signal.codeValidLen; enc++;
 
-	// ÖØ¸´·¢ËÍ´ÎÊý
+	// ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½Í´ï¿½ï¿½ï¿½
 	uint8_t signal_count = signal.signal_count<RUNCODE_Get(defCodeIndex_RF_Send_CountMin) ? RUNCODE_Get(defCodeIndex_RF_Send_CountDefault):signal.signal_count;
 	*enc = signal_count; enc++;
 
-	// Òýµ¼Âë
+	// ï¿½ï¿½ï¿½ï¿½
 	memcpy( enc, signal.headcode, sizeof(uint16_t)*signal.headlen );
 	enc += sizeof(uint16_t)*signal.headlen;
 
-	// Êý¾Ý¶ÎBIT 1ÉÏÉýÑØÊ±¼ä
+	// ï¿½ï¿½Ý¶ï¿½BIT 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	memcpy( enc, &signal.one_high_time, sizeof(uint16_t) );
 	enc += sizeof(uint16_t);
 
-	// Êý¾Ý¶ÎBIT 1ÏÂ½µÑØÊ±¼ä
+	// ï¿½ï¿½Ý¶ï¿½BIT 1ï¿½Â½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	memcpy( enc, &signal.one_low_time, sizeof(uint16_t) );
 	enc += sizeof(uint16_t);
 
-	// Êý¾Ý¶ÎBIT 0ÉÏÉýÑØÊ±¼ä
+	// ï¿½ï¿½Ý¶ï¿½BIT 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	memcpy( enc, &signal.zero_high_time, sizeof(uint16_t) );
 	enc += sizeof(uint16_t);
 
-	// Êý¾Ý¶ÎBIT 0ÏÂ½µÑØÊ±¼ä
+	// ï¿½ï¿½Ý¶ï¿½BIT 0ï¿½Â½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	memcpy( enc, &signal.zero_low_time, sizeof(uint16_t) );
 	enc += sizeof(uint16_t);
 
-	// Êý¾ÝÂëÊ±Ðòcode
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½code
 	memcpy( enc, &signal.code, 4 );
 	enc += 4;
 
-	// silent¼ä¸ôÊ±¼ä
+	// silentï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	memcpy( enc, &signal.silent_interval, sizeof(uint16_t) );
 	enc += sizeof(uint16_t);
 
-	// ½áÊøÂë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	memcpy( enc, signal.tailcode, sizeof(uint16_t)*signal.taillen );
 	enc += sizeof(uint16_t)*signal.taillen;
 
@@ -825,7 +823,7 @@ bool DeviceConnection::Encode_RFRemote_original( const RFSignal &signal, uint8_t
 
 	const int originalbytelen = sizeof(uint16_t)*signal.original_len <= sizeof(signal.original) ? sizeof(uint16_t)*signal.original_len : sizeof(signal.original);
 
-	// Ñ§Ï°µ½µÄÊý¾Ý»ù´¡ÉÏ£¬Òýµ¼ÂëÎªÕýÂö³åÊ±£¬×îÇ°Ãæ²¹ÉÏÒýµ¼ÂëÊ±¼ä
+	// Ñ§Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý»ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ç°ï¿½æ²¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	if( 0 != signal.original_headflag )
 	{
 		memcpy( enc, &signal.original_headtime, sizeof(uint16_t) );
@@ -835,7 +833,7 @@ bool DeviceConnection::Encode_RFRemote_original( const RFSignal &signal, uint8_t
 	memcpy( enc, &signal.original, originalbytelen );
 	enc += originalbytelen;
 
-	// Ñ§Ï°µ½µÄÊý¾Ý»ù´¡ÉÏ£¬Òýµ¼ÂëÎª0x00¸ºÂö³åÊ±£¬×îºóÐè²¹ÉÏÒýµ¼ÂëÊ±¼ä
+	// Ñ§Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý»ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½Îª0x00ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è²¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	if( 0 == signal.original_headflag )
 	{
 		memcpy( enc, &signal.original_headtime, sizeof(uint16_t) );
@@ -855,7 +853,7 @@ bool DeviceConnection::Encode_RFRemote_IR_code( const RFSignal &signal, uint8_t 
 
 	*enc = signal_count; enc++;
 
-	const int originalbytelen = signal.original_len <= sizeof(signal.original) ? signal.original_len : sizeof(signal.original); // original_len=×Ö½Ú
+	const int originalbytelen = signal.original_len <= sizeof(signal.original) ? signal.original_len : sizeof(signal.original); // original_len=ï¿½Ö½ï¿½
 	
 	*enc = originalbytelen; enc++;
 
@@ -924,17 +922,17 @@ defGSReturn DeviceConnection::SendControl( const IOTDeviceType DevType, const GS
 		return isSuccess;
 	}
 
-	// Ð­Òé×Ü¸ñÊ½²¿·Ö
+	// Ð­ï¿½ï¿½ï¿½Ü¸ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
 	uint8_t sendBuf[MIAN_PORT_BUF_MAX] = {0};
 	uint8_t *sendBuf_end = sendBuf + sizeof(sendBuf);
 
 	sendBuf[0] = 0xBC;
 	sendBuf[1] = 0xAC;
-	uint8_t *pPacketLen = sendBuf+2;		// °ü³¤¶È Î»ÖÃ
-	uint8_t *pPacketVer = pPacketLen+1;		// °ü°æ±¾ Î»ÖÃ
-	uint8_t *pModuleIndex = pPacketVer+1;	// Ä£¿éË÷Òý Î»ÖÃ
-	uint8_t *enc = pModuleIndex+1;			// Êý¾Ý¶Î±àÂëÇø
-	uint8_t *pPacketEnd = NULL;				// ½áÊøÈ·ÈÏÎ» Î»ÖÃ
+	uint8_t *pPacketLen = sendBuf+2;		// ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
+	uint8_t *pPacketVer = pPacketLen+1;		// ï¿½ï¿½æ±¾ Î»ï¿½ï¿½
+	uint8_t *pModuleIndex = pPacketVer+1;	// Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
+	uint8_t *enc = pModuleIndex+1;			// ï¿½ï¿½Ý¶Î±ï¿½ï¿½ï¿½ï¿½ï¿½
+	uint8_t *pPacketEnd = NULL;				// ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Î» Î»ï¿½ï¿½
 
 	*pPacketVer = 0x65;
 
@@ -1083,41 +1081,36 @@ defGSReturn DeviceConnection::SendControl( const IOTDeviceType DevType, const GS
 						*pPacketLen = (enc - sendBuf) - MIAN_PORT_UNPkt_LEN;
 						*pPacketEnd = 0xAC;
 						*pModuleIndex = pCurButton->GetSignal().GetModuleIndex(); //module
-
-						// ·¢ËÍ´ÎÊý°üº¬ÔÚ±àÂëÀï
+						// å‘é€æ¬¡æ•°åŒ…å«åœ¨ç¼–ç é‡Œé¢
 						LOGMSG( "RFRemoteCtrl(%s) Send module=%d, %s", pCurButton->GetObjName().c_str(), \
 						       pCurButton->GetSignal().GetModuleIndex(), pCurButton->GetSignal().Print( "", false ).c_str() );
-
 						m_serial_msg->doMessage( LinkID, sendBuf, pPacketEnd + 1 - sendBuf, \
 						       DevType, DevID, rfCtl, address, overtime, QueueOverTime, \
 						       nextInterval>1 ? nextInterval : pCurButton->GetSignal().GetSendNeedTime() );
-
 						isSuccess = defGSReturn_Success;
 					}
 					else
 					{
 						//LOGMSGEX( defLOGNAME, defLOG_ERROR, "RFRemoteCtrl(%s) Send err, %s", pCurButton->GetObjName().c_str(), pCurButton->GetSignal().Print( "", false ).c_str() );
 					}
-
 					enc = ptemp_enc;
 				}
 			}
 			break;
 	}
-
 	return isSuccess;
 }
 
-// °ü×î´ó´óÐ¡
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
 #define defSendDataMaxSize 255
 
-// ·Ö°üÄÚÈÝ´óÐ¡
-#define defSendDataClipSize	(255-6)  // ×î´ó¼õÈ¥Í·Î²
+// ï¿½Ö°ï¿½ï¿½ï¿½ï¿½Ý´ï¿½Ð¡
+#define defSendDataClipSize	(255-6)  // ï¿½ï¿½ï¿½ï¿½È¥Í·Î²
 
-// ´®¿Ú·¢ËÍ¶ÔÍâ½Ó¿Ú
+// ï¿½ï¿½ï¿½Ú·ï¿½ï¿½Í¶ï¿½ï¿½ï¿½Ó¿ï¿½
 int DeviceConnection::SendData(CCommLinkRun *CommLink, unsigned char *sendbuf,int sendsize)
 {
-	// Êý¾ÝÌ«³¤½øÐÐ·Ö°ü·¢ËÍ
+	// ï¿½ï¿½ï¿½Ì«ï¿½ï¿½ï¿½ï¿½ï¿½Ð·Ö°ï¿½ï¿½ï¿½
 	if( sendsize <= defSendDataMaxSize )
 	{
 		return SendData_clip( CommLink, sendbuf, sendsize );
@@ -1125,20 +1118,20 @@ int DeviceConnection::SendData(CCommLinkRun *CommLink, unsigned char *sendbuf,in
 
 	g_PrintfByte( sendbuf, sendsize, "send (dev SendData) largesize", CommLink?CommLink->get_cfg().id:defPrintfByteDefaultLinkID, CommLink?CommLink->get_cfg().name.c_str():"" );
 
-	// Ã¿´Î·Ö°ü´æ´¢
+	// Ã¿ï¿½Î·Ö°ï¿½æ´¢
 	unsigned char clipbuf[1024] = {0};
 	int clipsize = 0;
 
-	memcpy( clipbuf, sendbuf, 5 ); // Í·ÄÚÈÝ
-	uint8_t *const clipbuf_PacketLen = clipbuf+2;	// °ü³¤¶È Î»ÖÃ
-	uint8_t *const clipbuf_data = clipbuf+5;		// data Î»ÖÃ
+	memcpy( clipbuf, sendbuf, 5 ); // Í·ï¿½ï¿½ï¿½ï¿½
+	uint8_t *const clipbuf_PacketLen = clipbuf+2;	// ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
+	uint8_t *const clipbuf_data = clipbuf+5;		// data Î»ï¿½ï¿½
 
-	unsigned char *buf_temp = sendbuf+5; // µ±Ç°Êý¾Ý¶¯Ì¬µØÖ·
-	int buf_temp_size = sendsize-6; // µ±Ç°Êý¾Ý¶¯Ì¬Ê£Óà´óÐ¡
-	const unsigned char *const buf_temp_end = sendbuf+sendsize-1; // Êý¾Ý½áÎ²
-	//int buf_temp_size = buf_temp_end-buf_temp; // µ±Ç°Êý¾Ý¶¯Ì¬Ê£Óà´óÐ¡
+	unsigned char *buf_temp = sendbuf+5; // ï¿½ï¿½Ç°ï¿½ï¿½Ý¶ï¿½Ì¬ï¿½ï¿½Ö·
+	int buf_temp_size = sendsize-6; // ï¿½ï¿½Ç°ï¿½ï¿½Ý¶ï¿½Ì¬Ê£ï¿½ï¿½ï¿½Ð¡
+	const unsigned char *const buf_temp_end = sendbuf+sendsize-1; // ï¿½ï¿½Ý½ï¿½Î²
+	//int buf_temp_size = buf_temp_end-buf_temp; // ï¿½ï¿½Ç°ï¿½ï¿½Ý¶ï¿½Ì¬Ê£ï¿½ï¿½ï¿½Ð¡
 
-	// ·Ö°ü
+	// ï¿½Ö°ï¿½
 	int sendsizecount = 0;
 	for( ; buf_temp<buf_temp_end; )
 	{
@@ -1150,8 +1143,8 @@ int DeviceConnection::SendData(CCommLinkRun *CommLink, unsigned char *sendbuf,in
 		int cur_copy_size = buf_temp_size>defSendDataClipSize ? defSendDataClipSize:buf_temp_size;
 
 		memcpy( clipbuf_data, buf_temp, cur_copy_size );
-		*clipbuf_PacketLen = cur_copy_size+6-MIAN_PORT_UNPkt_LEN;// ´óÐ¡
-		clipbuf_data[cur_copy_size] = 0xAC; // ½áÎ²
+		*clipbuf_PacketLen = cur_copy_size+6-MIAN_PORT_UNPkt_LEN;// ï¿½ï¿½Ð¡
+		clipbuf_data[cur_copy_size] = 0xAC; // ï¿½ï¿½Î²
 
 		sendsizecount += this->SendData_clip( CommLink, clipbuf, cur_copy_size+6 );
 
@@ -1164,7 +1157,7 @@ int DeviceConnection::SendData(CCommLinkRun *CommLink, unsigned char *sendbuf,in
 	return sendsizecount;
 }
 
-// ´®¿Ú·¢ËÍ·Ö°ü
+// ï¿½ï¿½ï¿½Ú·ï¿½ï¿½Í·Ö°ï¿½
 int DeviceConnection::SendData_clip(CCommLinkRun *CommLink, unsigned char *buf,int size)
 {
 	if( !this->isRunning )
@@ -1181,7 +1174,7 @@ int DeviceConnection::SendData_clip(CCommLinkRun *CommLink, unsigned char *buf,i
 #if defined(defTEST_ModbusMod)
 	if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 	{
-		// modbus²âÊÔÄ£Ê½ÏÂÈ¥µôÍ·Î²
+		// modbusï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½È¥ï¿½ï¿½Í·Î²
 		trans_mod = defTransMod_Transparent;
 
 		if( IsRUNCODEEnable(defCodeIndex_PrintSend_MainPort) )
@@ -1301,7 +1294,7 @@ void DeviceConnection::Run(int port)
 	if(port>=1)
 	{
 		m_usecfg_port = port;
-		port--; //Àà¿âÊÇË÷ÒýÖµ£¬ËùÒÔÒªÐ¡
+		port--; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÐ¡
 		//if(isRunning && port!=m_port){
 		//	this->Stoped();
 		//}
@@ -1325,7 +1318,7 @@ void DeviceConnection::Run(int port)
 			RS232_disableRTS( m_port );
 
 			/*jyc20160824
-			//´´½¨COM¼àÌýÏß³Ì		
+			//ï¿½ï¿½ï¿½ï¿½COMï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½		
 			HANDLE   hth1;
 			unsigned  uiThread1ID;
 			m_threadRunning++;
@@ -1352,7 +1345,7 @@ void DeviceConnection::AddCommLinkThread( int CommLinkCount )
 		return;
 	}
 	/*jyc20160824
-	//´´½¨Ïß³Ì
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 	HANDLE   hth1;
 	unsigned  uiThread1ID;
 	m_threadRunning++;
@@ -1393,7 +1386,7 @@ void DeviceConnection::OnDataReceived( CHeartbeatGuard *phbGuard, CCommLinkRun *
 #if defined(defTEST_ModbusMod)
 if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 	{
-		// modbus²âÊÔÄ£Ê½ÏÂ¼ÓÉÏÍ·Î²
+		// modbusï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½Â¼ï¿½ï¿½ï¿½Í·Î²
 		trans_mod = defTransMod_Transparent;
 
 		if( IsRUNCODEEnable(defCodeIndex_PrintRecv_MainPort) )
@@ -1421,13 +1414,13 @@ if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 
 	while(size>5)
 	{
-		uint8_t PacketHead = *buffer++; size--;			// °üÍ·
-		uint8_t PacketHeadCheck = *buffer++; size--;	// °üÍ· È·ÈÏÎ»
-		uint8_t PacketLen = *buffer++; size--;			// °ü³¤¶È Î»ÖÃ
-		uint8_t PacketVer = *buffer++; size--;			// °ü°æ±¾ Î»ÖÃ
-		uint8_t ModuleIndex = *buffer++; size--;		// Ä£¿éË÷Òý Î»ÖÃ
+		uint8_t PacketHead = *buffer++; size--;			// ï¿½ï¿½Í·
+		uint8_t PacketHeadCheck = *buffer++; size--;	// ï¿½ï¿½Í· È·ï¿½ï¿½Î»
+		uint8_t PacketLen = *buffer++; size--;			// ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
+		uint8_t PacketVer = *buffer++; size--;			// ï¿½ï¿½æ±¾ Î»ï¿½ï¿½
+		uint8_t ModuleIndex = *buffer++; size--;		// Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Î»ï¿½ï¿½
 
-		// °üÍ·
+		// ï¿½ï¿½Í·
 		if( 0xBC != PacketHead
 			|| 0xAC != PacketHeadCheck
 			)
@@ -1443,21 +1436,21 @@ if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 			continue;
 		}
 
-		uint8_t DataLen = PacketLen-2;			// Êý¾Ý¶Î³¤¶È
-		if( size<(uint32_t)(DataLen+1) ) // Êý¾Ý¶ÎºÍ½áÊøÈ·ÈÏÎ» µÄ³¤¶È
+		uint8_t DataLen = PacketLen-2;			// ï¿½ï¿½Ý¶Î³ï¿½ï¿½ï¿½
+		if( size<(uint32_t)(DataLen+1) ) // ï¿½ï¿½Ý¶ÎºÍ½ï¿½ï¿½ï¿½È·ï¿½ï¿½Î» ï¿½Ä³ï¿½ï¿½ï¿½
 		{
 			g_PrintfByte( srcbuf, srcbufsize, "Device DataReceived len no enough! src=", CommLink?CommLink->get_cfg().id:defPrintfByteDefaultLinkID, CommLink?CommLink->get_cfg().name.c_str():"" );
 			continue;
 		}
 
-		uint8_t PacketEnd = *(buffer+DataLen);	// ½áÊøÈ·ÈÏÎ» Î»ÖÃ
+		uint8_t PacketEnd = *(buffer+DataLen);	// ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Î» Î»ï¿½ï¿½
 		if( 0xAC != PacketEnd )
 		{
 			g_PrintfByte( srcbuf, srcbufsize, "Device DataReceived end error! src=", CommLink?CommLink->get_cfg().id:defPrintfByteDefaultLinkID, CommLink?CommLink->get_cfg().name.c_str():"" );
 			continue;
 		}
 
-		//ÃüÁîÂë
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		switch(ModuleIndex)
 		{
 			case RXB8_315:
@@ -1472,7 +1465,7 @@ if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 				}
 			case CC1101_433:
 				{
-					//ÃüÁî×Ó
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					this->DecodeCC1101Data(CommLink, buffer, DataLen);
 				    break;
 				}
@@ -1482,10 +1475,10 @@ if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 					break;
 				}
 			case RXB8_315_TX:
-				//Ò£¿Ø·µ»Ø
+				//Ò£ï¿½Ø·ï¿½ï¿½ï¿½
 				break;
 			case RXB8_433_TX:
-				//Ò£¿Ø·µ»Ø
+				//Ò£ï¿½Ø·ï¿½ï¿½ï¿½
 				break;
 			case Module_RS485:
 				{
@@ -1551,7 +1544,7 @@ if( IsRUNCODEEnable(defCodeIndex_TEST_ModbusMod) )
 
 		buffer+= DataLen;
 		size-= DataLen;
-		PacketEnd = *buffer++; size--;			// ½áÊøÈ·ÈÏÎ» Î»ÖÃ
+		PacketEnd = *buffer++; size--;			// ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Î» Î»ï¿½ï¿½
 	}
 }
 
@@ -1756,7 +1749,7 @@ void DeviceConnection::DecodeRxb8Data( CHeartbeatGuard *phbGuard, CCommLinkRun *
 	unsigned char *buf = srcbuf;
 	uint32_t size = srcbufsize;
 
-	// ÖÁÉÙ×Ö½ÚÊý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 	if( srcbufsize < 3 )
 	{
 		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "DeviceConnection::DecodeRxb8Data size=%d err!\r\n", srcbufsize );
@@ -1769,20 +1762,20 @@ void DeviceConnection::DecodeRxb8Data( CHeartbeatGuard *phbGuard, CCommLinkRun *
 	signal.signal_type = defRFSignalType_code;
 	signal.freq = freq;
 
-	// ¸ù¾ÝÖ¸ÁîÍ·Î²¶¨Òå£¬È¡³ö¶ÔÓ¦Î»µÄÖµ
-	// Òýµ¼Âë³¤¶È
-	if( buf[0] & 0x01 ) // ÊÇ·ñÓÐÒýµ¼Âë
+	// ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Í·Î²ï¿½ï¿½ï¿½å£¬È¡ï¿½ï¿½ï¿½ï¿½Ó¦Î»ï¿½ï¿½Öµ
+	// ï¿½ï¿½ï¿½ë³¤ï¿½ï¿½
+	if( buf[0] & 0x01 ) // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		signal.headlen = (buf[0] & 0x0E)>>1;
 	}
 
-	// ½áÊøÂë³¤¶È
-	if( buf[0] & 0x10 ) // ÊÇ·ñÓÐ½áÊøÂë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ë³¤ï¿½ï¿½
+	if( buf[0] & 0x10 ) // ï¿½Ç·ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		signal.taillen = (buf[0] & 0xE0)>>5;
 	}
 
-	// ×Ö½ÚÊý
+	// ï¿½Ö½ï¿½ï¿½ï¿½
 	const uint32_t needsize = (1+1+sizeof(uint16_t)*signal.headlen+2*4+4+2+sizeof(uint16_t)*signal.taillen);
 	if( size < needsize )
 	{
@@ -1792,9 +1785,9 @@ void DeviceConnection::DecodeRxb8Data( CHeartbeatGuard *phbGuard, CCommLinkRun *
 
 	uint8_t *buffer = buf;
 
-	buffer++; // Ö¸ÁîÍ·Î²¶¨Òå
+	buffer++; // Ö¸ï¿½ï¿½Í·Î²ï¿½ï¿½ï¿½ï¿½
 
-	// Ö¸Áî³¤¶È					(1 byte)		Ö¸ÁîÓÐÐ§Î»³¤¶È
+	// Ö¸ï¿½î³¤ï¿½ï¿½					(1 byte)		Ö¸ï¿½ï¿½ï¿½ï¿½Ð§Î»ï¿½ï¿½ï¿½ï¿½
 	signal.codeValidLen = *buffer++;
 
 	if( signal.headlen>0 )
@@ -1922,14 +1915,14 @@ void DeviceConnection::DecodeCC1101Data(CCommLinkRun *CommLink, uint8_t *buf,uin
 						if(!rfControl) continue;
 						RFDevice *dev = rfControl->GetDevice();
 						if(dev->GetProductid() == pid){
-							//¸üÐÂµØÖ·ÐÅÏ¢
+							//ï¿½ï¿½ï¿½Âµï¿½Ö·ï¿½ï¿½Ï¢
 							DeviceAddress *addr = dev->DecodeAddressData(buffer,size - (buffer - buf));
 							if(addr){
 								std::list<IRFDeviceHandler *>::const_iterator ith = m_RFDeviceHandlerQueue.begin();
 								for(;ith!=m_RFDeviceHandlerQueue.end();ith++){
 									(*ith)->OnDeviceAddress(addr);
 								}
-								//Éè±¸¿ØÖÆ						
+								//ï¿½è±¸ï¿½ï¿½ï¿½ï¿½						
 								this->m_handler->OnDeviceData(LinkID, *it,rfControl,addr);
 							}
 							break;
@@ -1960,7 +1953,7 @@ void DeviceConnection::DecodeCC1101Data(CCommLinkRun *CommLink, uint8_t *buf,uin
 				}
 				return;
 			}
-			//Ã»ÓÐhandlerÊÍ·Å¶ÔÏó
+			//Ã»ï¿½ï¿½handlerï¿½Í·Å¶ï¿½ï¿½ï¿½
 			delete(dev);
 			break;
 		}
@@ -2060,7 +2053,7 @@ void DeviceConnection::DecodeCANData(CCommLinkRun *CommLink, uint8_t *buf,uint32
 							if(!ctl) continue;
 							if(ctl->GetDeviceid() == deviceId){
 								DeviceAddress *addr =ctl->DecodeAddressInfoData(buffer,size - (buffer - buf));
-								//Éè±¸¿ØÖÆ
+								//ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
 								if(addr){
 									std::list<ICANDeviceHandler *>::const_iterator ith = m_CANDeviceHandlerQueue.begin();
 									for(;ith!=m_CANDeviceHandlerQueue.end();ith++){
@@ -2090,7 +2083,7 @@ void DeviceConnection::DecodeCANData(CCommLinkRun *CommLink, uint8_t *buf,uint32
 							if(!ctl) continue;
 							if(ctl->GetDeviceid() == deviceId){
 								DeviceAddress *addr =ctl->DecodeAddressSettingData(buffer,size - (buffer - buf));
-								//Éè±¸¿ØÖÆ
+								//ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
 								if(addr){
 									std::list<ICANDeviceHandler *>::const_iterator ith = m_CANDeviceHandlerQueue.begin();
 									for(;ith!=m_CANDeviceHandlerQueue.end();ith++){
@@ -2128,7 +2121,7 @@ void DeviceConnection::DecodeCANData(CCommLinkRun *CommLink, uint8_t *buf,uint32
 	}
 }
 
-// ½âÂëRS485Ä£¿é½ÓÊÕ¹ýÀ´µÄÊý¾Ý
+// ï¿½ï¿½ï¿½ï¿½RS485Ä£ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun *CommLink, uint8_t* const srcbuf, const uint32_t srcbufsize )
 {
 	macHeartbeatGuard_step(157100);
@@ -2186,7 +2179,7 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 	{
 		if( this->IsCurGSDevViewMod_Debug() )
 		{
-			this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨ÖªµØÖ·²»Í¨ÖªÖµ£¬ÓÃÓÚ±éÀú¼ì²â
+			this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨Öªï¿½ï¿½Ö·ï¿½ï¿½Í¨ÖªÖµï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 
 		return;
@@ -2201,7 +2194,7 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 
 		if( this->IsCurGSDevViewMod_Debug() )
 		{
-			this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨ÖªµØÖ·²»Í¨ÖªÖµ£¬ÓÃÓÚ±éÀú¼ì²â
+			this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨Öªï¿½ï¿½Ö·ï¿½ï¿½Í¨ÖªÖµï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 
 		return;
@@ -2211,13 +2204,13 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 
 	if( CurCmd_Ctrl->GetDeviceid() != pDecodeCtrl->GetDeviceid() )
 	{
-		// ½âÂë³öÀ´ÓÐµØÖ·£¬ÅäÖÃÀïÈ´Ã»ÓÐ£¬ÅäÖÃ´íÎó
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´Ã»ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
 		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "DeviceConnection::Decode_RS485Data %s devid error! send devid=%d, recv devid=%d\r\n", CurCmd_Ctrl->GetName().c_str(), CurCmd_Ctrl->GetDeviceid(), pDecodeCtrl->GetDeviceid() );
 		CMsgCurCmd::Delete_CurCmd_Content_spec( CurCmd );
 
 		if( this->IsCurGSDevViewMod_Debug() )
 		{
-			this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨ÖªµØÖ·²»Í¨ÖªÖµ£¬ÓÃÓÚ±éÀú¼ì²â
+			this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨Öªï¿½ï¿½Ö·ï¿½ï¿½Í¨ÖªÖµï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 
 		return;
@@ -2228,7 +2221,7 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 	CurCmd_Ctrl->SetCommand( pDecodeCtrl->GetCommand() );
 	CurCmd_Ctrl->SetReturnErrCode( pDecodeCtrl->GetReturnErrCode() );
 
-	// Ä¿Ç°Ä¬ÈÏµ¥¸öµØÖ·´¦Àí
+	// Ä¿Ç°Ä¬ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½
 	DeviceAddress *pDecodeCtrlAddr = pDecodeCtrl->GetFristAddress();
 	if( pDecodeCtrlAddr
 		&& CurCmd_Ctrl->GetCommand()<defModbusCmd_Err_Spec
@@ -2238,13 +2231,13 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 		{
 			if( CurCmd_Addr && CurCmd_Addr->GetAddress() != pDecodeCtrlAddr->GetAddress() )
 			{
-				// ½âÂë³öÀ´ÓÐµØÖ·£¬ÅäÖÃÀïÈ´Ã»ÓÐ£¬ÅäÖÃ´íÎó
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´Ã»ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
 				//LOGMSGEX( defLOGNAME, defLOG_ERROR, "DeviceConnection::Decode_RS485Data %s addr error! send addr=%d, recv addr=%d\r\n", CurCmd_Ctrl->GetName().c_str(), CurCmd_Addr->GetAddress(), pDecodeCtrlAddr->GetAddress() );
 				CMsgCurCmd::Delete_CurCmd_Content_spec( CurCmd );
 
 				if( this->IsCurGSDevViewMod_Debug() )
 				{
-					this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨ÖªµØÖ·²»Í¨ÖªÖµ£¬ÓÃÓÚ±éÀú¼ì²â
+					this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨Öªï¿½ï¿½Ö·ï¿½ï¿½Í¨ÖªÖµï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½
 				}
 
 				return;
@@ -2286,21 +2279,22 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 				case IOT_DEVICE_Humidity:
 				case IOT_DEVICE_Wind:
 					{
-						// Õâ¼¸ÖÖÊý¾Ý¶¼ÊÇ100±¶´¦Àí
+						// ï¿½â¼¸ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½100ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 						const std::string strCurValue = pOneAddr_Decode->GetCurValue();
 						float flVal = (float)atoi( strCurValue.c_str() );
 
 						//LOGMSG( "Decode_RS485Data: src devid=%d, addr=%d, val=%.2f, ver=%s\r\n", CurCmd_Ctrl?CurCmd_Ctrl->GetDeviceid():0, pOneAddr_Decode->GetAddress(), flVal, CurCmd_Ctrl->getVer().c_str() );
 						
-						if(CurCmd_Ctrl->getVer() == defRS485_Ver_CO2_201706A || 
-						   CurCmd_Ctrl->getVer() == defRS485_Ver_HCHO_201706A){	 //jyc20170305 add
-							if(pOneAddr_Decode->GetAddress()>2)flVal /= 10.0f;
-						}
-						else if( CurCmd_Ctrl->getVer() == defRS485_Ver_Wind_1601_201501A
+						if(CurCmd_Ctrl->getVer() == defRS485_Ver_CO2_201706A){	 //jyc20170305 remove
+							if(pOneAddr_Decode->GetAddress()>2)flVal /= 10.0f; //jyc20170422 notice remove have bug
+						}else
+						if(CurCmd_Ctrl->getVer() == defRS485_Ver_HCHO_201706A){
+							if(pOneAddr_Decode->GetAddress()<3)flVal /= 1000.0f; //jyc20170422 add
+							else flVal /= 10.0f; //jyc20170422 notice some trouble
+						}else if( CurCmd_Ctrl->getVer() == defRS485_Ver_Wind_1601_201501A
 							|| CurCmd_Ctrl->getVer() == defRS485_Ver_Humidity_1601_201506A ){
 							flVal /= 10.0f;
-						}
-						else{
+						}else{
 							flVal /= 100.0f;
 						}
 
@@ -2314,7 +2308,13 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 						flVal = RS485DevControl::ValueRangeFix( pOneAddr_Decode->GetType(), flVal );
 
 						pOneAddr_CurCmd->SetDataType( IOT_Float );
-						pOneAddr_CurCmd->SetCurValue( flVal );
+						if((CurCmd_Ctrl->getVer() == defRS485_Ver_HCHO_201706A)&&
+								pOneAddr_CurCmd-> GetType() == IOT_DEVICE_HCHO)
+						{ //jyc20170619 modify
+							pOneAddr_CurCmd->SetCurValue_3f( flVal );
+						}else{
+							pOneAddr_CurCmd->SetCurValue( flVal );
+						}
 						
 						if( isOverRange)
 						{
@@ -2325,7 +2325,7 @@ void DeviceConnection::Decode_RS485Data( CHeartbeatGuard *phbGuard, CCommLinkRun
 
 							if( this->IsCurGSDevViewMod_Debug() )
 							{
-								this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨ÖªµØÖ·²»Í¨ÖªÖµ£¬ÓÃÓÚ±éÀú¼ì²â
+								this->m_handler->OnDeviceData( LinkID, NULL, pDecodeCtrl, NULL ); // Ö»Í¨Öªï¿½ï¿½Ö·ï¿½ï¿½Í¨ÖªÖµï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½
 							}
 
 							macHeartbeatGuard_step(157790);
@@ -2385,7 +2385,7 @@ void DeviceConnection::Decode_Rxb8Data_original( CHeartbeatGuard *phbGuard, CCom
 	unsigned char *buf = srcbuf;
 	uint32_t size = srcbufsize;
 
-	// ÖÁÉÙ×Ö½ÚÊý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 	if( srcbufsize < 2 )
 	{
 		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "DeviceConnection::Decode_Rxb8Data_original size=%d err!\r\n", srcbufsize );
@@ -2398,15 +2398,15 @@ void DeviceConnection::Decode_Rxb8Data_original( CHeartbeatGuard *phbGuard, CCom
 	signal.signal_type = defRFSignalType_original;
 	signal.freq = freq;
 
-	// Òýµ¼ÂëÕýÂö³å»ò¸ºÂö³å	(1 byte)	0x00¸ºÂö³å£¬0x01Õý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	(1 byte)	0x00ï¿½ï¿½ï¿½ï¿½ï¿½å£¬0x01ï¿½ï¿½
 	signal.original_headflag = *buf;
 	buf++; size--;
 
-	// Òýµ¼ÂëÊ±¼ä	UIN16_T
+	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½	UIN16_T
 	memcpy( &signal.original_headtime, buf, sizeof(uint16_t) );
 	buf += sizeof(uint16_t); size -= sizeof(uint16_t);
 
-	// Ê±¼ä¸öÊý	(1 byte)
+	// Ê±ï¿½ï¿½ï¿½ï¿½ï¿½	(1 byte)
 	const uint8_t timenum = *buf;
 	buf++; size--;
 	
@@ -2447,7 +2447,7 @@ void DeviceConnection::Decode_MOD_IR_RX_original( CHeartbeatGuard *phbGuard, CCo
 	unsigned char *buf = srcbuf;
 	uint32_t size = srcbufsize;
 
-	// ÖÁÉÙ×Ö½ÚÊý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 	if( srcbufsize < 2 )
 	{
 		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "DeviceConnection::Decode_MOD_IR_RX_original size=%d err!\r\n", srcbufsize );
@@ -2460,15 +2460,15 @@ void DeviceConnection::Decode_MOD_IR_RX_original( CHeartbeatGuard *phbGuard, CCo
 	signal.signal_type = defRFSignalType_IR_original;
 	signal.freq = defFreq_Null;
 
-	// Òýµ¼ÂëÕýÂö³å»ò¸ºÂö³å	(1 byte)	0x00¸ºÂö³å£¬0x01Õý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	(1 byte)	0x00ï¿½ï¿½ï¿½ï¿½ï¿½å£¬0x01ï¿½ï¿½
 	signal.original_headflag = *buf;
 	buf++; size--;
 
-	// Òýµ¼ÂëÊ±¼ä	UIN16_T
+	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½	UIN16_T
 	memcpy( &signal.original_headtime, buf, sizeof(uint16_t) );
 	buf += sizeof(uint16_t); size -= sizeof(uint16_t);
 
-	// Ê±¼ä¸öÊý	(1 byte)
+	// Ê±ï¿½ï¿½ï¿½ï¿½ï¿½	(1 byte)
 	const uint8_t timenum = *buf;
 	buf++; size--;
 	
@@ -2509,7 +2509,7 @@ void DeviceConnection::Decode_MOD_IR_RX_code( CHeartbeatGuard *phbGuard, CCommLi
 	unsigned char *buf = srcbuf;
 	uint32_t size = srcbufsize;
 
-	// ÖÁÉÙ×Ö½ÚÊý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
 	if( srcbufsize < 2 )
 	{
 		//LOGMSGEX( defLOGNAME, defLOG_ERROR, "DeviceConnection::Decode_MOD_IR_RX_code size=%d err!\r\n", srcbufsize );
@@ -2522,11 +2522,11 @@ void DeviceConnection::Decode_MOD_IR_RX_code( CHeartbeatGuard *phbGuard, CCommLi
 	signal.signal_type = defRFSignalType_IR_code;
 	signal.freq = defFreq_Null;
 
-	// Êý¾Ý³¤¶È
+	// ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
 	signal.original_len = *buf;
 	buf++; size--;
 
-	// Êý¾ÝÄÚÈÝ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	memcpy( &signal.original, buf, signal.original_len );
 
 	if( IsRUNCODEEnable(defCodeIndex_PrintRecv_val_IR) )
@@ -2611,12 +2611,12 @@ void DeviceConnection::Decode_MOD_SYS_get( CHeartbeatGuard *phbGuard, CCommLinkR
 			{
 			case 0x0D:
 			case 0x1D:
-				pMsgCurCmd->Set_MODSysSetInfo( defMODSysSetInfo_RXMod, *buf );	// Êý¾Ý¸ñÊ½ Ô­Ê¼»ò±àÂë
+				pMsgCurCmd->Set_MODSysSetInfo( defMODSysSetInfo_RXMod, *buf );	// ï¿½ï¿½Ý¸ï¿½Ê½ Ô­Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
 				break;
 
 			case 0x0A:
 			case 0x1A:
-				pMsgCurCmd->Set_MODSysSetInfo( defMODSysSetInfo_TXCtl, *buf );	// ¿ØÖÆÄ£Ê½ ½ÓÊÕ(Ñ§Ï°Ä£Ê½)»ò·¢ËÍ
+				pMsgCurCmd->Set_MODSysSetInfo( defMODSysSetInfo_TXCtl, *buf );	// ï¿½ï¿½ï¿½ï¿½Ä£Ê½ ï¿½ï¿½ï¿½ï¿½(Ñ§Ï°Ä£Ê½)ï¿½ï¿½ï¿½ï¿½
 				break;
 
 			default:
@@ -2637,7 +2637,7 @@ void DeviceConnection::Decode_MOD_SYS_get( CHeartbeatGuard *phbGuard, CCommLinkR
 }
 
 
-// ÐÞ¸ÄÉè±¸µØÖ·
+// ï¿½Þ¸ï¿½ï¿½è±¸ï¿½ï¿½Ö·
 bool DeviceConnection::ModifyDevID( GSIOTDevice *iotdevice, uint8_t newID, const std::string &ver, uint8_t SpecAddr )
 {
 	if( !iotdevice )
@@ -2678,7 +2678,7 @@ bool DeviceConnection::ModifyDevID( GSIOTDevice *iotdevice, uint8_t newID, const
 	return isSuccess;
 }
 
-// ÐÞ¸ÄRS485Ä£¿éÏÂ×ÓÉè±¸µÄÉè±¸µØÖ·
+// ï¿½Þ¸ï¿½RS485Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·
 bool DeviceConnection::ModifyDevID_RS485( const defLinkID in_LinkID, IOTDeviceType Type, uint8_t oldID, uint8_t newID, const std::string &ver, uint8_t SpecAddr )
 {
 	RS485DevControl *ModifyDevIDCtl = RS485DevControl::CreateRS485DevControl_ModifyDevAddr( Type, oldID, newID, ver );

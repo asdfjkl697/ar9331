@@ -1,6 +1,5 @@
 #include "DataStoreMgr.h"
 #include "common.h"
-//#include <windows.h>
 #include <time.h>
 #include "gloox/util.h"
 #include <bitset>
@@ -32,7 +31,7 @@ bool operator< ( const struRec_stat_month::struKey &key1, const struRec_stat_mon
 	return (key1.dt_month < key2.dt_month);
 }
 
-// ÊÇ·ñÊôÓÚÊý¾Ý¿â¼ÇÂ¼²»´æÔÚµÄ´íÎóÂë¹éÀà
+// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 bool g_isNoDBRec( const defGSReturn ret )
 {
 	switch(ret)
@@ -45,7 +44,7 @@ bool g_isNoDBRec( const defGSReturn ret )
 	return false;
 }
 
-// ·ÖÎöÍ³¼Æ×î´ó×îÐ¡
+// ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
 void g_AnalyseStat( struStat &Stat, const time_t curTime, const int curValue, const time_t data_dt_begin, const time_t data_dt_end )
 {
 	if( data_dt_begin && data_dt_end )
@@ -56,14 +55,14 @@ void g_AnalyseStat( struStat &Stat, const time_t curTime, const int curValue, co
 		}
 	}
 
-	// ×î´óÖµ±È½Ï
+	// ï¿½ï¿½ï¿½Öµï¿½È½ï¿½
 	if( 0==Stat.stat_v1k_max_dt || curValue > Stat.stat_v1k_max )
 	{
 		Stat.stat_v1k_max_dt = curTime;
 		Stat.stat_v1k_max = curValue;
 	}
 
-	// ×îÐ¡Öµ±È½Ï
+	// ï¿½ï¿½Ð¡Öµï¿½È½ï¿½
 	if( 0==Stat.stat_v1k_min_dt || curValue < Stat.stat_v1k_min )
 	{
 		Stat.stat_v1k_min_dt = curTime;
@@ -76,7 +75,7 @@ void g_AnalyseStat( struStat &Stat, const time_t curTime, const int curValue, co
 	}
 }
 
-// ·ÖÎöÍ³¼Æ×î´ó×îÐ¡
+// ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
 void g_AnalyseStat( struStat &Stat, const struStat &substat, const time_t data_dt_begin, const time_t data_dt_end )
 {
 	if( data_dt_begin && data_dt_end )
@@ -95,14 +94,14 @@ void g_AnalyseStat( struStat &Stat, const struStat &substat, const time_t data_d
 	if( !substat.stat_valid )
 		return;
 
-	// ×î´óÖµ±È½Ï
+	// ï¿½ï¿½ï¿½Öµï¿½È½ï¿½
 	if( !Stat.stat_valid || substat.stat_v1k_max > Stat.stat_v1k_max )
 	{
 		Stat.stat_v1k_max_dt = substat.stat_v1k_max_dt;
 		Stat.stat_v1k_max = substat.stat_v1k_max;
 	}
 
-	// ×îÐ¡Öµ±È½Ï
+	// ï¿½ï¿½Ð¡Öµï¿½È½ï¿½
 	if( !Stat.stat_valid || substat.stat_v1k_min < Stat.stat_v1k_min )
 	{
 		Stat.stat_v1k_min_dt = substat.stat_v1k_min_dt;
@@ -115,7 +114,7 @@ void g_AnalyseStat( struStat &Stat, const struStat &substat, const time_t data_d
 	}
 }
 
-// lst_v1kÖÐÖ¸¶¨Ê±¼ädata_dt×ó±ß×î½üµÄÖµ
+// lst_v1kï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½data_dtï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 bool g_getLeftV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &get_v1k, const time_t dt_valid_range )
 {
 	get_v1k.reset();
@@ -123,7 +122,7 @@ bool g_getLeftV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &get
 	if( lst_v1k.empty() )
 		return false;
 
-	defmapV1k::const_iterator it = lst_v1k.upper_bound( data_dt );	// ´óÓÚdata_dt
+	defmapV1k::const_iterator it = lst_v1k.upper_bound( data_dt );	// ï¿½ï¿½ï¿½ï¿½data_dt
 
 	if( it==lst_v1k.begin() )
 	{
@@ -134,7 +133,7 @@ bool g_getLeftV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &get
 
 	if( dt_valid_range )
 	{
-		// µÃµ½µÄÖµ±È×ó±ßÊ±¼ä·¶Î§¸üÔç£¬Ôò³¬³öÓÐÐ§È¡Öµ·¶Î§
+		// ï¿½Ãµï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½ï¿½ï¿½ç£¬ï¿½ò³¬³ï¿½ï¿½ï¿½Ð§È¡Öµï¿½ï¿½Î§
 		if( it->first < (data_dt-dt_valid_range) )
 		{
 			return false;
@@ -145,8 +144,8 @@ bool g_getLeftV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &get
 	return true;
 }
 
-// lst_v1kÖÐÖ¸¶¨Ê±¼ädata_dtÓÒ±ß×î½üµÄÖµ
-// dt_valid_rangeÓÐÐ§·¶Î§ÄÚ
+// lst_v1kï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½data_dtï¿½Ò±ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+// dt_valid_rangeï¿½ï¿½Ð§ï¿½ï¿½Î§ï¿½ï¿½
 bool g_getRightV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &get_v1k, const time_t dt_valid_range )
 {
 	get_v1k.reset();
@@ -154,7 +153,7 @@ bool g_getRightV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &ge
 	if( lst_v1k.empty() )
 		return false;
 
-	defmapV1k::const_iterator it = lst_v1k.lower_bound( data_dt );	// ²»Ð¡ÓÚdata_dt£¬¼´>=data_dt
+	defmapV1k::const_iterator it = lst_v1k.lower_bound( data_dt );	// ï¿½ï¿½Ð¡ï¿½ï¿½data_dtï¿½ï¿½ï¿½ï¿½>=data_dt
 
 	if( it==lst_v1k.end() )
 	{
@@ -163,7 +162,7 @@ bool g_getRightV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &ge
 
 	if( dt_valid_range )
 	{
-		// µÃµ½µÄÖµ±ÈÓÒ±ßÊ±¼ä·¶Î§¸üÍí£¬Ôò³¬³öÓÐÐ§È¡Öµ·¶Î§
+		// ï¿½Ãµï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ò±ï¿½Ê±ï¿½ä·¶Î§ï¿½ï¿½ï¿½?ï¿½ò³¬³ï¿½ï¿½ï¿½Ð§È¡Öµï¿½ï¿½Î§
 		if( it->first > (data_dt+dt_valid_range) )
 		{
 			return false;
@@ -174,7 +173,7 @@ bool g_getRightV1k( const time_t data_dt, const defmapV1k &lst_v1k, stru_V1K &ge
 	return true;
 }
 
-// ÈÕÍ³¼ÆÊÇ·ñÒÑ´æÔÚ
+// ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½
 bool g_is_stat_day_spec( const defmap_is_stat_day &lst_is_stat_day, unsigned char day )
 {
 	return ( lst_is_stat_day.find(day) != lst_is_stat_day.end() );
@@ -257,7 +256,7 @@ void struRec_stat_day::Print( const bool print_lst_src_v1k ) const
 	if( !print_lst_src_v1k )
 		return;
 
-	// Êý¾Ý¼ÇÂ¼
+	// ï¿½ï¿½Ý¼ï¿½Â¼
 	const time_t day_begin = g_struGSTime_To_UTCTime( struGSTime( key.dt_year, key.dt_month, key.dt_day ) );
 
 	const std::bitset<24> bit_valid_A(v1k_valid_00_11A);
@@ -372,7 +371,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			db->exec( "INSERT INTO data_db_ver(val,name,strval) VALUES(15082600,'db_ver_stat_month','')" );
 		}
 
-		// ÀúÊ·Êý¾Ý
+		// ï¿½ï¿½Ê·ï¿½ï¿½ï¿½
 #if 1
 		db->exec( "CREATE TABLE if not exists [histdata] ( \r\n"\
 			"[id] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, \r\n"\
@@ -400,7 +399,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[name] VARCHAR(255)  NULL)" );
 #endif
 
-		// ÈÕÍ³¼Æ
+		// ï¿½ï¿½Í³ï¿½ï¿½
 		db->exec( "CREATE TABLE if not exists [stat_day] ( \r\n"\
 			"[id] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, \r\n"\
 			"[dt_day] INTEGER  NULL, \r\n"\
@@ -409,7 +408,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[address_type] INTEGER  NULL, \r\n"\
 			"[address_id] INTEGER  NULL, \r\n"\
 
-			// Í³¼Æ
+			// Í³ï¿½ï¿½
 			"[stat_valid] INTEGER  NULL, \r\n"\
 			"[stat_v1k_max_dt] INTEGER  NULL, \r\n"\
 			"[stat_v1k_max] INTEGER  NULL, \r\n"\
@@ -418,7 +417,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[stat_v1k_avg] INTEGER  NULL, \r\n"\
 			"[stat_v1k_avg_num] INTEGER  NULL, \r\n"\
 
-			// 48¸öÕûµãºÍ°ëµãÖµ AµÄ24Î»Ç°24¸öÖµ£¬BµÄ24Î»ºó24¸öÖµ£¬1ÓÐÐ§0ÎÞÐ§
+			// 48ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½Öµ Aï¿½ï¿½24Î»Ç°24ï¿½ï¿½Öµï¿½ï¿½Bï¿½ï¿½24Î»ï¿½ï¿½24ï¿½ï¿½Öµï¿½ï¿½1ï¿½ï¿½Ð§0ï¿½ï¿½Ð§
 			"[v1k_valid_00_11A] INTEGER  NULL, \r\n"\
 			"[v1k_valid_12_23B] INTEGER  NULL, \r\n"\
 
@@ -474,7 +473,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[v1k_2300] INTEGER  NULL, \r\n"\
 			"[v1k_2330] INTEGER  NULL)" );
 
-		// ÔÂÍ³¼Æ
+		// ï¿½ï¿½Í³ï¿½ï¿½
 		db->exec( "CREATE TABLE if not exists [stat_month] ( \r\n"\
 			"[id] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, \r\n"\
 			
@@ -483,7 +482,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[address_type] INTEGER  NULL, \r\n"\
 			"[address_id] INTEGER  NULL, \r\n"\
 
-			// Í³¼Æ
+			// Í³ï¿½ï¿½
 			"[stat_valid] INTEGER  NULL, \r\n"\
 			"[stat_v1k_max_dt] INTEGER  NULL, \r\n"\
 			"[stat_v1k_max] INTEGER  NULL, \r\n"\
@@ -492,7 +491,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[stat_v1k_avg] INTEGER  NULL, \r\n"\
 			"[stat_v1k_avg_num] INTEGER  NULL)" );
 
-		// Ë÷Òý - ÀúÊ·Êý¾Ý
+		// ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½Ê·ï¿½ï¿½ï¿½
 		db->exec( "CREATE INDEX if not exists [IDX_HISTDATA_] ON [histdata]( \r\n"\
 			"[data_dt]  ASC, \r\n"\
 			"[dev_type]  ASC, \r\n"\
@@ -500,7 +499,7 @@ SQLite_DBDataSave::SQLite_DBDataSave( bool isReadOnly, const std::string &dbname
 			"[address_type]  ASC, \r\n"\
 			"[address_id]  ASC)" );
 
-		// Ë÷Òý - ÈÕÍ³¼Æ
+		// ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½Í³ï¿½ï¿½
 		db->exec( "CREATE INDEX if not exists [IDX_STAT_DAY_] ON [stat_day]( \r\n"\
 			"[dt_day]  ASC, \r\n"\
 			"[dev_type]  ASC, \r\n"\
@@ -651,7 +650,6 @@ void SQLite_DBDataSave::insertdata( const defvecDataSave &vecDataSave )
 
 		try
 		{
-#if 1
 			SQLite::Statement  query(*db,"INSERT INTO histdata VALUES(NULL,:data_dt,:dev_type,:dev_id,:address_type,:address_id,:data_dt_str,:dataflag,:strvalue,:value1k)");
 
 			int col = 1;
@@ -665,22 +663,6 @@ void SQLite_DBDataSave::insertdata( const defvecDataSave &vecDataSave )
 			query.bind(col++, (*it)->strvalue);
 			query.bind(col++, (int)(atof((*it)->strvalue.c_str())*1000));
 			query.exec();
-#else
-			SQLite::Statement  query(*db,"INSERT INTO histdata VALUES(NULL,:data_dt,:dev_type,:dev_id,:address_type,:address_id,:data_dt_str,:dataflag,:strvalue,:value1k,:name)");
-
-			int col = 1;
-			query.bind(col++, (int)(*it)->data_dt);
-			query.bind(col++, (int)(*it)->AddrObjKey.dev_type);
-			query.bind(col++, (*it)->AddrObjKey.dev_id);
-			query.bind(col++, (int)(*it)->AddrObjKey.address_type);
-			query.bind(col++, (*it)->AddrObjKey.address_id);
-			query.bind(col++, strdt);
-			query.bind(col++, (int)(*it)->dataflag);
-			query.bind(col++, (*it)->strvalue);
-			query.bind(col++, (int)(atof((*it)->strvalue.c_str())*1000));
-			query.bind(col++, (*it)->name);
-			query.exec();
-#endif
 		}
 		catch(...)
 		{
@@ -696,7 +678,7 @@ void SQLite_DBDataSave::insertdata( const defvecDataSave &vecDataSave )
 	LOGMSG( "DBSaveInsert count=%d BatchEnd (%s) DB(%d,%d) tm=%dms\r\n", count, this->m_dbname.c_str(), m_dtDBSave.Year, m_dtDBSave.Month, timeGetTime()-dwstart );
 }
 
-// ¼ì²éÍ³¼Æ£¬Î´Í³¼ÆµÄ½øÐÐÍ³¼Æ
+// ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½Î´Í³ï¿½ÆµÄ½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 bool SQLite_DBDataSave::CheckAndDoStat_day()
 {
 	if( is_all_stat_day_finished() && is_stat_month() )
@@ -728,7 +710,7 @@ bool SQLite_DBDataSave::CheckAndDoStat_day()
 	return true;
 }
 
-// Õë¶ÔÕâ¸ö¿âÀïµÄËùÓÐ¶ÔÏóµÄËùÓÐÈÕÍ³¼Æ£º¶ÔÓÚÎ´½øÐÐÍ³¼Æ¶¼Ö´ÐÐÈÕÍ³¼Æ£¬ÒÑÍ³¼ÆµÄ²»ÔÙÖ´ÐÐ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ¶ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½ï¿½ï¿½Í³ï¿½ÆµÄ²ï¿½ï¿½ï¿½Ö´ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DoStat_day_all()
 {
 	if( !db )
@@ -741,7 +723,7 @@ defGSReturn SQLite_DBDataSave::DoStat_day_all()
 	return DoStat_day_all_specmax( maxday );
 }
 
-// ´Ó1¿ªÊ¼ÖÁmaxdayµÄÎ´½øÐÐÍ³¼Æ¶¼Ö´ÐÐÈÕÍ³¼Æ£¬ÒÑÍ³¼ÆµÄ²»ÔÙÖ´ÐÐ
+// ï¿½ï¿½1ï¿½ï¿½Ê¼ï¿½ï¿½maxdayï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ¶ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½ï¿½ï¿½Í³ï¿½ÆµÄ²ï¿½ï¿½ï¿½Ö´ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DoStat_day_all_specmax( const unsigned char maxday, const unsigned char specstart )
 {
 	if( !db )
@@ -792,7 +774,7 @@ defGSReturn SQLite_DBDataSave::DoStat_day_all_specmax( const unsigned char maxda
 	return defGSReturn_Success;
 }
 
-// Ö¸¶¨Ä³Ò»Ìì£¬¶ÔÕâÒ»ÌìµÄËùÓÐ¶ÔÏó½øÐÐÈÕÍ³¼Æ
+// Ö¸ï¿½ï¿½Ä³Ò»ï¿½ì£¬ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DoStat_day_specday( const unsigned char day )
 {
 	DWORD dwstart = timeGetTime();
@@ -845,7 +827,7 @@ defGSReturn SQLite_DBDataSave::DoStat_day_specday( const unsigned char day )
 		//delete pRec_stat_day;
 	}
 
-	// Ð´ÈëÒÑÍê³ÉÈÕÍ³¼Æ¼ÇÂ¼±êÖ¾
+	// Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½Ö¾
 	if( DBSave_stat_day( struRec_stat_day(struRec_stat_day::struKey(m_dtDBSave.Year, m_dtDBSave.Month, day)) ) )
 	{
 		m_lst_is_stat_day.insert( day );
@@ -858,7 +840,7 @@ defGSReturn SQLite_DBDataSave::DoStat_day_specday( const unsigned char day )
 	return defGSReturn_Success;
 }
 
-// ·ÖÎöµÃµ½Ê±¼äµãËùÔÚÖµ
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 bool SQLite_DBDataSave::GetValueForSpecTime_lst( const time_t spec_data_dt, const defmapV1k &lst_v1k, stru_V1K &get_v1k, const time_t dt_valid_range_prev, const time_t dt_valid_range_next )
 {
 	stru_V1K right_v1k = 0;
@@ -895,14 +877,14 @@ bool SQLite_DBDataSave::GetValueForSpecTime_lst( const time_t spec_data_dt, cons
 		else
 		{
 			bool getleft = true;
-			// ×óÓÒ¶¼ÓÐÇÒÊ±¼ä¶¼²»ÊÇÍêÈ«ÏàµÈµÄÇé¿öÏÂ
+			// ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä¶¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-			// Ê±¼äºÜ½Ó½ü
+			// Ê±ï¿½ï¿½Ü½Ó½ï¿½
 			const time_t left_span = spec_data_dt - left_v1k.data_dt;
 			const time_t right_span = right_v1k.data_dt - spec_data_dt;
 			if( left_span<60 || right_span<60  )
 			{
-				if( left_span <= right_span ) // Ê±¼ä½Ó½üµÄÓÅÏÈÔ­Ôò
+				if( left_span <= right_span ) // Ê±ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½
 				{
 					getleft = true;
 				}
@@ -911,7 +893,7 @@ bool SQLite_DBDataSave::GetValueForSpecTime_lst( const time_t spec_data_dt, cons
 					getleft = false;
 				}
 			}
-			else if( left_v1k.data_dt ) // Ç°ÖµÓÅÏÈÔ­Ôò
+			else if( left_v1k.data_dt ) // Ç°Öµï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½
 			{
 				getleft = true;
 			}
@@ -936,14 +918,14 @@ bool SQLite_DBDataSave::GetValueForSpecTime_lst( const time_t spec_data_dt, cons
 	return false;
 }
 
-// ·ÖÎöµÃµ½Ê±¼ä·¶Î§ÄÚµÄÍ³¼Æ
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ê±ï¿½ä·¶Î§ï¿½Úµï¿½Í³ï¿½ï¿½
 void SQLite_DBDataSave::GetOneStatForSpecTime_lst( const time_t data_dt_begin, const time_t data_dt_end, const defmapV1k &lst_src_v1k, struStat &Stat )
 {
-	const defmapV1k::const_iterator itBegin = lst_src_v1k.lower_bound( data_dt_begin );	// ²»Ð¡ÓÚdata_dt£¬¼´>=data_dt
+	const defmapV1k::const_iterator itBegin = lst_src_v1k.lower_bound( data_dt_begin );	// ï¿½ï¿½Ð¡ï¿½ï¿½data_dtï¿½ï¿½ï¿½ï¿½>=data_dt
 	if( itBegin == lst_src_v1k.end() )
 		return;
 
-	const defmapV1k::const_iterator itEnd = lst_src_v1k.upper_bound( data_dt_end );	// ´óÓÚdata_dt
+	const defmapV1k::const_iterator itEnd = lst_src_v1k.upper_bound( data_dt_end );	// ï¿½ï¿½ï¿½ï¿½data_dt
 	
 	double sum = 0.0f;
 	for( defmapV1k::const_iterator it=itBegin; it!=itEnd; ++it )
@@ -954,19 +936,19 @@ void SQLite_DBDataSave::GetOneStatForSpecTime_lst( const time_t data_dt_begin, c
 		const time_t curTime = it->first;
 		const int curValue = it->second.v1k;
 
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		sum += it->second.v1k;
 		Stat.stat_v1k_avg_num++;
 
 		g_AnalyseStat( Stat, curTime, curValue, data_dt_begin, data_dt_end );
 	}
 
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	Stat.calc_avg( sum );
 }
 
-// ¶ÔÒ»¸ö¶ÔÏó×öÈÕÍ³¼Æ
-// retime_maxmin: ÖØÐÂµ÷Õû×î´ó×îÐ¡ÖµÊ±¼ä
+// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
+// retime_maxmin: ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ÖµÊ±ï¿½ï¿½
 bool SQLite_DBDataSave::DoStat_day_specday_specone( struRec_stat_day &Rec_stat_day, const bool retime_maxmin, const time_t data_dt_begin, const time_t data_dt_end )
 {
 	if( Rec_stat_day.lst_src_v1k.empty() )
@@ -987,14 +969,14 @@ bool SQLite_DBDataSave::DoStat_day_specday_specone( struRec_stat_day &Rec_stat_d
 		const time_t curTime = it->first;
 		const int curValue = it->second.v1k;
 
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		sum += it->second.v1k;
 		Rec_stat_day.Stat.stat_v1k_avg_num++;
 
 		g_AnalyseStat( Rec_stat_day.Stat, curTime, curValue, data_dt_begin, data_dt_end );
 	}
 
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	Rec_stat_day.Stat.calc_avg( sum );
 
 	const time_t statBaseTime = g_struGSTime_To_UTCTime( statdt );
@@ -1005,7 +987,7 @@ bool SQLite_DBDataSave::DoStat_day_specday_specone( struRec_stat_day &Rec_stat_d
 
 	for( int i=0; i<48; ++i, curstatTime+=(30*60) )
 	{
-		// ¼ÇÂ¼µÃµ½µÄÔ­Ê¼Ê±¼äºÍÖµ
+		// ï¿½ï¿½Â¼ï¿½Ãµï¿½ï¿½ï¿½Ô­Ê¼Ê±ï¿½ï¿½ï¿½Öµ
 		stru_V1K src_get_v1k;
 
 		const bool isvalid = curstatTime>curUTCTime ? false : GetValueForSpecTime_lst( curstatTime, Rec_stat_day.lst_src_v1k, src_get_v1k ) && src_get_v1k.v1k_valid;
@@ -1022,13 +1004,13 @@ bool SQLite_DBDataSave::DoStat_day_specday_specone( struRec_stat_day &Rec_stat_d
 			bit_valid_B.set( i-24, isvalid );
 		}
 
-		// ×î´ó×îÐ¡ÖµÊÇ·ñÔÚÔ­Ê¼Ê±¼äµãÉÏ£¬ÓëÔ­Ê¼ÖµÏàµÈ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½Ç·ï¿½ï¿½ï¿½Ô­Ê¼Ê±ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ô­Ê¼Öµï¿½ï¿½ï¿½
 		if( retime_maxmin && src_get_v1k.data_dt && src_get_v1k.v1k_valid )
 		{
-			// ×î´óÖµ±È½Ï
+			// ï¿½ï¿½ï¿½Öµï¿½È½ï¿½
 			if( Rec_stat_day.Stat.stat_v1k_max_dt )
 			{
-				// ÖµÏàµÈ²¢ÇÒÊ±¼ä¸üÔç
+				// Öµï¿½ï¿½È²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
 				if( src_get_v1k.v1k == Rec_stat_day.Stat.stat_v1k_max && curstatTime<Rec_stat_day.Stat.stat_v1k_max_dt )
 				{
 					Rec_stat_day.Stat.stat_v1k_max_dt = curstatTime;//src_get_data_dt;
@@ -1036,10 +1018,10 @@ bool SQLite_DBDataSave::DoStat_day_specday_specone( struRec_stat_day &Rec_stat_d
 				}
 			}
 
-			// ×îÐ¡Öµ±È½Ï
+			// ï¿½ï¿½Ð¡Öµï¿½È½ï¿½
 			if( Rec_stat_day.Stat.stat_v1k_min_dt )
 			{
-				// ÖµÏàµÈ²¢ÇÒÊ±¼ä¸üÔç
+				// Öµï¿½ï¿½È²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
 				if( src_get_v1k.v1k == Rec_stat_day.Stat.stat_v1k_min && curstatTime<Rec_stat_day.Stat.stat_v1k_min_dt )
 				{
 					Rec_stat_day.Stat.stat_v1k_min_dt = curstatTime;//src_get_data_dt;
@@ -1055,7 +1037,7 @@ bool SQLite_DBDataSave::DoStat_day_specday_specone( struRec_stat_day &Rec_stat_d
 	return true;
 }
 
-// ·ÖÎöÔ­Ê¼Êý¾ÝÁÐ±íµÃµ½Ð¡Ê±Í³¼ÆÁÐ±í
+// ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ãµï¿½Ð¡Ê±Í³ï¿½ï¿½ï¿½Ð±ï¿½
 void SQLite_DBDataSave::DoStat_hour_lst( const time_t data_dt_begin, const time_t data_dt_end, const defmapV1k &lst_src_v1k, defmapstruStat &lst_stathour, const int spanhour )
 {
 	const time_t span = spanhour*60*60;
@@ -1075,7 +1057,7 @@ void SQLite_DBDataSave::DoStat_hour_lst( const time_t data_dt_begin, const time_
 	}
 }
 
-// ·ÖÎöÔ­Ê¼Êý¾ÝÁÐ±íµÃµ½·ÖÖÓÍ³¼ÆÁÐ±í
+// ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ð±ï¿½
 void SQLite_DBDataSave::DoStat_minute_lst( const time_t data_dt_begin, const time_t data_dt_end, const defmapV1k &lst_src_v1k, defmapstruStat &lst_statminute, const int spanminute )
 {
 	const time_t curUTCTime = g_GetUTCTime();
@@ -1096,7 +1078,7 @@ void SQLite_DBDataSave::DoStat_minute_lst( const time_t data_dt_begin, const tim
 		}
 		else
 		{
-			// ¼ÇÂ¼µÃµ½µÄÔ­Ê¼Ê±¼äºÍÖµ
+			// ï¿½ï¿½Â¼ï¿½Ãµï¿½ï¿½ï¿½Ô­Ê¼Ê±ï¿½ï¿½ï¿½Öµ
 			stru_V1K src_get_v1k;
 
 			if( GetValueForSpecTime_lst( curtime, lst_src_v1k, src_get_v1k ) && src_get_v1k.v1k_valid )
@@ -1118,7 +1100,7 @@ void SQLite_DBDataSave::DoStat_minute_lst( const time_t data_dt_begin, const tim
 	}
 }
 
-// ÔÂÍ³¼Æ
+// ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DoStat_month_all()
 {
 	if( !db )
@@ -1155,7 +1137,7 @@ defGSReturn SQLite_DBDataSave::DoStat_month_all()
 		return ret;
 	}
 
-	// ±éÀúÕâ¸öÔÂµÄËùÓÐÈÕÍ³¼Æ£¬¶þ´Î¼ÆËãµÃ³öÔÂÍ³¼Æ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 	defmapRec_stat_month mapRec_stat_month;
 	for( defmapRec_stat_day::const_iterator itD=mapRec_stat_day.begin(); itD!=mapRec_stat_day.end(); ++itD )
 	{
@@ -1181,7 +1163,7 @@ defGSReturn SQLite_DBDataSave::DoStat_month_all()
 		if( !pMonth )
 			continue;
 
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		pMonth->temp_v1k_sum += double(pDay->Stat.stat_v1k_avg) * pDay->Stat.stat_v1k_avg_num;
 		pMonth->Stat.stat_v1k_avg_num += pDay->Stat.stat_v1k_avg_num;
 
@@ -1194,13 +1176,13 @@ defGSReturn SQLite_DBDataSave::DoStat_month_all()
 	{
 		struRec_stat_month *pMonth = itM->second;
 
-		// ¼ÆËãÆ½¾ùÖµ
+		// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		pMonth->Stat.calc_avg( pMonth->temp_v1k_sum );
 
 		DBSave_stat_month( *pMonth );
 	}
 
-	// Ð´ÈëÒÑÍê³ÉÔÂÍ³¼Æ¼ÇÂ¼±êÖ¾
+	// Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½Ö¾
 	if( DBSave_stat_month( struRec_stat_month(struRec_stat_month::struKey(m_dtDBSave.Year, m_dtDBSave.Month )) ) )
 	{
 		m_is_stat_month = true;
@@ -1213,7 +1195,7 @@ defGSReturn SQLite_DBDataSave::DoStat_month_all()
 	return defGSReturn_Success;
 }
 
-// »ñÈ¡Ö¸¶¨Ê±¼äµÄÖµ
+// ï¿½ï¿½È¡Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Öµ
 defGSReturn SQLite_DBDataSave::QueryValueForSpecTime( const GSIOTAddrObjKey &AddrObjKey, const time_t spec_data_dt, stru_V1K &get_v1k )
 {
 	get_v1k.reset();
@@ -1236,10 +1218,10 @@ defGSReturn SQLite_DBDataSave::QueryValueForSpecTime( const GSIOTAddrObjKey &Add
 		return defGSReturn_Success;
 	}
 
-	return defGSReturn_DBNoRec; // Ã»ÓÐ·ûºÏÌõ¼þµÄ¼ÇÂ¼
+	return defGSReturn_DBNoRec; // Ã»ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â¼
 }
 
-// ÔØÈëÖ¸¶¨¶ÔÏóÖ¸¶¨ÈÕµÄÔ­Ê¼v1kÊý¾Ý
+// ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Õµï¿½Ô­Ê¼v1kï¿½ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_ForDay( const GSIOTAddrObjKey &AddrObjKey, const unsigned char day, defmapV1k &lst_src_v1k ) const
 {
 	const time_t data_dt_begin = g_struGSTime_To_UTCTime( struGSTime( m_dtDBSave.Year, m_dtDBSave.Month, day ) );
@@ -1248,7 +1230,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_ForDay( const GSIOTAddrOb
 	return DBLoad_histdata_SpecObj_ForTime( AddrObjKey, data_dt_begin, data_dt_end, lst_src_v1k );
 }
 
-// ÔØÈëÖ¸¶¨¶ÔÏóÖ¸¶¨Ê±¼ä¶ÎµÄÔ­Ê¼v1kÊý¾Ý£¬·Ö±ð´æ´¢ÔÚmapRec_stat_dayµÄ¸÷×Ô¶ÔÏóÀï
+// ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½Îµï¿½Ô­Ê¼v1kï¿½ï¿½Ý£ï¿½ï¿½Ö±ï¿½æ´¢ï¿½ï¿½mapRec_stat_dayï¿½Ä¸ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_mapRecStatDay_ForTime( const GSIOTAddrObjKey &AddrObjKey, const time_t data_dt_begin, const time_t data_dt_end, defmapRec_stat_day &mapRec_stat_day ) const
 {
 	if( !this->db )
@@ -1307,7 +1289,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_mapRecStatDay_ForTime( co
 	return defGSReturn_Success;
 }
 
-// ÔØÈëÖ¸¶¨¶ÔÏóÖ¸¶¨Ê±¼ä¶ÎµÄÔ­Ê¼v1kÊý¾Ý
+// ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½Îµï¿½Ô­Ê¼v1kï¿½ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_ForTime( const GSIOTAddrObjKey &AddrObjKey, const time_t data_dt_begin, const time_t data_dt_end, defmapV1k &lst_src_v1k, const bool doQueryMax, const int spanrate, const bool rateForType ) const
 {
 	if( !this->db )
@@ -1342,7 +1324,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_ForTime( const GSIOTAddrO
 			defDataFlag_ dataflag = (defDataFlag_)query.getColumn(5).getInt();
 			int v1k = query.getColumn(6).getInt();
 
-			// È¥³ý±ä»¯ÂÊµÍµÄÊý¾Ý
+			// È¥ï¿½ï¿½ä»¯ï¿½ÊµÍµï¿½ï¿½ï¿½ï¿½
 			if( spanrate )
 			{
 				if( hasprev )
@@ -1387,7 +1369,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_histdata_SpecObj_ForTime( const GSIOTAddrO
 	return defGSReturn_Success;
 }
 
-// ¶ÁÈ¡Ö¸¶¨ÈÕµÄËùÓÐ¶ÔÏóµÄÔ­Ê¼Êý¾Ý
+// ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DBLoad_histdata_AllObj_ForDay( const unsigned char day, defmapRec_stat_day &mapRec_stat_day ) const
 {
 	if( !this->db )
@@ -1458,7 +1440,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_histdata_AllObj_ForDay( const unsigned cha
 	return defGSReturn_Success;
 }
 
-// ½«Ò»ÌõÈÕÍ³¼ÆÊý¾Ý¿â¼ÇÂ¼¶ÁÈ¡µ½½á¹¹
+// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Â¼ï¿½ï¿½È¡ï¿½ï¿½ï¿½á¹¹
 defGSReturn SQLite_DBDataSave::DBReadOneRec_stat_day( SQLite::Statement &query, struRec_stat_day &Rec_stat_day ) const
 {
 	if( !Rec_stat_day.lst_src_v1k.empty() )
@@ -1493,7 +1475,7 @@ defGSReturn SQLite_DBDataSave::DBReadOneRec_stat_day( SQLite::Statement &query, 
 	return defGSReturn_Success;
 }
 
-// ÔØÈëÒ»ÌõÖ¸¶¨¶ÔÏóÖ¸¶¨ÈÕµÄÈÕÍ³¼Æ¼ÇÂ¼
+// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Í³ï¿½Æ¼ï¿½Â¼
 defGSReturn SQLite_DBDataSave::DBLoad_stat_day_SpecObj_SpecDay( struRec_stat_day &Rec_stat_day ) const
 {
 	if( !this->db )
@@ -1532,7 +1514,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_stat_day_SpecObj_SpecDay( struRec_stat_day
 	return defGSReturn_Err;
 }
 
-// ÔØÈëËùÓÐÖ¸¶¨¶ÔÏóÖ¸¶¨ÈÕ·¶Î§µÄÈÕÍ³¼Æ¼ÇÂ¼
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Õ·ï¿½Î§ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ¼ï¿½Â¼
 defGSReturn SQLite_DBDataSave::DBLoad_stat_day_SpecObj_DayRange( const GSIOTAddrObjKey &AddrObjKey, const unsigned char day_begin, const unsigned char day_end, defmapRec_stat_day &mapRec_stat_day ) const
 {
 	if( !this->db )
@@ -1581,7 +1563,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_stat_day_SpecObj_DayRange( const GSIOTAddr
 	return defGSReturn_Success;
 }
 
-// ÔØÈëÕâ¸öÔÂµÄËùÓÐ¶ÔÏóµÄÈÕÍ³¼Æ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DBLoad_stat_day_full( defmapRec_stat_day &mapRec_stat_day ) const
 {
 	if( !this->db )
@@ -1625,7 +1607,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_stat_day_full( defmapRec_stat_day &mapRec_
 	return defGSReturn_Success;
 }
 
-// ½«Ò»ÌõÔÂÍ³¼ÆÊý¾Ý¿â¼ÇÂ¼¶ÁÈ¡µ½½á¹¹
+// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Â¼ï¿½ï¿½È¡ï¿½ï¿½ï¿½á¹¹
 defGSReturn SQLite_DBDataSave::DBReadOneRec_stat_month( SQLite::Statement &query, struRec_stat_month &Rec_stat_month ) const
 {
 	int col = 1;
@@ -1646,7 +1628,7 @@ defGSReturn SQLite_DBDataSave::DBReadOneRec_stat_month( SQLite::Statement &query
 	return defGSReturn_Success;
 }
 
-// ÔØÈëÒ»ÌõÖ¸¶¨¶ÔÏóÖ¸¶¨ÔÂµÄÔÂÍ³¼Æ¼ÇÂ¼
+// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½Í³ï¿½Æ¼ï¿½Â¼
 defGSReturn SQLite_DBDataSave::DBLoad_stat_month_SpecObj_SpecMonth( struRec_stat_month &Rec_stat_month ) const
 {
 	if( !this->db )
@@ -1685,7 +1667,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_stat_month_SpecObj_SpecMonth( struRec_stat
 	return defGSReturn_DBNoRec;
 }
 
-// ÔØÈëÕâ¸öÔÂµÄËùÓÐ¶ÔÏóµÄÔÂÍ³¼Æ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn SQLite_DBDataSave::DBLoad_stat_month_full( defmapRec_stat_month &mapRec_stat_month ) const
 {
 	if( !this->db )
@@ -1729,7 +1711,7 @@ defGSReturn SQLite_DBDataSave::DBLoad_stat_month_full( defmapRec_stat_month &map
 	return defGSReturn_Success;
 }
 
-// Ö¸¶¨ÈÕÍ³¼ÆÊÇ·ñÒÑ´æÔÚ
+// Ö¸ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½
 bool SQLite_DBDataSave::DBIsBeing_stat_day( const struRec_stat_day &Rec_stat_day )
 {
 	if( !this->db )
@@ -1750,7 +1732,7 @@ bool SQLite_DBDataSave::DBIsBeing_stat_day( const struRec_stat_day &Rec_stat_day
 	return false;
 }
 
-// ÈÕÍ³¼ÆÊÇ·ñÒÑ´æÔÚ »ñÈ¡Ö¸¶¨¶ÔÏóµÄËùÓÐÈÕÍ³¼ÆÊÇ·ñÒÑ´æÔÚ±êÖ¾
+// ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½Ú±ï¿½Ö¾
 bool SQLite_DBDataSave::DBIsBeing_stat_day_getlist( const struRec_stat_day &Rec_stat_day, defmap_is_stat_day &lst_is_stat_day )
 {
 	if( !this->db )
@@ -1780,7 +1762,7 @@ bool SQLite_DBDataSave::DBIsBeing_stat_day_getlist( const struRec_stat_day &Rec_
 	return true;
 }
 
-// ÔÂÍ³¼ÆÊÇ·ñÒÑ´æÔÚ
+// ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½
 bool SQLite_DBDataSave::DBIsBeing_stat_month( const struRec_stat_month &Rec_stat_month )
 {
 	if( !this->db )
@@ -1801,7 +1783,7 @@ bool SQLite_DBDataSave::DBIsBeing_stat_month( const struRec_stat_month &Rec_stat
 	return false;
 }
 
-// ±£´æÈÕÍ³¼ÆÊý¾Ý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½
 bool SQLite_DBDataSave::DBSave_stat_day( const struRec_stat_day &Rec_stat_day )
 {
 	if( !this->db )
@@ -1856,7 +1838,7 @@ bool SQLite_DBDataSave::DBSave_stat_day( const struRec_stat_day &Rec_stat_day )
 	return true;
 }
 
-// ±£´æÔÂÍ³¼ÆÊý¾Ý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½
 bool SQLite_DBDataSave::DBSave_stat_month( const struRec_stat_month &Rec_stat_month )
 {
 	if( !this->db )
@@ -1866,7 +1848,7 @@ bool SQLite_DBDataSave::DBSave_stat_month( const struRec_stat_month &Rec_stat_mo
 
 	if( DBIsBeing_stat_month( Rec_stat_month ) )
 	{
-		//int id = query.getColumn(0);
+		//int id = query.getColumn(0);CreateDBNameForSpecDt
 		//SQLite::Statement query(*this->db,"UPDATE ");
 		//query.bind(1, );
 		//query.exec();
@@ -1909,7 +1891,7 @@ CDataStoreMgr::CDataStoreMgr(void)
 
 CDataStoreMgr::~CDataStoreMgr(void)
 {
-	//...ÊÍ·Åm_lstDBDataSaveMgr
+	//...ï¿½Í·ï¿½m_lstDBDataSaveMgr
 }
 
 std::string CDataStoreMgr::CreateDBNameForSpecDt( const time_t &t )
@@ -1927,15 +1909,6 @@ std::string CDataStoreMgr::CreateDBNameForSpecDt( const struGSTime &dt )
 		return std::string("");
 
 	char dbname[256];
-/* jyc20170227 modify
-#if defined(defTEST_UseTestChangeDb)
-	//snprintf( dbname, sizeof(dbname), "test7b_%04d%02d%02d.db", dt.Year, dt.Month, dt.Day );
-	snprintf( dbname, sizeof(dbname), "test7b_%04d%02d.db", dt.Year, dt.Month );
-#else
-	snprintf( dbname, sizeof(dbname), "gsdata%04d%02d.db", dt.Year, dt.Month );
-	//snprintf( dbname, sizeof(dbname), "test7b_%04d%02d.db", dt.Year, dt.Month );
-#endif
-*/
 	snprintf( dbname, sizeof(dbname), "gsdata%04d%02d.db", dt.Year, dt.Month );
 
 	return std::string(dbname);
@@ -1956,12 +1929,12 @@ bool CDataStoreMgr::IsSameDBSave( const struGSTime &dtA, const struGSTime &dtB )
 	return g_IsSameMonth( dtA, dtB );
 }
 
-// ×ÛºÏÕûÀí³É²éÑ¯½á¹ûÊý¾Ý
-// create_lst_query_v1k: ´´½¨Ê±¼äµãÊý¾ÝÁ´±í£»
-// spanhour: È¡Öµ¼ä¸ôÐ¡Ê±Öµ£¬ÆäÖÐ0Îª°ëÐ¡Ê±£»
-// spanrate: È¡Öµ±ä»¯ÂÊ£¬±ä»¯ÂÊÐ¡ÓÚ´ËÖµÊ±¹ýÂËµô£»
-// rateForType: ±ä»¯ÂÊÅÐ¶Ï°´¼à²âµãÀàÐÍ¼ÆËãÅÐ¶Ï£¬ÀýÈç·çËÙ°´·çËÙ¼¶±ð£»
-// remove_invalid: ÒÆ³ýÎÞÐ§Êý¾Ý£¬µ«»á±£Áô¹ý¶ÉµÄÎÞÐ§Êý¾Ý×÷Îª¹ý¶É±êÖ¾¡£
+// ï¿½Ûºï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// create_lst_query_v1k: ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
+// spanhour: È¡Öµï¿½ï¿½ï¿½Ð¡Ê±Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0Îªï¿½ï¿½Ð¡Ê±ï¿½ï¿½
+// spanrate: È¡Öµï¿½ä»¯ï¿½Ê£ï¿½ï¿½ä»¯ï¿½ï¿½Ð¡ï¿½Ú´ï¿½ÖµÊ±ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½
+// rateForType: ï¿½ä»¯ï¿½ï¿½ï¿½Ð¶Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ï¿½ï¿½ï¿½Ù¼ï¿½ï¿½ï¿½
+// remove_invalid: ï¿½Æ³ï¿½ï¿½ï¿½Ð§ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½á±£ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½É±ï¿½Ö¾ï¿½ï¿½
 defGSReturn CDataStoreMgr::Stat_mapRec_stat_day_To_QueryStat( const defmapRec_stat_day &mapRec_stat_day, stru_QueryStat &ResultStat, const bool create_lst_query_v1k, const int spanhour, const int spanrate, const bool rateForType, const bool remove_invalid, const bool doQueryMax )
 {
 	time_t first_day_begin_time = 0;
@@ -1977,14 +1950,14 @@ defGSReturn CDataStoreMgr::Stat_mapRec_stat_day_To_QueryStat( const defmapRec_st
 			continue;
 		}
 
-		// Í³¼Æ
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// Í³ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		ResultStat.temp_v1k_sum += double(pDay->Stat.stat_v1k_avg) * pDay->Stat.stat_v1k_avg_num;
 		ResultStat.Stat.stat_v1k_avg_num += pDay->Stat.stat_v1k_avg_num;
 
 		g_AnalyseStat( ResultStat.Stat, pDay->Stat );
 
-		// Êý¾Ý¼ÇÂ¼
+		// ï¿½ï¿½Ý¼ï¿½Â¼
 		const time_t day_begin = g_struGSTime_To_UTCTime( struGSTime( pDay->key.dt_year, pDay->key.dt_month, pDay->key.dt_day ) );
 
 		if( !first_day_begin_time )
@@ -2012,7 +1985,7 @@ defGSReturn CDataStoreMgr::Stat_mapRec_stat_day_To_QueryStat( const defmapRec_st
 
 			const bool v1k_valid = ( i<24 ) ? bit_valid_A.test( i ) : bit_valid_B.test( i-24 );
 
-			// µÚ1¸öÓÐÐ§Êý¾ÝÖ®Ç°µÄ¶¼²»Òª
+			// ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ä¶ï¿½ï¿½ï¿½Òª
 			if( v1k_valid )
 			{
 				if( !hasvalid )
@@ -2039,7 +2012,7 @@ defGSReturn CDataStoreMgr::Stat_mapRec_stat_day_To_QueryStat( const defmapRec_st
 
 			stru_QueryV1K curQueryV1K( curv_time, v1k_valid?defDataFlag_Norm:defDataFlag_Invalid, pDay->v1k[i] );
 
-			// È¥³ý±ä»¯ÂÊµÍµÄÊý¾Ý
+			// È¥ï¿½ï¿½ä»¯ï¿½ÊµÍµï¿½ï¿½ï¿½ï¿½
 			if( doAdd && spanrate )
 			{
 				if( prev_QueryV1K.data_dt )
@@ -2083,13 +2056,13 @@ defGSReturn CDataStoreMgr::Stat_mapRec_stat_day_To_QueryStat( const defmapRec_st
 		}
 	}
 
-	// ²¹³äÖÐ¼äÕûÌìÃ»ÓÐµÄÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ðµï¿½ï¿½ï¿½ï¿½
 	if( create_lst_query_v1k && hasvalid )
 	{
 		QueryStatFixInvalidFullDay( ResultStat, mapRec_stat_day, first_day_begin_time );
 	}
 
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	ResultStat.Stat.calc_avg( ResultStat.temp_v1k_sum );
 
 	return defGSReturn_Success;
@@ -2097,10 +2070,10 @@ defGSReturn CDataStoreMgr::Stat_mapRec_stat_day_To_QueryStat( const defmapRec_st
 
 void CDataStoreMgr::QueryStatFixInvalidFullDay( stru_QueryStat &ResultStat, const defmapRec_stat_day &mapRec_stat_day, const time_t first_day_begin_time )
 {
-	// ²¹³äÖÐ¼äÕûÌìÃ»ÓÐµÄÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ðµï¿½ï¿½ï¿½ï¿½
 	const int maxday = ( ResultStat.data_dt_end - ResultStat.data_dt_begin )/(24*60*60) + 2;
 
-	for( int i=1; i<maxday; ++i ) // ×î¶àÕâÃ´¶à´Î
+	for( int i=1; i<maxday; ++i ) // ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
 	{
 		const time_t curv_time = first_day_begin_time + i*24*60*60;
 
@@ -2118,8 +2091,8 @@ void CDataStoreMgr::QueryStatFixInvalidFullDay( stru_QueryStat &ResultStat, cons
 	}
 }
 
-// ×ÛºÏÕûÀí³É²éÑ¯½á¹ûÊý¾Ý£¬·ÖÖÓ¼¶¼ä¸ô£¬Ðè·ÖÎöÔ­Ê¼Êý¾Ý
-// spanmin: È¡Öµ¼ä¸ô·ÖÖÓÖµ£¬1-60
+// ï¿½Ûºï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½
+// spanmin: È¡Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½1-60
 defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defmapV1k &lst_src_v1k, stru_QueryStat &ResultStat, const int spanmin, const int spanrate, const bool rateForType, const bool remove_invalid, const bool doQueryMax, const bool retime_maxmin )
 {
 	if( lst_src_v1k.empty() )
@@ -2130,7 +2103,7 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 
 	const time_t curUTCTime = g_GetUTCTime();
 
-	// ÏÈÍ³¼Æ
+	// ï¿½ï¿½Í³ï¿½ï¿½
 	for( defmapV1k::const_iterator it = lst_src_v1k.begin(); it!=lst_src_v1k.end(); ++it )
 	{
 		if( !it->second.v1k_valid )
@@ -2139,19 +2112,19 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 		const time_t curTime = it->first;
 		const int curValue = it->second.v1k;
 
-		// Í³¼Æ
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// Í³ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		ResultStat.temp_v1k_sum += curValue;
 		ResultStat.Stat.stat_v1k_avg_num++;
 
 		g_AnalyseStat( ResultStat.Stat, curTime, curValue, ResultStat.data_dt_begin, ResultStat.data_dt_end );
 	}
 
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	ResultStat.Stat.calc_avg( ResultStat.temp_v1k_sum );
 
 
-	// ºó¼ÆËã¼ä¸ôÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	bool hasvalid = false;
 	bool prev_valid = true;
 	stru_QueryV1K prev_QueryV1K;
@@ -2165,12 +2138,12 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 
 	for( time_t curstatTime=ResultStat.data_dt_begin; curstatTime<stat_dt_end; curstatTime+=spannum )
 	{
-		// ¼ÇÂ¼µÃµ½µÄÔ­Ê¼Ê±¼äºÍÖµ
+		// ï¿½ï¿½Â¼ï¿½Ãµï¿½ï¿½ï¿½Ô­Ê¼Ê±ï¿½ï¿½ï¿½Öµ
 		stru_V1K src_get_v1k;
 
 		const bool v1k_valid = curstatTime>curUTCTime ? false : SQLite_DBDataSave::GetValueForSpecTime_lst( curstatTime, lst_src_v1k, src_get_v1k ) && src_get_v1k.v1k_valid;
 
-		// µÚ1¸öÓÐÐ§Êý¾ÝÖ®Ç°µÄ¶¼²»Òª
+		// ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ä¶ï¿½ï¿½ï¿½Òª
 		if( v1k_valid )
 		{
 			if( !hasvalid )
@@ -2197,7 +2170,7 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 
 		stru_QueryV1K curQueryV1K( curstatTime, src_get_v1k.v1k_valid, src_get_v1k.v1k );
 
-		// È¥³ý±ä»¯ÂÊµÍµÄÊý¾Ý
+		// È¥ï¿½ï¿½ä»¯ï¿½ÊµÍµï¿½ï¿½ï¿½ï¿½
 		if( doAdd && spanrate )
 		{
 			if( prev_QueryV1K.data_dt )
@@ -2239,13 +2212,13 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 
 		prev_valid = v1k_valid;
 
-		// ×î´ó×îÐ¡ÖµÊÇ·ñÔÚÔ­Ê¼Ê±¼äµãÉÏ£¬ÓëÔ­Ê¼ÖµÏàµÈ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½Ç·ï¿½ï¿½ï¿½Ô­Ê¼Ê±ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ô­Ê¼Öµï¿½ï¿½ï¿½
 		if( retime_maxmin && src_get_v1k.data_dt && src_get_v1k.v1k_valid )
 		{
-			// ×î´óÖµ±È½Ï
+			// ï¿½ï¿½ï¿½Öµï¿½È½ï¿½
 			if( ResultStat.Stat.stat_v1k_max_dt )
 			{
-				// ÖµÏàµÈ²¢ÇÒÊ±¼ä¸üÔç
+				// Öµï¿½ï¿½È²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
 				if( src_get_v1k.v1k == ResultStat.Stat.stat_v1k_max && curstatTime<ResultStat.Stat.stat_v1k_max_dt )
 				{
 					ResultStat.Stat.stat_v1k_max_dt = curstatTime;//src_get_data_dt;
@@ -2253,10 +2226,10 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 				}
 			}
 
-			// ×îÐ¡Öµ±È½Ï
+			// ï¿½ï¿½Ð¡Öµï¿½È½ï¿½
 			if( ResultStat.Stat.stat_v1k_min_dt )
 			{
-				// ÖµÏàµÈ²¢ÇÒÊ±¼ä¸üÔç
+				// Öµï¿½ï¿½È²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
 				if( src_get_v1k.v1k == ResultStat.Stat.stat_v1k_min && curstatTime<ResultStat.Stat.stat_v1k_min_dt )
 				{
 					ResultStat.Stat.stat_v1k_min_dt = curstatTime;//src_get_data_dt;
@@ -2269,7 +2242,7 @@ defGSReturn CDataStoreMgr::Stat_lst_src_v1k_To_QueryStat_ForSpanmin( const defma
 	return defGSReturn_Success;
 }
 
-// ×ÛºÏÕûÀí³É²éÑ¯½á¹ûÊý¾Ý
+// ï¿½Ûºï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 bool CDataStoreMgr::Stat_mapRec_stat_month_To_QueryStat( const defmapRec_stat_month &mapRec_stat_month, stru_QueryStat &ResultStat )
 {
 	time_t first_day_begin_time = 0;
@@ -2284,18 +2257,29 @@ bool CDataStoreMgr::Stat_mapRec_stat_month_To_QueryStat( const defmapRec_stat_mo
 			continue;
 		}
 
-		// Í³¼Æ
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// Í³ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		ResultStat.temp_v1k_sum += double(pMonth->Stat.stat_v1k_avg) * pMonth->Stat.stat_v1k_avg_num;
 		ResultStat.Stat.stat_v1k_avg_num += pMonth->Stat.stat_v1k_avg_num;
 
 		g_AnalyseStat( ResultStat.Stat, pMonth->Stat );
 	}
 	
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	ResultStat.Stat.calc_avg( ResultStat.temp_v1k_sum );
 
 	return true;
+}
+
+void RemoveDB(struGSTime dt){ //jyc20170425 add
+	char systemcmd[40];
+	struGSTime dtold=dt;
+	if(dt.Month>2){dtold.Month=dt.Month-2;}
+	else{dtold.Year=dt.Year-1;dtold.Month=dt.Month+10;}
+	const std::string dbname = CDataStoreMgr::CreateDBNameForSpecDt( dtold );
+	const std::string path = ROOTDIR + dbname;
+	sprintf(systemcmd,"rm -f %s",path.c_str());
+	system(systemcmd);
 }
 
 void CDataStoreMgr::CheckCreateDB( const time_t utctime )
@@ -2305,9 +2289,10 @@ void CDataStoreMgr::CheckCreateDB( const time_t utctime )
 
 	AutoRelease_getDBDataSave autodb( this );
 	SQLite_DBDataSave *pDBSave = autodb.get( dt, true, "CheckCreateDB", false ); 
+	RemoveDB(dt);
 }
 
-// »ñÈ¡Ö¸¶¨ÈÕÆÚµÄÊý¾Ý¿âÊµÀý
+// ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ý¿ï¿½Êµï¿½ï¿½
 SQLite_DBDataSave* CDataStoreMgr::GetDBSave_lock( const struGSTime &dt, const bool DoAutoCreate, const char *pinfo, const bool check_file_exists )
 {
 	const std::string dbname = CDataStoreMgr::CreateDBNameForSpecDt( dt );
@@ -2380,7 +2365,7 @@ bool CDataStoreMgr::DBMgr_set( SQLite_DBDataSave *pDBDataSave )
 	return true;
 }
 
-// Ëø¶¨°´dt»ñÈ¡
+// ï¿½ï¿½dtï¿½ï¿½È¡
 SQLite_DBDataSave* CDataStoreMgr::DBMgr_get( const struGSTime &dt )
 {
 	gloox::util::MutexGuard( this->m_mutex_lstDBDataSaveMgr );
@@ -2388,7 +2373,7 @@ SQLite_DBDataSave* CDataStoreMgr::DBMgr_get( const struGSTime &dt )
 	return DBMgr_get_nolock( dt );
 }
 
-// Ëø¶¨°´dbname»ñÈ¡
+// ï¿½ï¿½dbnameï¿½ï¿½È¡
 SQLite_DBDataSave* CDataStoreMgr::DBMgr_get( const std::string &dbname )
 {
 	gloox::util::MutexGuard( this->m_mutex_lstDBDataSaveMgr );
@@ -2445,7 +2430,7 @@ SQLite_DBDataSave* CDataStoreMgr::DBMgr_get_nolock( const std::string &dbname )
 	return NULL;
 }
 
-// ´òÓ¡µÄÔËÐÐ¶ÔÏóÐÅÏ¢
+// ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 void CDataStoreMgr::DBMgr_Print()
 {
 	gloox::util::MutexGuard( this->m_mutex_lstDBDataSaveMgr );
@@ -2542,7 +2527,7 @@ void CDataStoreMgr::DBMgr_Check( const bool CheckNow )
 		{
 			if( 0 != itUse->second->m_usecount )
 			{
-				if( sno > SYS_DBDataFileMax )//¶à¸ü¶àÊ±²Å½Ó×Å·ÖÎö
+				if( sno > SYS_DBDataFileMax )//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Å½ï¿½ï¿½Å·ï¿½ï¿½ï¿½
 				{
 					++it;
 					continue;
@@ -2574,7 +2559,7 @@ void CDataStoreMgr::DBMgr_Check( const bool CheckNow )
 	LOGMSG( "DataStoreMgr::DBMgr_Check() End, usetime=%dms\r\n", timeGetTime()-dwstart );
 }
 
-// ¼ì²éÍ³¼Æ
+// ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 void CDataStoreMgr::CheckStat()
 {
 	LOGMSG( "DataStoreMgr::CheckStat()\r\n" );
@@ -2587,12 +2572,12 @@ void CDataStoreMgr::CheckStat()
 	}
 
 	const int curGSTimemin = curGSTime.Hour*100 + curGSTime.Minute;
-	if( curGSTimemin<110 || curGSTimemin>255 ) // 01:10 - 02:55 ÔÚÕâ¸öÊ±¼ä¶ÎÄÚÍ³¼Æ
+	if( curGSTimemin<110 || curGSTimemin>255 ) // 01:10 - 02:55 ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 		return;
 
 	DBMgr_Check();
 
-	// ¼ÆËã³öÇ°Ò»Ìì
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ò»ï¿½ï¿½
 	const time_t prevdayUTCTime = curUTCTime-24*60*60;
 	struGSTime prevdayGSTime;
 	if( !g_UTCTime_To_struGSTime( prevdayUTCTime, prevdayGSTime ) )
@@ -2607,13 +2592,13 @@ void CDataStoreMgr::CheckStat()
 
 		if( pDBSave )
 		{
-			// ÏÈÍ³¼ÆÌì
+			// ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½
 			if( IsSameDBSave( prevdayGSTime, pDBSave->get_dt() ) )
 			{
 				pDBSave->DoStat_day_all();
 			}
 
-			// ºóÍ³¼ÆÔÂ
+			// ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½
 			if( !pDBSave->is_stat_month() )
 			{
 				const DWORD dwstart = timeGetTime();
@@ -2633,7 +2618,7 @@ void CDataStoreMgr::CheckStat()
 			SQLite_DBDataSave *pDBSave = autodb.get( prevdayGSTime, false, "CheckStat", true );
 			if( pDBSave )
 			{
-				const short stat_daymax = prevdayGSTime.Day;// Í³¼ÆµÄÌì£¬0²»Í³¼Æ
+				const short stat_daymax = prevdayGSTime.Day;// Í³ï¿½Æµï¿½ï¿½ì£¬0ï¿½ï¿½Í³ï¿½ï¿½
 				pDBSave->DoStat_day_all_specmax( stat_daymax );
 			}
 		}
@@ -2660,12 +2645,12 @@ void CDataStoreMgr::insertdata( const defvecDataSave &vecDataSave )
 // return do save
 bool CDataStoreMgr::insertdata_CheckSaveInvalid( const GSIOTAddrObjKey &AddrObjKey, const bool valid )
 {
-	// ÓÐÐ§¶¼´æ
+	// ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½
 	if( valid )
 	{
 		if( !m_mapCheckInvalid.empty() )
 		{
-			// ÒÆ³ýÖ®Ç°ÎÞÐ§¼ÇÂ¼
+			// ï¿½Æ³ï¿½Ö®Ç°ï¿½ï¿½Ð§ï¿½ï¿½Â¼
 			//std::map<GSIOTAddrObjKey,int>::const_iterator it = m_mapCheckInvalid.find( AddrObjKey );
 			std::map<GSIOTAddrObjKey,int>::iterator it = m_mapCheckInvalid.find( AddrObjKey );
 			if( it != m_mapCheckInvalid.end() )
@@ -2694,7 +2679,7 @@ bool CDataStoreMgr::insertdata_CheckSaveInvalid( const GSIOTAddrObjKey &AddrObjK
 	return false;
 }
 
-// ²éÑ¯·ÖÎöÁÙÊ±Í³¼Æµ±Ç°Ìì
+// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Í³ï¿½Æµï¿½Ç°ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryAnalyse_stat_NowDay( struRec_stat_day &Rec_stat_day )
 {
 	const DWORD dwstart = timeGetTime();
@@ -2724,7 +2709,7 @@ defGSReturn CDataStoreMgr::QueryAnalyse_stat_NowDay( struRec_stat_day &Rec_stat_
 	return defGSReturn_Success;
 }
 
-// ²éÑ¯·ÖÎöÁÙÊ±Í³¼Æµ±Ç°ÔÂ
+// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Í³ï¿½Æµï¿½Ç°ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryAnalyse_stat_NowMonth( struRec_stat_month &Rec_stat_month, defmapRec_stat_day &mapRec_stat_day, const bool getday, const bool doCreateWhenNotFound )
 {
 	const DWORD dwstart = timeGetTime();
@@ -2775,7 +2760,7 @@ defGSReturn CDataStoreMgr::QueryAnalyse_stat_NowMonth( struRec_stat_month &Rec_s
 		mapRec_stat_day[pRec_stat_day->key] = pRec_stat_day;
 	}
 
-	// Í³¼Æ
+	// Í³ï¿½ï¿½
 	for( defmapRec_stat_day::const_iterator itD=mapRec_stat_day.begin(); itD!=mapRec_stat_day.end(); ++itD )
 	{
 		const struRec_stat_day *pDay = itD->second;
@@ -2783,7 +2768,7 @@ defGSReturn CDataStoreMgr::QueryAnalyse_stat_NowMonth( struRec_stat_month &Rec_s
 		if( !pDay->Stat.stat_valid )
 			continue;
 		
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		Rec_stat_month.temp_v1k_sum += double(pDay->Stat.stat_v1k_avg) * pDay->Stat.stat_v1k_avg_num;
 		Rec_stat_month.Stat.stat_v1k_avg_num += pDay->Stat.stat_v1k_avg_num;
 
@@ -2802,7 +2787,7 @@ defGSReturn CDataStoreMgr::QueryAnalyse_stat_NowMonth( struRec_stat_month &Rec_s
 	return defGSReturn_Success;
 }
 
-// ²éÑ¯ ´ÓÄ³¸ö½üÆÚÊ±¼äµ½ÏÖÔÚµÄÊý¾ÝÇé¿ö
+// ï¿½ï¿½Ñ¯ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½äµ½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatData_ForTimeToNow( const time_t data_dt_begin, stru_QueryStat &ResultStat, const bool create_lst_query_v1k, const int spanhour, const int spanrate, const bool rateForType, const bool remove_invalid )
 {
 	const time_t NowUTCTime = g_GetUTCTime();
@@ -2813,7 +2798,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTimeToNow( const time_t data_dt_begi
 	return ret;
 }
 
-// ²éÑ¯ ´ÓÄ³¶ÎÖ¸¶¨Ê±¼äµÄÊý¾ÝÇé¿öÍ³¼Æ
+// ï¿½ï¿½Ñ¯ ï¿½ï¿½Ä³ï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatData_ForTime( const time_t data_dt_begin, const time_t data_dt_end, stru_QueryStat &ResultStat, defmapRec_stat_day &mapRec_stat_day, const bool create_stathour, const bool create_lst_query_v1k, const int spanhour, const int spanrate, const bool rateForType, const bool remove_invalid )
 {
 	const int c_maxday = 55;
@@ -2841,7 +2826,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTime( const time_t data_dt_begin, co
 		return defGSReturn_ErrParam;
 	}
 
-	// ¿ç¶ÈÌ«³¤ ³¬¹ýnÌì
+	// ï¿½ï¿½ï¿½Ì«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½
 	if( ResultStat.data_dt_end - ResultStat.data_dt_begin > c_maxday*24*60*60 )
 	{
 		LOGMSG( "Query_SpecObj_ForTimeToNow time long>%dday err, %s\r\n", c_maxday, ResultStat.GetBaseInfo().c_str() );
@@ -2868,7 +2853,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTime( const time_t data_dt_begin, co
 	AutoRelease_getDBDataSave autodbB( this );
 	SQLite_DBDataSave *pDBSaveB = NULL;
 
-	// ÊÇ·ñ¿çÔÂ
+	// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 	if( !IsSameDBSave(GSTimeBegin, GSTimeEnd) )
 	{
 		pDBSaveB = autodbB.get( GSTimeEnd, false, "Query_SpecObj_ForTimeToNow_B", true );
@@ -2880,7 +2865,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTime( const time_t data_dt_begin, co
 		return defGSReturn_DBNoExist;
 	}
 
-	// ÔØÈëÊ±¼ä·¶Î§ÄÚÊý¾Ý£¬ÓÉÓÚÊ±¼ä·¶Î§¿É×ÔÓÉÑ¡ÔñÌá¹©£¬×îÇ°ÃæºÍ×îºóÃæµÄ¿ÉÄÜ²»ÊÇÍêÕûµÄÒ»Ìì
+	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 
 	if( pDBSaveA )
 	{
@@ -2904,7 +2889,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTime( const time_t data_dt_begin, co
 		}
 	}
 
-	// ¶ÔÃ¿Ò»ÌìÄÚµÄÊý¾Ý·Ö±ðÍ³¼Æ¼ÆËã·ÖÎö
+	// ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ý·Ö±ï¿½Í³ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	for( defmapRec_stat_day::const_iterator it=mapRec_stat_day.begin(); it!=mapRec_stat_day.end(); ++it )
 	{
 		struRec_stat_day *pRec_stat_day = it->second;
@@ -2931,7 +2916,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTime( const time_t data_dt_begin, co
 	return ret;
 }
 
-// ²éÑ¯ ´ÓÄ³¸ö½üÆÚÊ±¼äµ½ÏÖÔÚµÄÊý¾ÝÇé¿ö£¬·ÖÖÓ¼¶¼ä¸ô£¬Ðè·ÖÎöÔ­Ê¼Êý¾Ý
+// ï¿½ï¿½Ñ¯ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½äµ½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatData_ForTimeToNow_ForSpanmin( const time_t data_dt_begin, stru_QueryStat &ResultStat, const int spanmin, const int spanrate, const bool rateForType, const bool remove_invalid )
 {
 	const time_t NowUTCTime = g_GetUTCTime();
@@ -2939,7 +2924,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTimeToNow_ForSpanmin( const time_t d
 	return QueryStatData_ForTime_ForSpanmin( data_dt_begin, NowUTCTime, ResultStat, spanmin, spanrate, rateForType, remove_invalid );
 }
 
-// ²éÑ¯ ´ÓÄ³¶ÎÖ¸¶¨Ê±¼äµÄÊý¾ÝÇé¿öÍ³¼Æ£¬·ÖÖÓ¼¶¼ä¸ô£¬Ðè·ÖÎöÔ­Ê¼Êý¾Ý
+// ï¿½ï¿½Ñ¯ ï¿½ï¿½Ä³ï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatData_ForTime_ForSpanmin( const time_t data_dt_begin, const time_t data_dt_end, stru_QueryStat &ResultStat, const int spanmin, const int spanrate, const bool rateForType, const bool remove_invalid )
 {
 	const bool create_lst_query_v1k = true;
@@ -2968,7 +2953,7 @@ defGSReturn CDataStoreMgr::QueryStatData_ForTime_ForSpanmin( const time_t data_d
 	return Stat_lst_src_v1k_To_QueryStat_ForSpanmin( lst_v1k, ResultStat, spanmin, spanrate, rateForType, remove_invalid, true, true );
 }
 
-// ²éÑ¯ ´ÓÄ³¶ÎÖ¸¶¨Ê±¼äµÄÊý¾ÝÇé¿öÍ³¼Æ£¬·ÖÖÓÍ³¼Æ
+// ï¿½ï¿½Ñ¯ ï¿½ï¿½Ä³ï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatMinute_ForTime( stru_QueryStat &ResultStat, defmapstruStat &lst_statminute, const int spanminute )
 {
 	if( ResultStat.data_dt_end == ResultStat.data_dt_begin )
@@ -3000,21 +2985,21 @@ defGSReturn CDataStoreMgr::QueryStatMinute_ForTime( stru_QueryStat &ResultStat, 
 
 	for( defmapstruStat::const_iterator it = lst_statminute.begin(); it!=lst_statminute.end(); ++it )
 	{
-		// Í³¼Æ
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// Í³ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		ResultStat.temp_v1k_sum += double( it->second.stat_v1k_avg ) * it->second.stat_v1k_avg_num;
 		ResultStat.Stat.stat_v1k_avg_num += it->second.stat_v1k_avg_num;
 
 		g_AnalyseStat( ResultStat.Stat, it->second );
 	}
 
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	ResultStat.Stat.calc_avg( ResultStat.temp_v1k_sum );
 
 	return ret;
 }
 
-// °´Ö¸¶¨ ÆðÊ¼ÌìÖÁ½áÊøÌì ·¶Î§ ²éÑ¯ÈÕÍ³¼Æ
+// ï¿½ï¿½Ö¸ï¿½ï¿½ ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î§ ï¿½ï¿½Ñ¯ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatDayRec_ForDayRange( const time_t day_begin, const time_t day_end, stru_QueryStat &ResultStat, defmapRec_stat_day &mapRec_stat_day, const bool doAnalyseNowDay, const bool doCreateWhenNotFound, const bool create_lst_query_v1k, const int spanhour, const int spanrate, const bool rateForType, const bool remove_invalid, const bool doStat )
 {
 	const DWORD dwstart = timeGetTime();
@@ -3055,7 +3040,7 @@ defGSReturn CDataStoreMgr::QueryStatDayRec_ForDayRange( const time_t day_begin, 
 	struGSTime GSTimeEnd;
 	g_UTCTime_To_struGSTime( ResultStat.data_dt_end, GSTimeEnd );
 	
-	// ±éÀú»ñÈ¡Ã¿¸öÔÂµÄÃ¿ÌìµÄÈÕÍ³¼ÆÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ã¿ï¿½ï¿½ï¿½Âµï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½
 	struGSTime curDBMonthTime(GSTimeBegin);
 
 	bool hasDB = false;
@@ -3099,7 +3084,7 @@ defGSReturn CDataStoreMgr::QueryStatDayRec_ForDayRange( const time_t day_begin, 
 		curDBMonthTime.AddSelfMonth();
 	}
 
-	// ÊÇ·ñ>=½ñÌì
+	// ï¿½Ç·ï¿½>=ï¿½ï¿½ï¿½ï¿½
 	if( doAnalyseNowDay && g_CompareDay( GSTimeEnd, curDay ) >= 0 )
 	{
 		struRec_stat_day *pRec_stat_day = new struRec_stat_day( struRec_stat_day::struKey( ResultStat.AddrObjKey, curDay.Year, curDay.Month, curDay.Day ) );
@@ -3137,7 +3122,7 @@ defGSReturn CDataStoreMgr::QueryStatDayRec_ForDayRange( const time_t day_begin, 
 	return defGSReturn_Success;
 }
 
-// ²éÑ¯Ö¸¶¨¶ÔÏóµÄÆðÊ¼ÖÁ½áÊøÊ±¼äµÄ¸÷¸öÔÂÍ³¼Æ
+// ï¿½ï¿½Ñ¯Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn CDataStoreMgr::QueryStatMonthRec_ForMonthRange( const time_t month_begin, const time_t month_end, stru_QueryStat &ResultStat, defmapRec_stat_month &mapRec_stat_month, defmapRec_stat_day &mapRec_stat_day, const bool getday, const bool doAnalyseNowMonth, const bool doCreateWhenNotFound )
 {
 	const DWORD dwstart = timeGetTime();
@@ -3178,7 +3163,7 @@ defGSReturn CDataStoreMgr::QueryStatMonthRec_ForMonthRange( const time_t month_b
 	struGSTime GSTimeEnd;
 	g_UTCTime_To_struGSTime( ResultStat.data_dt_end, GSTimeEnd );
 
-	// ±éÀú»ñÈ¡Ã¿¸öÔÂµÄÔÂÍ³¼ÆÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ã¿ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½
 	struGSTime curDBMonthTime(GSTimeBegin);
 
 	bool hasDB = false;
@@ -3244,7 +3229,7 @@ defGSReturn CDataStoreMgr::QueryStatMonthRec_ForMonthRange( const time_t month_b
 		curDBMonthTime.AddSelfMonth();
 	}
 
-	// ÊÇ·ñ>=±¾ÔÂ
+	// ï¿½Ç·ï¿½>=ï¿½ï¿½ï¿½ï¿½
 	if( doAnalyseNowMonth && g_CompareMonth( GSTimeEnd, curdt ) >= 0 )
 	{
 		struRec_stat_month *pRec_stat_month = new struRec_stat_month( struRec_stat_month::struKey(ResultStat.AddrObjKey,curDBMonthTime.Year,curDBMonthTime.Month) );
@@ -3280,7 +3265,7 @@ defGSReturn CDataStoreMgr::QueryStatMonthRec_ForMonthRange( const time_t month_b
 	return defGSReturn_Success;
 }
 
-// ²éÑ¯Ö¸¶¨¶ÔÏóÖ¸¶¨ÈÕÍ³¼Æ
+// ï¿½ï¿½Ñ¯Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn CDataStoreMgr::QuerySpecRec_stat_day( struRec_stat_day &Rec_stat_day, const bool doCreateWhenNotFound, const bool doAnalyseNowDay )
 {
 	const DWORD dwstart = timeGetTime();
@@ -3319,7 +3304,7 @@ defGSReturn CDataStoreMgr::QuerySpecRec_stat_day( struRec_stat_day &Rec_stat_day
 	return defGSReturn_Success;
 }
 
-// ²éÑ¯Ö¸¶¨¶ÔÏóÖ¸¶¨ÔÂÍ³¼Æ
+// ï¿½ï¿½Ñ¯Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 defGSReturn CDataStoreMgr::QuerySpecRec_stat_month( struRec_stat_month &Rec_stat_month, const bool doCreateWhenNotFound, const bool doAnalyseNowMonth )
 {
 	const DWORD dwstart = timeGetTime();
@@ -3359,7 +3344,7 @@ defGSReturn CDataStoreMgr::QuerySpecRec_stat_month( struRec_stat_month &Rec_stat
 	return defGSReturn_Success;
 }
 
-// »ñÈ¡Ö¸¶¨¶ÔÏóµÄÖ¸¶¨Ê±¼äµÄÖµ
+// ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Öµ
 defGSReturn CDataStoreMgr::QueryValueForSpecTime( const GSIOTAddrObjKey &AddrObjKey, const time_t spec_data_dt, stru_V1K &get_v1k )
 {
 	const DWORD dwstart = timeGetTime();
@@ -3388,7 +3373,7 @@ defGSReturn CDataStoreMgr::QueryValueForSpecTime( const GSIOTAddrObjKey &AddrObj
 	return defGSReturn_Success;
 }
 
-// Ö¸¶¨Ê±¼ä·¶Î§ÄÚµÄÔ­Ê¼Öµ
+// Ö¸ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½Úµï¿½Ô­Ê¼Öµ
 defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange( const GSIOTAddrObjKey &AddrObjKey, const time_t data_dt_begin, const time_t data_dt_end, defmapV1k &lst_v1k, const int spanrate, const bool rateForType )
 {
 	const int c_maxday = 55;
@@ -3416,7 +3401,7 @@ defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange( const GSIOTAddrObjKey 
 		return defGSReturn_ErrParam;
 	}
 
-	// ¿ç¶ÈÌ«³¤ ³¬¹ýnÌì
+	// ï¿½ï¿½ï¿½Ì«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½
 	if( query_data_dt_end - query_data_dt_begin > c_maxday*24*60*60 )
 	{
 		LOGMSG( "QuerySrcValueLst_ForTimeRange time long>%dday err, %s\r\n", c_maxday, AddrObjKey.get_str().c_str() );
@@ -3443,7 +3428,7 @@ defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange( const GSIOTAddrObjKey 
 	AutoRelease_getDBDataSave autodbB( this );
 	SQLite_DBDataSave *pDBSaveB = NULL;
 
-	// ÊÇ·ñ¿çÔÂ
+	// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 	if( !IsSameDBSave(GSTimeBegin, GSTimeEnd) )
 	{
 		pDBSaveB = autodbB.get( GSTimeEnd, false, "QuerySrcValueLst_ForTimeRange_B", true );
@@ -3455,7 +3440,7 @@ defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange( const GSIOTAddrObjKey 
 		return defGSReturn_DBNoExist;
 	}
 
-	// ÔØÈëÊ±¼ä·¶Î§ÄÚÊý¾Ý£¬ÓÉÓÚÊ±¼ä·¶Î§¿É×ÔÓÉÑ¡ÔñÌá¹©£¬×îÇ°ÃæºÍ×îºóÃæµÄ¿ÉÄÜ²»ÊÇÍêÕûµÄÒ»Ìì
+	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 
 	if( pDBSaveA )
 	{
@@ -3484,7 +3469,7 @@ defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange( const GSIOTAddrObjKey 
 	return defGSReturn_Success;
 }
 
-// Ö¸¶¨Ê±¼ä·¶Î§ÄÚµÄÔ­Ê¼Öµ
+// Ö¸ï¿½ï¿½Ê±ï¿½ä·¶Î§ï¿½Úµï¿½Ô­Ê¼Öµ
 defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange_QueryStat( stru_QueryStat &ResultStat, const int spanrate, const bool rateForType )
 {
 	const DWORD dwstart = timeGetTime();
@@ -3498,7 +3483,7 @@ defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange_QueryStat( stru_QuerySt
 		return ret;
 	}
 
-	// Í³¼Æ
+	// Í³ï¿½ï¿½
 	for( defmapV1k::const_iterator it=lst_v1k.begin(); it!=lst_v1k.end(); ++it )
 	{
 		const time_t curTime = it->first;
@@ -3509,14 +3494,14 @@ defGSReturn CDataStoreMgr::QuerySrcValueLst_ForTimeRange_QueryStat( stru_QuerySt
 		if( !it->second.v1k_valid )
 			continue;
 
-		// ×ÜÊýÀÛ¼Æ£¬ºóÃæ¼ÆËãÆ½¾ùÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		ResultStat.temp_v1k_sum += it->second.v1k;
 		ResultStat.Stat.stat_v1k_avg_num++;
 
 		g_AnalyseStat( ResultStat.Stat, curTime, curValue, ResultStat.data_dt_begin, ResultStat.data_dt_end );
 	}
 
-	// ¼ÆËãÆ½¾ùÖµ
+	// ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 	ResultStat.Stat.calc_avg( ResultStat.temp_v1k_sum );
 
 	lst_v1k.clear();

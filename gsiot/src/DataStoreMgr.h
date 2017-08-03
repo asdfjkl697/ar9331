@@ -8,12 +8,12 @@
 #define defValidRange_prev	(35*60)
 #define defValidRange_next	(10*60)
 
-// Ô­Ê¼Öµ½á¹¹
+// Ô­Ê¼Öµï¿½á¹¹
 struct stru_V1K
 {
-	time_t data_dt;			// ÖµµÄÊ±¼ä
-	defDataFlag_ v1k_valid;	// ±êÖ¾ DataFlag
-	int v1k;				// 1000±¶µÄÖµ
+	time_t data_dt;			// Öµï¿½ï¿½Ê±ï¿½ï¿½
+	defDataFlag_ v1k_valid;	// ï¿½ï¿½Ö¾ DataFlag
+	int v1k;				// 1000ï¿½ï¿½ï¿½ï¿½Öµ
 
 	stru_V1K( const time_t in_data_dt=0, const defDataFlag_ in_v1k_valid=defDataFlag_Invalid, const int in_v1k=0 )
 		: data_dt(in_data_dt), v1k_valid(in_v1k_valid), v1k(in_v1k)
@@ -28,18 +28,18 @@ struct stru_V1K
 	}
 };
 #define stru_QueryV1K stru_V1K
-typedef std::map<time_t,stru_V1K> defmapV1k;	 // Ô­Ê¼Êý¾ÝÁÐ±í <utctime,stru_SrcV1K>
+typedef std::map<time_t,stru_V1K> defmapV1k;	 // Ô­Ê¼ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ <utctime,stru_SrcV1K>
 
-// Êý¾Ý±£´æ»º´æ½á¹¹
+// ï¿½ï¿½Ý±ï¿½ï¿½æ»ºï¿½ï¿½á¹¹
 struct struDataSave
 {
-	time_t data_dt;				// Öµ²É¼¯Ê±¼ä
+	time_t data_dt;				// Öµï¿½É¼ï¿½Ê±ï¿½ï¿½
 
-	GSIOTAddrObjKey AddrObjKey;	// Êý¾Ý¼ÇÂ¼µÄ¶ÔÏókey
+	GSIOTAddrObjKey AddrObjKey;	// ï¿½ï¿½Ý¼ï¿½Â¼ï¿½Ä¶ï¿½ï¿½ï¿½key
 
-	defDataFlag_ dataflag;		// ±£´æÔ­ÒòµÈµÈ±êÖ¾
+	defDataFlag_ dataflag;		// ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ÈµÈ±ï¿½Ö¾
 	std::string strvalue;		// Öµ
-	std::string name;			// Öµ²É¼¯¶ÔÏóÃû³Æ
+	std::string name;			// Öµï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	struDataSave( const time_t in_data_dt, const IOTDeviceType in_dev_type, const int in_dev_id, const IOTDeviceType in_address_type, const int in_address_id,
 		const defDataFlag_ in_dataflag, const std::string &in_strvalue, const std::string &in_name )
@@ -51,15 +51,15 @@ struct struDataSave
 typedef std::vector<struDataSave*> defvecDataSave;
 
 
-// Êý¾Ý¼ÇÂ¼
+// ï¿½ï¿½Ý¼ï¿½Â¼
 struct struRec_histdata
 {
-	time_t data_dt;				// ÖµµÄÊ±¼ä
+	time_t data_dt;				// Öµï¿½ï¿½Ê±ï¿½ï¿½
 
-	GSIOTAddrObjKey AddrObjKey;	// ¼ÇÂ¼µÄ¶ÔÏókey
+	GSIOTAddrObjKey AddrObjKey;	// ï¿½ï¿½Â¼ï¿½Ä¶ï¿½ï¿½ï¿½key
 
-	defDataFlag_ dataflag;		// ±êÖ¾
-	int value1k;				// 1000±¶µÄÖµ
+	defDataFlag_ dataflag;		// ï¿½ï¿½Ö¾
+	int value1k;				// 1000ï¿½ï¿½ï¿½ï¿½Öµ
 	//std::string data_dt_str;
 	//std::string strvalue;
 	//std::string name;
@@ -67,7 +67,7 @@ struct struRec_histdata
 typedef std::map<time_t,struRec_histdata*> defmapRec_histdata;
 
 
-// Í³¼Æ
+// Í³ï¿½ï¿½
 struct struStat
 {
 	struStat(
@@ -94,26 +94,26 @@ struct struStat
 		stat_v1k_avg = ( stat_v1k_avg_num > 0 ) ? ( sum / stat_v1k_avg_num ) : 0;
 	}
 
-	int stat_valid;				// stat_v1k_´òÍ·µÄÍ³¼ÆÊý¾ÝÊÇ·ñÓÐÐ§£¬1ÓÐÐ§0ÎÞÐ§
-	int stat_v1k_max_dt;		// ×î´óÖµ³öÏÖÊ±¼ä
-	int stat_v1k_max;			// ×î´óÖµ
-	int stat_v1k_min_dt;		// ×îÐ¡Öµ³öÏÖÊ±¼ä
-	int stat_v1k_min;			// ×îÐ¡Öµ
-	int stat_v1k_avg;			// Æ½¾ùÖµ
-	int stat_v1k_avg_num;		// ÓÃÓÚ¼ÆËãÆ½¾ùÖµµÄÔ­Ê¼Êý¾ÝÊýÁ¿
+	int stat_valid;				// stat_v1k_ï¿½ï¿½Í·ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§ï¿½ï¿½1ï¿½ï¿½Ð§0ï¿½ï¿½Ð§
+	int stat_v1k_max_dt;		// ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	int stat_v1k_max;			// ï¿½ï¿½ï¿½Öµ
+	int stat_v1k_min_dt;		// ï¿½ï¿½Ð¡Öµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	int stat_v1k_min;			// ï¿½ï¿½Ð¡Öµ
+	int stat_v1k_avg;			// Æ½ï¿½ï¿½Öµ
+	int stat_v1k_avg_num;		// ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 typedef std::map<struGSTime,struStat> defmapstruStat;
 
-// ÈÕÍ³¼Æ½á¹¹
+// ï¿½ï¿½Í³ï¿½Æ½á¹¹
 struct struRec_stat_day
 {
 	struct struKey
 	{
-		int dt_year;				// Í³¼Æ¼ÇÂ¼ËùÔÚÄê
-		int dt_month;				// Í³¼Æ¼ÇÂ¼ËùÔÚÔÂ
-		int dt_day;					// Í³¼Æ¼ÇÂ¼ËùÔÚÈÕ
+		int dt_year;				// Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int dt_month;				// Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int dt_day;					// Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-		GSIOTAddrObjKey AddrObjKey;	// Í³¼Æ¼ÇÂ¼µÄ¶ÔÏókey
+		GSIOTAddrObjKey AddrObjKey;	// Í³ï¿½Æ¼ï¿½Â¼ï¿½Ä¶ï¿½ï¿½ï¿½key
 		
 		struKey( int in_dt_year=0, int in_dt_month=0, int in_dt_day=0, IOTDeviceType in_dev_type=IOT_DEVICE_Unknown, int in_dev_id=0, IOTDeviceType in_address_type=IOT_DEVICE_Unknown, int in_address_id=0 )
 			: dt_year(in_dt_year), dt_month(in_dt_month), dt_day(in_dt_day), AddrObjKey( in_dev_type, in_dev_id, in_address_type, in_address_id )
@@ -128,16 +128,16 @@ struct struRec_stat_day
 
 	struKey key;
 
-	// Í³¼Æ
+	// Í³ï¿½ï¿½
 	struStat Stat;
 
-	// 48¸öÕûµãºÍ°ëµãÖµ AµÄ24Î»Ç°24¸öÖµ£¬BµÄ24Î»ºó24¸öÖµ£¬1ÓÐÐ§0ÎÞÐ§
+	// 48ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½Öµ Aï¿½ï¿½24Î»Ç°24ï¿½ï¿½Öµï¿½ï¿½Bï¿½ï¿½24Î»ï¿½ï¿½24ï¿½ï¿½Öµï¿½ï¿½1ï¿½ï¿½Ð§0ï¿½ï¿½Ð§
 	int v1k_valid_00_11A;
 	int v1k_valid_12_23B;
-	int v1k[48];				// 48¸öÕûµãºÍ°ëµãÖµ°´Ë³ÐòÅÅÏÂÀ´£¬00:00¡¢00:30¡¢01:00¡¢01:30¡¢µÈµÈ
+	int v1k[48];				// 48ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½Öµï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½00:00ï¿½ï¿½00:30ï¿½ï¿½01:00ï¿½ï¿½01:30ï¿½ï¿½ï¿½Èµï¿½
 
-	defmapV1k lst_src_v1k;		// Ô­Ê¼Êý¾ÝÁÐ±í <utctime,value1k>
-	defmapstruStat lst_stathour;	// Ð¡Ê±ÄÚÍ³¼Æ£¬h:0-23£¬0±íÊ¾0:00-0:59Ð¡Ê±ÄÚµÄÍ³¼Æ£¬1±íÊ¾1:00-1:59µãÄÚµÄÍ³¼Æ...
+	defmapV1k lst_src_v1k;		// Ô­Ê¼ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ <utctime,value1k>
+	defmapstruStat lst_stathour;	// Ð¡Ê±ï¿½ï¿½Í³ï¿½Æ£ï¿½h:0-23ï¿½ï¿½0ï¿½ï¿½Ê¾0:00-0:59Ð¡Ê±ï¿½Úµï¿½Í³ï¿½Æ£ï¿½1ï¿½ï¿½Ê¾1:00-1:59ï¿½ï¿½ï¿½Úµï¿½Í³ï¿½ï¿½...
 
 	struRec_stat_day( const struKey &in_key )
 		: key(in_key), 
@@ -167,15 +167,15 @@ bool operator< ( const struRec_stat_day::struKey &key1, const struRec_stat_day::
 typedef std::map<struRec_stat_day::struKey,struRec_stat_day*> defmapRec_stat_day;
 
 
-// ÔÂÍ³¼Æ½á¹¹
+// ï¿½ï¿½Í³ï¿½Æ½á¹¹
 struct struRec_stat_month
 {
 	struct struKey
 	{
-		int dt_year;				// Í³¼Æ¼ÇÂ¼ËùÔÚÄê
-		int dt_month;				// Í³¼Æ¼ÇÂ¼ËùÔÚÔÂ
+		int dt_year;				// Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int dt_month;				// Í³ï¿½Æ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-		GSIOTAddrObjKey AddrObjKey;	// Í³¼Æ¼ÇÂ¼µÄ¶ÔÏókey
+		GSIOTAddrObjKey AddrObjKey;	// Í³ï¿½Æ¼ï¿½Â¼ï¿½Ä¶ï¿½ï¿½ï¿½key
 
 		struKey( int in_dt_year=0, int in_dt_month=0, IOTDeviceType in_dev_type=IOT_DEVICE_Unknown, int in_dev_id=0, IOTDeviceType in_address_type=IOT_DEVICE_Unknown, int in_address_id=0 )
 			: dt_year(in_dt_year), dt_month(in_dt_month), AddrObjKey( in_dev_type, in_dev_id, in_address_type, in_address_id )
@@ -195,9 +195,9 @@ struct struRec_stat_month
 
 	struKey key;
 
-	// Í³¼Æ
+	// Í³ï¿½ï¿½
 	struStat Stat;
-	double temp_v1k_sum;		// ÓÃÓÚÍ³¼ÆÆ½¾ùÖµµÄÁÙÊ±»º´æ		
+	double temp_v1k_sum;		// ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½Æ½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½		
 
 	struRec_stat_month( const struKey &in_key )
 		: key(in_key), temp_v1k_sum(0.0f)
@@ -217,17 +217,17 @@ struct struRec_stat_month
 bool operator< ( const struRec_stat_month::struKey &key1, const struRec_stat_month::struKey &key2 );
 typedef std::map<struRec_stat_month::struKey,struRec_stat_month*> defmapRec_stat_month;
 
-// Í³¼Æ²éÑ¯½á¹¹
+// Í³ï¿½Æ²ï¿½Ñ¯ï¿½á¹¹
 struct stru_QueryStat
 {
 	GSIOTAddrObjKey AddrObjKey;
 	
-	time_t data_dt_begin;		// ²éÑ¯Êý¾ÝÆðÊ¼Ê±¼ä
-	time_t data_dt_end;			// ²éÑ¯Êý¾Ý½áÊøÊ±¼ä
+	time_t data_dt_begin;		// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼Ê±ï¿½ï¿½
+	time_t data_dt_end;			// ï¿½ï¿½Ñ¯ï¿½ï¿½Ý½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
-	// Í³¼Æ
+	// Í³ï¿½ï¿½
 	struStat Stat;
-	double temp_v1k_sum;		// ÓÃÓÚÍ³¼ÆÆ½¾ùÖµµÄÁÙÊ±»º´æ
+	double temp_v1k_sum;		// ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½Æ½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 	
 	defmapV1k lst_query_v1k;
 
@@ -241,7 +241,7 @@ struct stru_QueryStat
 	void AddStatToList();
 };
 
-typedef std::set<unsigned char> defmap_is_stat_day; // ÈÕÍ³¼ÆÊÇ·ñÒÑ´æÔÚ¼ÇÂ¼ÁÐ±í
+typedef std::set<unsigned char> defmap_is_stat_day; // ï¿½ï¿½Í³ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½Ú¼ï¿½Â¼ï¿½Ð±ï¿½
 
 bool g_isNoDBRec( const defGSReturn ret );
 void g_AnalyseStat( struStat &Stat, const time_t curTime, const int curValue, const time_t data_dt_begin=0, const time_t data_dt_end=0 );
@@ -349,21 +349,18 @@ public:
 
 protected:
 	SQLite::Database *db;
-	struGSTime m_dtDBSave;	// Êý¾Ý´æ´¢Ê±¼ä Äê+ÔÂ
-	bool m_isReadOnly;		// ÊÇ·ñÖ»¶Á´ò¿ª
-	std::string m_path;		// Êý¾Ý¿âÎÄ¼þÈ«Â·¾¶
-	std::string m_dbname;	// Êý¾Ý¿âÎÄ¼þÃû³Æ
+	struGSTime m_dtDBSave;	// ï¿½ï¿½Ý´æ´¢Ê±ï¿½ï¿½ ï¿½ï¿½+ï¿½ï¿½
+	bool m_isReadOnly;		// ï¿½Ç·ï¿½Ö»ï¿½ï¿½ï¿½ï¿½
+	std::string m_path;		// ï¿½ï¿½Ý¿ï¿½ï¿½Ä¼ï¿½È«Â·ï¿½ï¿½
+	std::string m_dbname;	// ï¿½ï¿½Ý¿ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½
 
-	bool m_is_stat_month;			// ±¾ÔÂÊÇ·ñÒÑÍ³¼Æ
-	defmap_is_stat_day m_lst_is_stat_day;	// ÒÑÍ³¼ÆµÄÌìÔÚÕâÀï¼ÇÂ¼ £¬1±íÊ¾1ÈÕ£¬2±íÊ¾2ÈÕ£¬µÈµÈ
+	bool m_is_stat_month;			// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í³ï¿½ï¿½
+	defmap_is_stat_day m_lst_is_stat_day;	// ï¿½ï¿½Í³ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ ï¿½ï¿½1ï¿½ï¿½Ê¾1ï¿½Õ£ï¿½2ï¿½ï¿½Ê¾2ï¿½Õ£ï¿½ï¿½Èµï¿½
 
-	int m_usecount;			// ÕýÔÚ±»Ê¹ÓÃ¼ÆÊý
-	uint32_t m_lastUseTs;	// ÉÏ´ÎÊ¹ÓÃÊ±¼ä´Á
+	int m_usecount;			// ï¿½ï¿½ï¿½Ú±ï¿½Ê¹ï¿½Ã¼ï¿½ï¿½ï¿½
+	uint32_t m_lastUseTs;	// ï¿½Ï´ï¿½Ê¹ï¿½ï¿½Ê±ï¿½ï¿½ï¿½
 };
 
-
-//=====================================================
-// DataStoreMgr Êý¾Ý´æ´¢Àà¹ÜÀí
 
 class CDataStoreMgr
 {
@@ -415,17 +412,18 @@ private:
 	SQLite_DBDataSave* DBMgr_get_nolock( const struGSTime &dt );
 	SQLite_DBDataSave* DBMgr_get_nolock( const std::string &dbname );
 
+	//void RemoveDB(struGSTime dt); //jyc20170425 add
 	void CheckCreateDB( const time_t utctime );
 
 private:
 	gloox::util::Mutex m_mutex_lstDBDataSaveMgr;
-	std::map<std::string,SQLite_DBDataSave*>	m_lstDBDataSaveMgr; // <CreateDBNameForSpecDtµÃµ½µÄÎÄ¼þÃû, Êý¾Ý¿â´æ´¢ÊµÀýÖ¸Õë>
+	std::map<std::string,SQLite_DBDataSave*>	m_lstDBDataSaveMgr; // <CreateDBNameForSpecDtï¿½Ãµï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½, ï¿½ï¿½Ý¿ï¿½æ´¢Êµï¿½ï¿½Ö¸ï¿½ï¿½>
 	uint32_t m_lastdo_DBMgr_Check;
 
-	std::map<GSIOTAddrObjKey,int> m_mapCheckInvalid; // ×îºóÒ»´Î´æ´¢ÊÇ·ñÎÞÐ§Öµ<key,count>
+	std::map<GSIOTAddrObjKey,int> m_mapCheckInvalid; // ï¿½ï¿½ï¿½Ò»ï¿½Î´æ´¢ï¿½Ç·ï¿½ï¿½ï¿½Ð§Öµ<key,count>
 };
 
-// ×Ô¶¯ÊÍ·Å·â×°Àà
+// ï¿½Ô¶ï¿½ï¿½Í·Å·ï¿½×°ï¿½ï¿½
 class AutoRelease_getDBDataSave
 {
 public:
